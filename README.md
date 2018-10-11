@@ -1,4 +1,8 @@
-# pdx-ece411-fall2018-kjn
+# Portland State Universty
+
+## ECE 411 Practicum Project
+
+## Group 9
 
 ## Members  
 Nathan Lutterman  
