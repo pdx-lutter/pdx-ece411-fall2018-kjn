@@ -10,9 +10,9 @@ https://pdx-lutter.github.io/pdx-ece411-fall2018-kjn/
 
 ### Group Members
 
-Nathan Lutterman
-Kimball Davis
-Jason Houlihan
+* Nathan Lutterman  
+* Kimball Davis  
+* Jason Houlihan  
 
 
 
