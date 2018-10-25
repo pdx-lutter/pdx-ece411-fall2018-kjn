@@ -20,5 +20,6 @@ Jason Houlihan
 
 ### Important Documents
 
-[Preliminary Schematic](docs/schematics/preliminary.sch)
+[Preliminary EAGLE PCB Design Schematic](docs/schematics/preliminary.sch)
 
+![Preliminary Schematic Thumbnail](docs/schematics/images/preliminary.png)
