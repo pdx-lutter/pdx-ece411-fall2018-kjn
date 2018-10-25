@@ -1,12 +1,24 @@
-# Portland State Universty
+# Portland State University
 
-## ECE 411 Practicum Project
+## ECE 411 Practicum Project - Group 16
 
 https://pdx-lutter.github.io/pdx-ece411-fall2018-kjn/
 
-## Group 16
 
-## Members  
+
+### Precision Temperature Control Unit
+
+
+
+### Group Members
+
 Nathan Lutterman  
 Kimball Davis  
 Jason Houlihan   
+
+---
+
+### Important Documents
+
+[Preliminary Schematic](docs/schematics/preliminary.sch)
+
