@@ -1,0 +1,185 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+\usepackage[T1]{fontenc} % Output font encoding for international characters
+
+\usepackage{mathpazo} % Palatino font
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{tabu}
+\usepackage{array}
+\usepackage{cellspace}
+\usepackage[table]{xcolor}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{parskip}
+
+\usepackage{titlesec}
+\titlespacing\subsection{0pt}{1pt plus 4 pt minus 2pt}{1pt plus 4 pt minus 2pt}
+
+\renewcommand{\baselinestretch}{1.25}
+\geometry{margin=0.75 in}
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for horizontal lines, change thickness here
+	
+	\center % Centre everything on the page
+	
+	%------------------------------------------------
+	%	Headings
+	%------------------------------------------------
+	
+	\textsc{\LARGE Portland State University
+}\\[.25cm] % Main heading such as the name of your university/college
+	
+	\textsc{\Large Department of Electrical and Computer Engineering }\\[.5cm] % Major heading such as course name
+\includegraphics[width=0.2\textwidth]{psuLOGO}\\[.5cm]	
+	\textsc{\LARGE ECE 411 - Industry Design Process }\\[0.75cm] % Minor heading such as course title
+	
+		\textsc{\Large Professor Andrew Greenberg, MS\\
+Professor of Electrical \& Computer Engineering
+ }\\[.75cm]
+	
+	%------------------------------------------------
+	%	Title
+	%------------------------------------------------
+	
+	\HRule\\[0.4cm]
+	
+	{\huge\bfseries Design Review Notes}\\[0.4cm] % Title of your document
+	
+	\HRule\\[1.5cm]
+	
+	%------------------------------------------------
+	%	Author(s)
+	%------------------------------------------------
+	
+%	\begin{minipage}{0.4\textwidth}
+%		\begin{flushleft}
+%			\large
+%			\textit{By:}\\
+%		 \textsc{Kimball S. Davis} % Your name
+%		\end{flushleft}
+%	\end{minipage}
+%	~
+%	\begin{minipage}{0.4\textwidth}
+%		\begin{flushright}
+%			\large
+%			\textit{Professor of Electrical \& Computer Engineering}\\
+%		 \textsc{Professor Branimir Pejcinovic, Ph.D.} % Supervisor's name
+%		\end{flushright}
+%	\end{minipage}
+	
+	% If you don't want a supervisor, uncomment the two lines below and comment the code above
+	\Large{Group \#16:}\\
+		 \Large\textsc{Kimball S. Davis, Jason Houlihan, \& Nathan Lutterman} % Your name
+	
+	%------------------------------------------------
+	%	Date
+	%------------------------------------------------
+	
+	\vfill\vfill\vfill\vfill % Position the date 3/4 down the remaining page
+	
+	{\large\today} % Date, change the \today to a set date if you want to be precise
+	
+	%------------------------------------------------
+	%	Logo
+	%------------------------------------------------
+	
+	%\vfill\vfill
+	%\includegraphics[width=0.2\textwidth]{PSULOGO}\\[1cm] % Include a department/university logo - this will require the graphicx package
+	 
+	%----------------------------------------------------------------------------------------
+	
+	\vfill % Push the date up 1/4 of the remaining page
+	
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+\setlength{\columnsep}{.2 in}
+
+\setlength{\parskip}{0pt}
+
+	
+\section*{Schematic and Board Layout Design Review Notes}
+\textbf{Team Being Reviewed:} Group 16: Kimball Davis, Jason Houlihan, Nathan Lutterman\\
+\textbf{Reviewer:} Douglas Hall, Ph.D\\
+
+\textit{NOTE: Although Professor Geenberg never directly reviewed our design, we discovered some flaws in our design while watching the reviews done in class. We included these in our review notes because we changed our design based on these observations before Dr. Hall reviewed the design.}
+
+\section*{Schematic} 
+
+\subsection*{Critical}
+
+\begin{itemize}
+
+    \item Missing bypass capacitors on +5V inputs to AT89S52. Added 100 nF bypass capacitors to design.
+    \item Don't put anything on the NET layer that is not a net. We had some section labeling on the NET layer. The text was moved to the NOTES layer.
+    
+\end{itemize}
+
+\subsection*{Major}
+
+\begin{itemize}
+
+    \item Not clear exactly what the power is coming from. Changed power supply labeling in schematic.
+    \item Make sure there are adequate test points. Added test points for I2C signals for display.
+    \item Not clear how much current the loads require to operate, or what the loads are. Labeled the loads on the schematic with part number, voltage, and current specifications.
+
+\end{itemize}
+		
+\subsection*{Minor}
+
+\begin{itemize}
+
+    \item For LEDS use 500 to 1K resistors to keep them dimmer. Changed resistors in LED circuits from 330 to 1k $\Omega$
+    \item When presenting a schematic for review be aware of the scale. If our schematic were projected on a screen or on a laptop with zoom capabilities it would be fine. Presented on 11x7 paper a lot of the text is hard to read.
+
+\end{itemize}
+
+\section*{Layout} 
+
+\subsection*{Critical}
+
+\begin{itemize}
+
+    \item None
+    
+\end{itemize}
+
+\subsection*{Major}
+
+\begin{itemize}
+
+    \item Will the voltage regulator need additional heat sinks based on the power the loads will draw?
+
+\end{itemize}
+		
+\subsection*{Minor}
+
+\begin{itemize}
+
+    \item Consider printing top and bottom layers separately, or on transparencies that can overlap so it is easier for the reviewer to follow traces.
+    \item Not clear what type of mounting hardware will be needed for connectors.
+
+\end{itemize}
+
+\section*{Bill of Materials} 
+
+\begin{itemize}
+
+    \item Power supply, fan, and light-bulb specifications are not clearly defined.
+    
+\end{itemize}
+
+	
+\end{document}
+
