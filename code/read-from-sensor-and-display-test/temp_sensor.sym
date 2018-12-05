@@ -306,12 +306,12 @@ Symbol Table
     _WR                                                         =  0000B6 G
     ___fs2sint                                                     ****** GX
     ___fsadd                                                       ****** GX
+    ___fsdiv                                                       ****** GX
     ___fseq                                                        ****** GX
     ___fslt                                                        ****** GX
     ___fsmul                                                       ****** GX
     ___fssub                                                       ****** GX
-    ___schar2fs                                                    ****** GX
-    ___sint2fs                                                     ****** GX
+    ___uchar2fs                                                    ****** GX
     __divsint                                                      ****** GX
     __divsint_PARM_2                                               ****** GX
   F __interrupt_vect                                               000000 R
@@ -323,36 +323,36 @@ Symbol Table
     __sdcc_gsinit_startup                                          ****** GX
   F __sdcc_program_startup                                         000003 GR
   7 __start__stack                                                 000000 GR
- 18 _delay                                                         000387 GR
+ 18 _clear_display_buffer                                          00033A GR
+ 18 _delay                                                         000000 GR
   5 _display_buffer                                                000010 GR
- 18 _i2c_delay                                                     000000 GR
- 18 _i2c_read_byte                                                 0001AF GR
- 18 _i2c_scl_read                                                  000066 GR
- 18 _i2c_scl_write                                                 00004C GR
-  6 _i2c_scl_write_PARM_2                                          000000 GR
- 18 _i2c_sda_read                                                  00002F GR
- 18 _i2c_sda_write                                                 000015 GR
+ 18 _i2c_delay                                                     00001F GR
+ 18 _i2c_read_byte                                                 0001A5 GR
+ 18 _i2c_scl_read                                                  000088 GR
+ 18 _i2c_scl_write                                                 00006B GR
+  5 _i2c_scl_write_PARM_2                                          00001A GR
+ 18 _i2c_sda_read                                                  00004E GR
+ 18 _i2c_sda_write                                                 000034 GR
   6 _i2c_sda_write_PARM_2                                          000000 GR
- 18 _i2c_send_byte                                                 0000F9 GR
-  5 _i2c_send_byte_PARM_2                                          00001A GR
- 18 _i2c_start                                                     000083 GR
- 18 _i2c_stop                                                      0000C4 GR
- 18 _main                                                          00039C GR
-  5 _main_current_temp_1_63                                        000021 R
-  5 _main_last_temp_1_63                                           000025 R
-  5 _main_temp_int_1_63                                            000029 R
-  A _main_update_display_1_63                                      000000 R
+ 18 _i2c_send_byte                                                 000110 GR
+  5 _i2c_send_byte_PARM_2                                          00001B GR
+ 18 _i2c_start                                                     0000AC GR
+ 18 _i2c_stop                                                      0000E4 GR
+ 18 _main                                                          0003E5 GR
+  5 _main_current_temp_1_68                                        000024 R
+  5 _main_last_temp_1_68                                           000028 R
+  5 _main_temp_int_1_68                                            00002C R
+  A _main_update_display_1_68                                      000000 R
     _modff                                                         ****** GX
     _modff_PARM_2                                                  ****** GX
   5 _number_table                                                  000000 GR
- 18 _read_temp_sensor                                              000206 GR
-  5 _read_temp_sensor_remainder_1_50                               00001C R
-  5 _read_temp_sensor_sloc0_1_0                                    00001D R
-  5 _read_temp_sensor_slope_1_50                                   00001B R
- 18 _write_display                                                 0002F0 GR
- 18 _write_display_command                                         00032D GR
- 18 _write_temp_sensor_command                                     00036A GR
- 18 _write_temp_sensor_config                                      000350 GR
+ 18 _read_temp_sensor                                              0001FC GR
+  5 _read_temp_sensor_count_remaining_1_54                         000020 R
+  5 _read_temp_sensor_slope_1_54                                   00001C R
+ 18 _write_display                                                 000355 GR
+ 18 _write_display_command                                         00038B GR
+ 18 _write_temp_sensor_command                                     0003C8 GR
+ 18 _write_temp_sensor_config                                      0003AE GR
     a                                                           =  0000E0 L
     a.0                                                         =  0000E0 L
     a.1                                                         =  0000E1 L
@@ -569,7 +569,7 @@ Area Table
    2 RSEG0                                      size      0   flags    8
    3 RSEG1                                      size      0   flags    8
    4 REG_BANK_0                                 size      8   flags    4
-   5 DSEG                                       size     2D   flags    0
+   5 DSEG                                       size     30   flags    0
    6 OSEG                                       size      1   flags    4
    7 SSEG                                       size      1   flags    0
    8 ISEG                                       size      0   flags    0
@@ -588,7 +588,7 @@ Area Table
   15 GSINIT5                                    size      0   flags   20
   16 GSINIT                                     size     4E   flags   20
   17 GSFINAL                                    size      3   flags   20
-  18 CSEG                                       size    50F   flags   20
+  18 CSEG                                       size    555   flags   20
   19 CONST                                      size      0   flags   20
   1A XINIT                                      size      0   flags   20
   1B CABS                                       size      0   flags   28

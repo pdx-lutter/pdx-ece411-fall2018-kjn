@@ -1,7 +1,7 @@
                                       1 ;--------------------------------------------------------
                                       2 ; File Created by SDCC : free open source ANSI-C Compiler
                                       3 ; Version 3.5.0 #9253 (Apr  3 2018) (Linux)
-                                      4 ; This file was generated Tue Dec  4 05:30:11 2018
+                                      4 ; This file was generated Wed Dec  5 08:35:54 2018
                                       5 ;--------------------------------------------------------
                                       6 	.module temp_sensor
                                       7 	.optsdcc -mmcs51 --model-small
@@ -9,1327 +9,1367 @@
                                       9 ;--------------------------------------------------------
                                      10 ; Public variables in this module
                                      11 ;--------------------------------------------------------
-                                     12 	.globl _i2c_scl_write_PARM_2
-                                     13 	.globl _i2c_sda_write_PARM_2
-                                     14 	.globl _main
-                                     15 	.globl _delay
-                                     16 	.globl _write_temp_sensor_config
-                                     17 	.globl _write_display_command
-                                     18 	.globl _write_display
-                                     19 	.globl _read_temp_sensor
-                                     20 	.globl _i2c_read_byte
-                                     21 	.globl _i2c_send_byte
-                                     22 	.globl _i2c_stop
-                                     23 	.globl _i2c_start
-                                     24 	.globl _i2c_scl_read
-                                     25 	.globl _i2c_scl_write
-                                     26 	.globl _i2c_sda_read
-                                     27 	.globl _i2c_sda_write
-                                     28 	.globl _i2c_delay
-                                     29 	.globl _modff
-                                     30 	.globl _CY
-                                     31 	.globl _AC
-                                     32 	.globl _F0
-                                     33 	.globl _RS1
-                                     34 	.globl _RS0
-                                     35 	.globl _OV
-                                     36 	.globl _F1
-                                     37 	.globl _P
-                                     38 	.globl _PS
-                                     39 	.globl _PT1
-                                     40 	.globl _PX1
-                                     41 	.globl _PT0
-                                     42 	.globl _PX0
-                                     43 	.globl _RD
-                                     44 	.globl _WR
-                                     45 	.globl _T1
-                                     46 	.globl _T0
-                                     47 	.globl _INT1
-                                     48 	.globl _INT0
-                                     49 	.globl _TXD
-                                     50 	.globl _RXD
-                                     51 	.globl _P3_7
-                                     52 	.globl _P3_6
-                                     53 	.globl _P3_5
-                                     54 	.globl _P3_4
-                                     55 	.globl _P3_3
-                                     56 	.globl _P3_2
-                                     57 	.globl _P3_1
-                                     58 	.globl _P3_0
-                                     59 	.globl _EA
-                                     60 	.globl _ES
-                                     61 	.globl _ET1
-                                     62 	.globl _EX1
-                                     63 	.globl _ET0
-                                     64 	.globl _EX0
-                                     65 	.globl _P2_7
-                                     66 	.globl _P2_6
-                                     67 	.globl _P2_5
-                                     68 	.globl _P2_4
-                                     69 	.globl _P2_3
-                                     70 	.globl _P2_2
-                                     71 	.globl _P2_1
-                                     72 	.globl _P2_0
-                                     73 	.globl _SM0
-                                     74 	.globl _SM1
-                                     75 	.globl _SM2
-                                     76 	.globl _REN
-                                     77 	.globl _TB8
-                                     78 	.globl _RB8
-                                     79 	.globl _TI
-                                     80 	.globl _RI
-                                     81 	.globl _P1_7
-                                     82 	.globl _P1_6
-                                     83 	.globl _P1_5
-                                     84 	.globl _P1_4
-                                     85 	.globl _P1_3
-                                     86 	.globl _P1_2
-                                     87 	.globl _P1_1
-                                     88 	.globl _P1_0
-                                     89 	.globl _TF1
-                                     90 	.globl _TR1
-                                     91 	.globl _TF0
-                                     92 	.globl _TR0
-                                     93 	.globl _IE1
-                                     94 	.globl _IT1
-                                     95 	.globl _IE0
-                                     96 	.globl _IT0
-                                     97 	.globl _P0_7
-                                     98 	.globl _P0_6
-                                     99 	.globl _P0_5
-                                    100 	.globl _P0_4
-                                    101 	.globl _P0_3
-                                    102 	.globl _P0_2
-                                    103 	.globl _P0_1
-                                    104 	.globl _P0_0
-                                    105 	.globl _B
-                                    106 	.globl _ACC
-                                    107 	.globl _PSW
-                                    108 	.globl _IP
-                                    109 	.globl _P3
-                                    110 	.globl _IE
-                                    111 	.globl _P2
-                                    112 	.globl _SBUF
-                                    113 	.globl _SCON
-                                    114 	.globl _P1
-                                    115 	.globl _TH1
-                                    116 	.globl _TH0
-                                    117 	.globl _TL1
-                                    118 	.globl _TL0
-                                    119 	.globl _TMOD
-                                    120 	.globl _TCON
-                                    121 	.globl _PCON
-                                    122 	.globl _DPH
-                                    123 	.globl _DPL
-                                    124 	.globl _SP
-                                    125 	.globl _P0
-                                    126 	.globl _i2c_send_byte_PARM_2
-                                    127 	.globl _display_buffer
-                                    128 	.globl _number_table
-                                    129 	.globl _write_temp_sensor_command
-                                    130 ;--------------------------------------------------------
-                                    131 ; special function registers
-                                    132 ;--------------------------------------------------------
-                                    133 	.area RSEG    (ABS,DATA)
-      000000                        134 	.org 0x0000
-                           000080   135 _P0	=	0x0080
-                           000081   136 _SP	=	0x0081
-                           000082   137 _DPL	=	0x0082
-                           000083   138 _DPH	=	0x0083
-                           000087   139 _PCON	=	0x0087
-                           000088   140 _TCON	=	0x0088
-                           000089   141 _TMOD	=	0x0089
-                           00008A   142 _TL0	=	0x008a
-                           00008B   143 _TL1	=	0x008b
-                           00008C   144 _TH0	=	0x008c
-                           00008D   145 _TH1	=	0x008d
-                           000090   146 _P1	=	0x0090
-                           000098   147 _SCON	=	0x0098
-                           000099   148 _SBUF	=	0x0099
-                           0000A0   149 _P2	=	0x00a0
-                           0000A8   150 _IE	=	0x00a8
-                           0000B0   151 _P3	=	0x00b0
-                           0000B8   152 _IP	=	0x00b8
-                           0000D0   153 _PSW	=	0x00d0
-                           0000E0   154 _ACC	=	0x00e0
-                           0000F0   155 _B	=	0x00f0
-                                    156 ;--------------------------------------------------------
-                                    157 ; special function bits
-                                    158 ;--------------------------------------------------------
-                                    159 	.area RSEG    (ABS,DATA)
-      000000                        160 	.org 0x0000
-                           000080   161 _P0_0	=	0x0080
-                           000081   162 _P0_1	=	0x0081
-                           000082   163 _P0_2	=	0x0082
-                           000083   164 _P0_3	=	0x0083
-                           000084   165 _P0_4	=	0x0084
-                           000085   166 _P0_5	=	0x0085
-                           000086   167 _P0_6	=	0x0086
-                           000087   168 _P0_7	=	0x0087
-                           000088   169 _IT0	=	0x0088
-                           000089   170 _IE0	=	0x0089
-                           00008A   171 _IT1	=	0x008a
-                           00008B   172 _IE1	=	0x008b
-                           00008C   173 _TR0	=	0x008c
-                           00008D   174 _TF0	=	0x008d
-                           00008E   175 _TR1	=	0x008e
-                           00008F   176 _TF1	=	0x008f
-                           000090   177 _P1_0	=	0x0090
-                           000091   178 _P1_1	=	0x0091
-                           000092   179 _P1_2	=	0x0092
-                           000093   180 _P1_3	=	0x0093
-                           000094   181 _P1_4	=	0x0094
-                           000095   182 _P1_5	=	0x0095
-                           000096   183 _P1_6	=	0x0096
-                           000097   184 _P1_7	=	0x0097
-                           000098   185 _RI	=	0x0098
-                           000099   186 _TI	=	0x0099
-                           00009A   187 _RB8	=	0x009a
-                           00009B   188 _TB8	=	0x009b
-                           00009C   189 _REN	=	0x009c
-                           00009D   190 _SM2	=	0x009d
-                           00009E   191 _SM1	=	0x009e
-                           00009F   192 _SM0	=	0x009f
-                           0000A0   193 _P2_0	=	0x00a0
-                           0000A1   194 _P2_1	=	0x00a1
-                           0000A2   195 _P2_2	=	0x00a2
-                           0000A3   196 _P2_3	=	0x00a3
-                           0000A4   197 _P2_4	=	0x00a4
-                           0000A5   198 _P2_5	=	0x00a5
-                           0000A6   199 _P2_6	=	0x00a6
-                           0000A7   200 _P2_7	=	0x00a7
-                           0000A8   201 _EX0	=	0x00a8
-                           0000A9   202 _ET0	=	0x00a9
-                           0000AA   203 _EX1	=	0x00aa
-                           0000AB   204 _ET1	=	0x00ab
-                           0000AC   205 _ES	=	0x00ac
-                           0000AF   206 _EA	=	0x00af
-                           0000B0   207 _P3_0	=	0x00b0
-                           0000B1   208 _P3_1	=	0x00b1
-                           0000B2   209 _P3_2	=	0x00b2
-                           0000B3   210 _P3_3	=	0x00b3
-                           0000B4   211 _P3_4	=	0x00b4
-                           0000B5   212 _P3_5	=	0x00b5
-                           0000B6   213 _P3_6	=	0x00b6
-                           0000B7   214 _P3_7	=	0x00b7
-                           0000B0   215 _RXD	=	0x00b0
-                           0000B1   216 _TXD	=	0x00b1
-                           0000B2   217 _INT0	=	0x00b2
-                           0000B3   218 _INT1	=	0x00b3
-                           0000B4   219 _T0	=	0x00b4
-                           0000B5   220 _T1	=	0x00b5
-                           0000B6   221 _WR	=	0x00b6
-                           0000B7   222 _RD	=	0x00b7
-                           0000B8   223 _PX0	=	0x00b8
-                           0000B9   224 _PT0	=	0x00b9
-                           0000BA   225 _PX1	=	0x00ba
-                           0000BB   226 _PT1	=	0x00bb
-                           0000BC   227 _PS	=	0x00bc
-                           0000D0   228 _P	=	0x00d0
-                           0000D1   229 _F1	=	0x00d1
-                           0000D2   230 _OV	=	0x00d2
-                           0000D3   231 _RS0	=	0x00d3
-                           0000D4   232 _RS1	=	0x00d4
-                           0000D5   233 _F0	=	0x00d5
-                           0000D6   234 _AC	=	0x00d6
-                           0000D7   235 _CY	=	0x00d7
-                                    236 ;--------------------------------------------------------
-                                    237 ; overlayable register banks
-                                    238 ;--------------------------------------------------------
-                                    239 	.area REG_BANK_0	(REL,OVR,DATA)
-      000000                        240 	.ds 8
-                                    241 ;--------------------------------------------------------
-                                    242 ; internal ram data
-                                    243 ;--------------------------------------------------------
-                                    244 	.area DSEG    (DATA)
-      000000                        245 _number_table::
-      000000                        246 	.ds 16
-      000010                        247 _display_buffer::
-      000010                        248 	.ds 10
-      00001A                        249 _i2c_send_byte_PARM_2:
-      00001A                        250 	.ds 1
-      00001B                        251 _read_temp_sensor_slope_1_50:
-      00001B                        252 	.ds 1
-      00001C                        253 _read_temp_sensor_remainder_1_50:
-      00001C                        254 	.ds 1
-      00001D                        255 _read_temp_sensor_sloc0_1_0:
-      00001D                        256 	.ds 4
-      000021                        257 _main_current_temp_1_63:
-      000021                        258 	.ds 4
-      000025                        259 _main_last_temp_1_63:
-      000025                        260 	.ds 4
-      000029                        261 _main_temp_int_1_63:
-      000029                        262 	.ds 4
-                                    263 ;--------------------------------------------------------
-                                    264 ; overlayable items in internal ram 
-                                    265 ;--------------------------------------------------------
-                                    266 	.area	OSEG    (OVR,DATA)
+                                     12 	.globl _i2c_sda_write_PARM_2
+                                     13 	.globl _main
+                                     14 	.globl _write_temp_sensor_config
+                                     15 	.globl _write_display_command
+                                     16 	.globl _read_temp_sensor
+                                     17 	.globl _i2c_read_byte
+                                     18 	.globl _i2c_send_byte
+                                     19 	.globl _i2c_stop
+                                     20 	.globl _i2c_start
+                                     21 	.globl _i2c_scl_read
+                                     22 	.globl _i2c_scl_write
+                                     23 	.globl _i2c_sda_read
+                                     24 	.globl _i2c_sda_write
+                                     25 	.globl _i2c_delay
+                                     26 	.globl _delay
+                                     27 	.globl _modff
+                                     28 	.globl _CY
+                                     29 	.globl _AC
+                                     30 	.globl _F0
+                                     31 	.globl _RS1
+                                     32 	.globl _RS0
+                                     33 	.globl _OV
+                                     34 	.globl _F1
+                                     35 	.globl _P
+                                     36 	.globl _PS
+                                     37 	.globl _PT1
+                                     38 	.globl _PX1
+                                     39 	.globl _PT0
+                                     40 	.globl _PX0
+                                     41 	.globl _RD
+                                     42 	.globl _WR
+                                     43 	.globl _T1
+                                     44 	.globl _T0
+                                     45 	.globl _INT1
+                                     46 	.globl _INT0
+                                     47 	.globl _TXD
+                                     48 	.globl _RXD
+                                     49 	.globl _P3_7
+                                     50 	.globl _P3_6
+                                     51 	.globl _P3_5
+                                     52 	.globl _P3_4
+                                     53 	.globl _P3_3
+                                     54 	.globl _P3_2
+                                     55 	.globl _P3_1
+                                     56 	.globl _P3_0
+                                     57 	.globl _EA
+                                     58 	.globl _ES
+                                     59 	.globl _ET1
+                                     60 	.globl _EX1
+                                     61 	.globl _ET0
+                                     62 	.globl _EX0
+                                     63 	.globl _P2_7
+                                     64 	.globl _P2_6
+                                     65 	.globl _P2_5
+                                     66 	.globl _P2_4
+                                     67 	.globl _P2_3
+                                     68 	.globl _P2_2
+                                     69 	.globl _P2_1
+                                     70 	.globl _P2_0
+                                     71 	.globl _SM0
+                                     72 	.globl _SM1
+                                     73 	.globl _SM2
+                                     74 	.globl _REN
+                                     75 	.globl _TB8
+                                     76 	.globl _RB8
+                                     77 	.globl _TI
+                                     78 	.globl _RI
+                                     79 	.globl _P1_7
+                                     80 	.globl _P1_6
+                                     81 	.globl _P1_5
+                                     82 	.globl _P1_4
+                                     83 	.globl _P1_3
+                                     84 	.globl _P1_2
+                                     85 	.globl _P1_1
+                                     86 	.globl _P1_0
+                                     87 	.globl _TF1
+                                     88 	.globl _TR1
+                                     89 	.globl _TF0
+                                     90 	.globl _TR0
+                                     91 	.globl _IE1
+                                     92 	.globl _IT1
+                                     93 	.globl _IE0
+                                     94 	.globl _IT0
+                                     95 	.globl _P0_7
+                                     96 	.globl _P0_6
+                                     97 	.globl _P0_5
+                                     98 	.globl _P0_4
+                                     99 	.globl _P0_3
+                                    100 	.globl _P0_2
+                                    101 	.globl _P0_1
+                                    102 	.globl _P0_0
+                                    103 	.globl _B
+                                    104 	.globl _ACC
+                                    105 	.globl _PSW
+                                    106 	.globl _IP
+                                    107 	.globl _P3
+                                    108 	.globl _IE
+                                    109 	.globl _P2
+                                    110 	.globl _SBUF
+                                    111 	.globl _SCON
+                                    112 	.globl _P1
+                                    113 	.globl _TH1
+                                    114 	.globl _TH0
+                                    115 	.globl _TL1
+                                    116 	.globl _TL0
+                                    117 	.globl _TMOD
+                                    118 	.globl _TCON
+                                    119 	.globl _PCON
+                                    120 	.globl _DPH
+                                    121 	.globl _DPL
+                                    122 	.globl _SP
+                                    123 	.globl _P0
+                                    124 	.globl _i2c_send_byte_PARM_2
+                                    125 	.globl _i2c_scl_write_PARM_2
+                                    126 	.globl _display_buffer
+                                    127 	.globl _number_table
+                                    128 	.globl _clear_display_buffer
+                                    129 	.globl _write_display
+                                    130 	.globl _write_temp_sensor_command
+                                    131 ;--------------------------------------------------------
+                                    132 ; special function registers
+                                    133 ;--------------------------------------------------------
+                                    134 	.area RSEG    (ABS,DATA)
+      000000                        135 	.org 0x0000
+                           000080   136 _P0	=	0x0080
+                           000081   137 _SP	=	0x0081
+                           000082   138 _DPL	=	0x0082
+                           000083   139 _DPH	=	0x0083
+                           000087   140 _PCON	=	0x0087
+                           000088   141 _TCON	=	0x0088
+                           000089   142 _TMOD	=	0x0089
+                           00008A   143 _TL0	=	0x008a
+                           00008B   144 _TL1	=	0x008b
+                           00008C   145 _TH0	=	0x008c
+                           00008D   146 _TH1	=	0x008d
+                           000090   147 _P1	=	0x0090
+                           000098   148 _SCON	=	0x0098
+                           000099   149 _SBUF	=	0x0099
+                           0000A0   150 _P2	=	0x00a0
+                           0000A8   151 _IE	=	0x00a8
+                           0000B0   152 _P3	=	0x00b0
+                           0000B8   153 _IP	=	0x00b8
+                           0000D0   154 _PSW	=	0x00d0
+                           0000E0   155 _ACC	=	0x00e0
+                           0000F0   156 _B	=	0x00f0
+                                    157 ;--------------------------------------------------------
+                                    158 ; special function bits
+                                    159 ;--------------------------------------------------------
+                                    160 	.area RSEG    (ABS,DATA)
+      000000                        161 	.org 0x0000
+                           000080   162 _P0_0	=	0x0080
+                           000081   163 _P0_1	=	0x0081
+                           000082   164 _P0_2	=	0x0082
+                           000083   165 _P0_3	=	0x0083
+                           000084   166 _P0_4	=	0x0084
+                           000085   167 _P0_5	=	0x0085
+                           000086   168 _P0_6	=	0x0086
+                           000087   169 _P0_7	=	0x0087
+                           000088   170 _IT0	=	0x0088
+                           000089   171 _IE0	=	0x0089
+                           00008A   172 _IT1	=	0x008a
+                           00008B   173 _IE1	=	0x008b
+                           00008C   174 _TR0	=	0x008c
+                           00008D   175 _TF0	=	0x008d
+                           00008E   176 _TR1	=	0x008e
+                           00008F   177 _TF1	=	0x008f
+                           000090   178 _P1_0	=	0x0090
+                           000091   179 _P1_1	=	0x0091
+                           000092   180 _P1_2	=	0x0092
+                           000093   181 _P1_3	=	0x0093
+                           000094   182 _P1_4	=	0x0094
+                           000095   183 _P1_5	=	0x0095
+                           000096   184 _P1_6	=	0x0096
+                           000097   185 _P1_7	=	0x0097
+                           000098   186 _RI	=	0x0098
+                           000099   187 _TI	=	0x0099
+                           00009A   188 _RB8	=	0x009a
+                           00009B   189 _TB8	=	0x009b
+                           00009C   190 _REN	=	0x009c
+                           00009D   191 _SM2	=	0x009d
+                           00009E   192 _SM1	=	0x009e
+                           00009F   193 _SM0	=	0x009f
+                           0000A0   194 _P2_0	=	0x00a0
+                           0000A1   195 _P2_1	=	0x00a1
+                           0000A2   196 _P2_2	=	0x00a2
+                           0000A3   197 _P2_3	=	0x00a3
+                           0000A4   198 _P2_4	=	0x00a4
+                           0000A5   199 _P2_5	=	0x00a5
+                           0000A6   200 _P2_6	=	0x00a6
+                           0000A7   201 _P2_7	=	0x00a7
+                           0000A8   202 _EX0	=	0x00a8
+                           0000A9   203 _ET0	=	0x00a9
+                           0000AA   204 _EX1	=	0x00aa
+                           0000AB   205 _ET1	=	0x00ab
+                           0000AC   206 _ES	=	0x00ac
+                           0000AF   207 _EA	=	0x00af
+                           0000B0   208 _P3_0	=	0x00b0
+                           0000B1   209 _P3_1	=	0x00b1
+                           0000B2   210 _P3_2	=	0x00b2
+                           0000B3   211 _P3_3	=	0x00b3
+                           0000B4   212 _P3_4	=	0x00b4
+                           0000B5   213 _P3_5	=	0x00b5
+                           0000B6   214 _P3_6	=	0x00b6
+                           0000B7   215 _P3_7	=	0x00b7
+                           0000B0   216 _RXD	=	0x00b0
+                           0000B1   217 _TXD	=	0x00b1
+                           0000B2   218 _INT0	=	0x00b2
+                           0000B3   219 _INT1	=	0x00b3
+                           0000B4   220 _T0	=	0x00b4
+                           0000B5   221 _T1	=	0x00b5
+                           0000B6   222 _WR	=	0x00b6
+                           0000B7   223 _RD	=	0x00b7
+                           0000B8   224 _PX0	=	0x00b8
+                           0000B9   225 _PT0	=	0x00b9
+                           0000BA   226 _PX1	=	0x00ba
+                           0000BB   227 _PT1	=	0x00bb
+                           0000BC   228 _PS	=	0x00bc
+                           0000D0   229 _P	=	0x00d0
+                           0000D1   230 _F1	=	0x00d1
+                           0000D2   231 _OV	=	0x00d2
+                           0000D3   232 _RS0	=	0x00d3
+                           0000D4   233 _RS1	=	0x00d4
+                           0000D5   234 _F0	=	0x00d5
+                           0000D6   235 _AC	=	0x00d6
+                           0000D7   236 _CY	=	0x00d7
+                                    237 ;--------------------------------------------------------
+                                    238 ; overlayable register banks
+                                    239 ;--------------------------------------------------------
+                                    240 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        241 	.ds 8
+                                    242 ;--------------------------------------------------------
+                                    243 ; internal ram data
+                                    244 ;--------------------------------------------------------
+                                    245 	.area DSEG    (DATA)
+      000000                        246 _number_table::
+      000000                        247 	.ds 16
+      000010                        248 _display_buffer::
+      000010                        249 	.ds 10
+      00001A                        250 _i2c_scl_write_PARM_2:
+      00001A                        251 	.ds 1
+      00001B                        252 _i2c_send_byte_PARM_2:
+      00001B                        253 	.ds 1
+      00001C                        254 _read_temp_sensor_slope_1_54:
+      00001C                        255 	.ds 4
+      000020                        256 _read_temp_sensor_count_remaining_1_54:
+      000020                        257 	.ds 4
+      000024                        258 _main_current_temp_1_68:
+      000024                        259 	.ds 4
+      000028                        260 _main_last_temp_1_68:
+      000028                        261 	.ds 4
+      00002C                        262 _main_temp_int_1_68:
+      00002C                        263 	.ds 4
+                                    264 ;--------------------------------------------------------
+                                    265 ; overlayable items in internal ram 
+                                    266 ;--------------------------------------------------------
                                     267 	.area	OSEG    (OVR,DATA)
-      000000                        268 _i2c_sda_write_PARM_2:
-      000000                        269 	.ds 1
-                                    270 	.area	OSEG    (OVR,DATA)
-                                    271 	.area	OSEG    (OVR,DATA)
-      000000                        272 _i2c_scl_write_PARM_2:
-      000000                        273 	.ds 1
-                                    274 	.area	OSEG    (OVR,DATA)
-                                    275 	.area	OSEG    (OVR,DATA)
+                                    268 	.area	OSEG    (OVR,DATA)
+                                    269 	.area	OSEG    (OVR,DATA)
+      000000                        270 _i2c_sda_write_PARM_2:
+      000000                        271 	.ds 1
+                                    272 	.area	OSEG    (OVR,DATA)
+                                    273 	.area	OSEG    (OVR,DATA)
+                                    274 ;--------------------------------------------------------
+                                    275 ; Stack segment in internal ram 
                                     276 ;--------------------------------------------------------
-                                    277 ; Stack segment in internal ram 
-                                    278 ;--------------------------------------------------------
-                                    279 	.area	SSEG
-      000000                        280 __start__stack:
-      000000                        281 	.ds	1
-                                    282 
+                                    277 	.area	SSEG
+      000000                        278 __start__stack:
+      000000                        279 	.ds	1
+                                    280 
+                                    281 ;--------------------------------------------------------
+                                    282 ; indirectly addressable internal ram data
                                     283 ;--------------------------------------------------------
-                                    284 ; indirectly addressable internal ram data
+                                    284 	.area ISEG    (DATA)
                                     285 ;--------------------------------------------------------
-                                    286 	.area ISEG    (DATA)
+                                    286 ; absolute internal ram data
                                     287 ;--------------------------------------------------------
-                                    288 ; absolute internal ram data
-                                    289 ;--------------------------------------------------------
-                                    290 	.area IABS    (ABS,DATA)
-                                    291 	.area IABS    (ABS,DATA)
+                                    288 	.area IABS    (ABS,DATA)
+                                    289 	.area IABS    (ABS,DATA)
+                                    290 ;--------------------------------------------------------
+                                    291 ; bit data
                                     292 ;--------------------------------------------------------
-                                    293 ; bit data
-                                    294 ;--------------------------------------------------------
-                                    295 	.area BSEG    (BIT)
-      000000                        296 _main_update_display_1_63:
-      000000                        297 	.ds 1
+                                    293 	.area BSEG    (BIT)
+      000000                        294 _main_update_display_1_68:
+      000000                        295 	.ds 1
+                                    296 ;--------------------------------------------------------
+                                    297 ; paged external ram data
                                     298 ;--------------------------------------------------------
-                                    299 ; paged external ram data
+                                    299 	.area PSEG    (PAG,XDATA)
                                     300 ;--------------------------------------------------------
-                                    301 	.area PSEG    (PAG,XDATA)
+                                    301 ; external ram data
                                     302 ;--------------------------------------------------------
-                                    303 ; external ram data
+                                    303 	.area XSEG    (XDATA)
                                     304 ;--------------------------------------------------------
-                                    305 	.area XSEG    (XDATA)
+                                    305 ; absolute external ram data
                                     306 ;--------------------------------------------------------
-                                    307 ; absolute external ram data
+                                    307 	.area XABS    (ABS,XDATA)
                                     308 ;--------------------------------------------------------
-                                    309 	.area XABS    (ABS,XDATA)
+                                    309 ; external initialized ram data
                                     310 ;--------------------------------------------------------
-                                    311 ; external initialized ram data
-                                    312 ;--------------------------------------------------------
-                                    313 	.area XISEG   (XDATA)
-                                    314 	.area HOME    (CODE)
-                                    315 	.area GSINIT0 (CODE)
-                                    316 	.area GSINIT1 (CODE)
-                                    317 	.area GSINIT2 (CODE)
-                                    318 	.area GSINIT3 (CODE)
-                                    319 	.area GSINIT4 (CODE)
-                                    320 	.area GSINIT5 (CODE)
-                                    321 	.area GSINIT  (CODE)
-                                    322 	.area GSFINAL (CODE)
-                                    323 	.area CSEG    (CODE)
+                                    311 	.area XISEG   (XDATA)
+                                    312 	.area HOME    (CODE)
+                                    313 	.area GSINIT0 (CODE)
+                                    314 	.area GSINIT1 (CODE)
+                                    315 	.area GSINIT2 (CODE)
+                                    316 	.area GSINIT3 (CODE)
+                                    317 	.area GSINIT4 (CODE)
+                                    318 	.area GSINIT5 (CODE)
+                                    319 	.area GSINIT  (CODE)
+                                    320 	.area GSFINAL (CODE)
+                                    321 	.area CSEG    (CODE)
+                                    322 ;--------------------------------------------------------
+                                    323 ; interrupt vector 
                                     324 ;--------------------------------------------------------
-                                    325 ; interrupt vector 
-                                    326 ;--------------------------------------------------------
-                                    327 	.area HOME    (CODE)
-      000000                        328 __interrupt_vect:
-      000000 02r00r00         [24]  329 	ljmp	__sdcc_gsinit_startup
+                                    325 	.area HOME    (CODE)
+      000000                        326 __interrupt_vect:
+      000000 02r00r00         [24]  327 	ljmp	__sdcc_gsinit_startup
+                                    328 ;--------------------------------------------------------
+                                    329 ; global & static initialisations
                                     330 ;--------------------------------------------------------
-                                    331 ; global & static initialisations
-                                    332 ;--------------------------------------------------------
-                                    333 	.area HOME    (CODE)
+                                    331 	.area HOME    (CODE)
+                                    332 	.area GSINIT  (CODE)
+                                    333 	.area GSFINAL (CODE)
                                     334 	.area GSINIT  (CODE)
-                                    335 	.area GSFINAL (CODE)
-                                    336 	.area GSINIT  (CODE)
-                                    337 	.globl __sdcc_gsinit_startup
-                                    338 	.globl __sdcc_program_startup
-                                    339 	.globl __start__stack
-                                    340 	.globl __mcs51_genXINIT
-                                    341 	.globl __mcs51_genXRAMCLEAR
-                                    342 	.globl __mcs51_genRAMCLEAR
-                                    343 ;	temp_sensor.c:37: unsigned char number_table[] = {
-      000000 75*00 3F         [24]  344 	mov	_number_table,#0x3F
-      000003 75*01 06         [24]  345 	mov	(_number_table + 0x0001),#0x06
-      000006 75*02 5B         [24]  346 	mov	(_number_table + 0x0002),#0x5B
-      000009 75*03 4F         [24]  347 	mov	(_number_table + 0x0003),#0x4F
-      00000C 75*04 66         [24]  348 	mov	(_number_table + 0x0004),#0x66
-      00000F 75*05 6D         [24]  349 	mov	(_number_table + 0x0005),#0x6D
-      000012 75*06 7D         [24]  350 	mov	(_number_table + 0x0006),#0x7D
-      000015 75*07 07         [24]  351 	mov	(_number_table + 0x0007),#0x07
-      000018 75*08 7F         [24]  352 	mov	(_number_table + 0x0008),#0x7F
-      00001B 75*09 6F         [24]  353 	mov	(_number_table + 0x0009),#0x6F
-      00001E 75*0A 77         [24]  354 	mov	(_number_table + 0x000a),#0x77
-      000021 75*0B 7C         [24]  355 	mov	(_number_table + 0x000b),#0x7C
-      000024 75*0C 39         [24]  356 	mov	(_number_table + 0x000c),#0x39
-      000027 75*0D 5E         [24]  357 	mov	(_number_table + 0x000d),#0x5E
-      00002A 75*0E 79         [24]  358 	mov	(_number_table + 0x000e),#0x79
-      00002D 75*0F 71         [24]  359 	mov	(_number_table + 0x000f),#0x71
-                                    360 ;	temp_sensor.c:57: unsigned char display_buffer[] = {
-      000030 75*10 00         [24]  361 	mov	_display_buffer,#0x00
-      000033 75*11 00         [24]  362 	mov	(_display_buffer + 0x0001),#0x00
-      000036 75*12 00         [24]  363 	mov	(_display_buffer + 0x0002),#0x00
-      000039 75*13 00         [24]  364 	mov	(_display_buffer + 0x0003),#0x00
-      00003C 75*14 00         [24]  365 	mov	(_display_buffer + 0x0004),#0x00
-      00003F 75*15 00         [24]  366 	mov	(_display_buffer + 0x0005),#0x00
-      000042 75*16 00         [24]  367 	mov	(_display_buffer + 0x0006),#0x00
-      000045 75*17 00         [24]  368 	mov	(_display_buffer + 0x0007),#0x00
-      000048 75*18 00         [24]  369 	mov	(_display_buffer + 0x0008),#0x00
-      00004B 75*19 00         [24]  370 	mov	(_display_buffer + 0x0009),#0x00
-                                    371 	.area GSFINAL (CODE)
-      000000 02r00r03         [24]  372 	ljmp	__sdcc_program_startup
+                                    335 	.globl __sdcc_gsinit_startup
+                                    336 	.globl __sdcc_program_startup
+                                    337 	.globl __start__stack
+                                    338 	.globl __mcs51_genXINIT
+                                    339 	.globl __mcs51_genXRAMCLEAR
+                                    340 	.globl __mcs51_genRAMCLEAR
+                                    341 ;	temp_sensor.c:39: unsigned char number_table[] = {
+      000000 75*00 3F         [24]  342 	mov	_number_table,#0x3F
+      000003 75*01 06         [24]  343 	mov	(_number_table + 0x0001),#0x06
+      000006 75*02 5B         [24]  344 	mov	(_number_table + 0x0002),#0x5B
+      000009 75*03 4F         [24]  345 	mov	(_number_table + 0x0003),#0x4F
+      00000C 75*04 66         [24]  346 	mov	(_number_table + 0x0004),#0x66
+      00000F 75*05 6D         [24]  347 	mov	(_number_table + 0x0005),#0x6D
+      000012 75*06 7D         [24]  348 	mov	(_number_table + 0x0006),#0x7D
+      000015 75*07 07         [24]  349 	mov	(_number_table + 0x0007),#0x07
+      000018 75*08 7F         [24]  350 	mov	(_number_table + 0x0008),#0x7F
+      00001B 75*09 6F         [24]  351 	mov	(_number_table + 0x0009),#0x6F
+      00001E 75*0A 77         [24]  352 	mov	(_number_table + 0x000a),#0x77
+      000021 75*0B 7C         [24]  353 	mov	(_number_table + 0x000b),#0x7C
+      000024 75*0C 39         [24]  354 	mov	(_number_table + 0x000c),#0x39
+      000027 75*0D 5E         [24]  355 	mov	(_number_table + 0x000d),#0x5E
+      00002A 75*0E 79         [24]  356 	mov	(_number_table + 0x000e),#0x79
+      00002D 75*0F 71         [24]  357 	mov	(_number_table + 0x000f),#0x71
+                                    358 ;	temp_sensor.c:59: unsigned char display_buffer[] = {
+      000030 75*10 00         [24]  359 	mov	_display_buffer,#0x00
+      000033 75*11 00         [24]  360 	mov	(_display_buffer + 0x0001),#0x00
+      000036 75*12 00         [24]  361 	mov	(_display_buffer + 0x0002),#0x00
+      000039 75*13 00         [24]  362 	mov	(_display_buffer + 0x0003),#0x00
+      00003C 75*14 00         [24]  363 	mov	(_display_buffer + 0x0004),#0x00
+      00003F 75*15 00         [24]  364 	mov	(_display_buffer + 0x0005),#0x00
+      000042 75*16 00         [24]  365 	mov	(_display_buffer + 0x0006),#0x00
+      000045 75*17 00         [24]  366 	mov	(_display_buffer + 0x0007),#0x00
+      000048 75*18 00         [24]  367 	mov	(_display_buffer + 0x0008),#0x00
+      00004B 75*19 00         [24]  368 	mov	(_display_buffer + 0x0009),#0x00
+                                    369 	.area GSFINAL (CODE)
+      000000 02r00r03         [24]  370 	ljmp	__sdcc_program_startup
+                                    371 ;--------------------------------------------------------
+                                    372 ; Home
                                     373 ;--------------------------------------------------------
-                                    374 ; Home
-                                    375 ;--------------------------------------------------------
-                                    376 	.area HOME    (CODE)
-                                    377 	.area HOME    (CODE)
-      000003                        378 __sdcc_program_startup:
-      000003 02r03r9C         [24]  379 	ljmp	_main
-                                    380 ;	return from main will return to caller
+                                    374 	.area HOME    (CODE)
+                                    375 	.area HOME    (CODE)
+      000003                        376 __sdcc_program_startup:
+      000003 02r03rE5         [24]  377 	ljmp	_main
+                                    378 ;	return from main will return to caller
+                                    379 ;--------------------------------------------------------
+                                    380 ; code
                                     381 ;--------------------------------------------------------
-                                    382 ; code
-                                    383 ;--------------------------------------------------------
-                                    384 	.area CSEG    (CODE)
+                                    382 	.area CSEG    (CODE)
+                                    383 ;------------------------------------------------------------
+                                    384 ;Allocation info for local variables in function 'delay'
                                     385 ;------------------------------------------------------------
-                                    386 ;Allocation info for local variables in function 'i2c_delay'
-                                    387 ;------------------------------------------------------------
-                                    388 ;i                         Allocated to registers r6 r7 
-                                    389 ;------------------------------------------------------------
-                                    390 ;	temp_sensor.c:75: void i2c_delay()
-                                    391 ;	-----------------------------------------
-                                    392 ;	 function i2c_delay
-                                    393 ;	-----------------------------------------
-      000000                        394 _i2c_delay:
-                           000007   395 	ar7 = 0x07
-                           000006   396 	ar6 = 0x06
-                           000005   397 	ar5 = 0x05
-                           000004   398 	ar4 = 0x04
-                           000003   399 	ar3 = 0x03
-                           000002   400 	ar2 = 0x02
-                           000001   401 	ar1 = 0x01
-                           000000   402 	ar0 = 0x00
-                                    403 ;	temp_sensor.c:78: for (i = 0; i < 5; i++);
-      000000 7E 05            [12]  404 	mov	r6,#0x05
-      000002 7F 00            [12]  405 	mov	r7,#0x00
-      000004                        406 00104$:
-      000004 EE               [12]  407 	mov	a,r6
-      000005 24 FF            [12]  408 	add	a,#0xFF
-      000007 FC               [12]  409 	mov	r4,a
-      000008 EF               [12]  410 	mov	a,r7
-      000009 34 FF            [12]  411 	addc	a,#0xFF
-      00000B FD               [12]  412 	mov	r5,a
-      00000C 8C 06            [24]  413 	mov	ar6,r4
-      00000E 8D 07            [24]  414 	mov	ar7,r5
-      000010 EC               [12]  415 	mov	a,r4
-      000011 4D               [12]  416 	orl	a,r5
-      000012 70 F0            [24]  417 	jnz	00104$
-      000014 22               [24]  418 	ret
-                                    419 ;------------------------------------------------------------
-                                    420 ;Allocation info for local variables in function 'i2c_sda_write'
-                                    421 ;------------------------------------------------------------
-                                    422 ;value                     Allocated with name '_i2c_sda_write_PARM_2'
-                                    423 ;sfr_address               Allocated to registers r7 
-                                    424 ;------------------------------------------------------------
-                                    425 ;	temp_sensor.c:81: void i2c_sda_write(unsigned char sfr_address, unsigned char value)
-                                    426 ;	-----------------------------------------
-                                    427 ;	 function i2c_sda_write
-                                    428 ;	-----------------------------------------
-      000015                        429 _i2c_sda_write:
-      000015 AF 82            [24]  430 	mov	r7,dpl
-                                    431 ;	temp_sensor.c:83: switch (sfr_address)
-      000017 BF A0 02         [24]  432 	cjne	r7,#0xA0,00112$
-      00001A 80 05            [24]  433 	sjmp	00101$
-      00001C                        434 00112$:
-                                    435 ;	temp_sensor.c:85: case DISPLAY_SFR: P2_0 = value; break;
-      00001C BF B0 0F         [24]  436 	cjne	r7,#0xB0,00104$
-      00001F 80 07            [24]  437 	sjmp	00102$
-      000021                        438 00101$:
-      000021 E5*00            [12]  439 	mov	a,_i2c_sda_write_PARM_2
-      000023 24 FF            [12]  440 	add	a,#0xff
-      000025 92 A0            [24]  441 	mov	_P2_0,c
-                                    442 ;	temp_sensor.c:86: case TEMP_SENSOR_SFR: P3_5 = value; break;
-      000027 22               [24]  443 	ret
-      000028                        444 00102$:
-      000028 E5*00            [12]  445 	mov	a,_i2c_sda_write_PARM_2
-      00002A 24 FF            [12]  446 	add	a,#0xff
-      00002C 92 B5            [24]  447 	mov	_P3_5,c
-                                    448 ;	temp_sensor.c:87: }
-      00002E                        449 00104$:
-      00002E 22               [24]  450 	ret
+                                    386 ;min_clock_cycles_to_wait  Allocated to registers r6 r7 
+                                    387 ;i                         Allocated to registers r4 r5 
+                                    388 ;------------------------------------------------------------
+                                    389 ;	temp_sensor.c:85: void delay(int min_clock_cycles_to_wait)
+                                    390 ;	-----------------------------------------
+                                    391 ;	 function delay
+                                    392 ;	-----------------------------------------
+      000000                        393 _delay:
+                           000007   394 	ar7 = 0x07
+                           000006   395 	ar6 = 0x06
+                           000005   396 	ar5 = 0x05
+                           000004   397 	ar4 = 0x04
+                           000003   398 	ar3 = 0x03
+                           000002   399 	ar2 = 0x02
+                           000001   400 	ar1 = 0x01
+                           000000   401 	ar0 = 0x00
+      000000 AE 82            [24]  402 	mov	r6,dpl
+      000002 AF 83            [24]  403 	mov	r7,dph
+                                    404 ;	temp_sensor.c:88: for(i = 0;i < min_clock_cycles_to_wait; i++);
+      000004 7C 00            [12]  405 	mov	r4,#0x00
+      000006 7D 00            [12]  406 	mov	r5,#0x00
+      000008                        407 00103$:
+      000008 C3               [12]  408 	clr	c
+      000009 EC               [12]  409 	mov	a,r4
+      00000A 9E               [12]  410 	subb	a,r6
+      00000B ED               [12]  411 	mov	a,r5
+      00000C 64 80            [12]  412 	xrl	a,#0x80
+      00000E 8F F0            [24]  413 	mov	b,r7
+      000010 63 F0 80         [24]  414 	xrl	b,#0x80
+      000013 95 F0            [12]  415 	subb	a,b
+      000015 50 07            [24]  416 	jnc	00105$
+      000017 0C               [12]  417 	inc	r4
+      000018 BC 00 ED         [24]  418 	cjne	r4,#0x00,00103$
+      00001B 0D               [12]  419 	inc	r5
+      00001C 80 EA            [24]  420 	sjmp	00103$
+      00001E                        421 00105$:
+      00001E 22               [24]  422 	ret
+                                    423 ;------------------------------------------------------------
+                                    424 ;Allocation info for local variables in function 'i2c_delay'
+                                    425 ;------------------------------------------------------------
+                                    426 ;i                         Allocated to registers r6 r7 
+                                    427 ;------------------------------------------------------------
+                                    428 ;	temp_sensor.c:97: void i2c_delay()
+                                    429 ;	-----------------------------------------
+                                    430 ;	 function i2c_delay
+                                    431 ;	-----------------------------------------
+      00001F                        432 _i2c_delay:
+                                    433 ;	temp_sensor.c:100: for (i = 0; i < 5; i++);
+      00001F 7E 05            [12]  434 	mov	r6,#0x05
+      000021 7F 00            [12]  435 	mov	r7,#0x00
+      000023                        436 00104$:
+      000023 EE               [12]  437 	mov	a,r6
+      000024 24 FF            [12]  438 	add	a,#0xFF
+      000026 FC               [12]  439 	mov	r4,a
+      000027 EF               [12]  440 	mov	a,r7
+      000028 34 FF            [12]  441 	addc	a,#0xFF
+      00002A FD               [12]  442 	mov	r5,a
+      00002B 8C 06            [24]  443 	mov	ar6,r4
+      00002D 8D 07            [24]  444 	mov	ar7,r5
+      00002F EC               [12]  445 	mov	a,r4
+      000030 4D               [12]  446 	orl	a,r5
+      000031 70 F0            [24]  447 	jnz	00104$
+      000033 22               [24]  448 	ret
+                                    449 ;------------------------------------------------------------
+                                    450 ;Allocation info for local variables in function 'i2c_sda_write'
                                     451 ;------------------------------------------------------------
-                                    452 ;Allocation info for local variables in function 'i2c_sda_read'
-                                    453 ;------------------------------------------------------------
-                                    454 ;sfr_address               Allocated to registers r7 
-                                    455 ;result                    Allocated to registers r6 
-                                    456 ;------------------------------------------------------------
-                                    457 ;	temp_sensor.c:90: unsigned char i2c_sda_read(unsigned char sfr_address)
+                                    452 ;value                     Allocated with name '_i2c_sda_write_PARM_2'
+                                    453 ;sfr_address               Allocated to registers r7 
+                                    454 ;------------------------------------------------------------
+                                    455 ;	temp_sensor.c:103: void i2c_sda_write(unsigned char sfr_address, unsigned char value)
+                                    456 ;	-----------------------------------------
+                                    457 ;	 function i2c_sda_write
                                     458 ;	-----------------------------------------
-                                    459 ;	 function i2c_sda_read
-                                    460 ;	-----------------------------------------
-      00002F                        461 _i2c_sda_read:
-      00002F AF 82            [24]  462 	mov	r7,dpl
-                                    463 ;	temp_sensor.c:92: unsigned char result = 0;
-      000031 7E 00            [12]  464 	mov	r6,#0x00
-                                    465 ;	temp_sensor.c:93: switch (sfr_address)
-      000033 BF A0 02         [24]  466 	cjne	r7,#0xA0,00112$
-      000036 80 05            [24]  467 	sjmp	00101$
-      000038                        468 00112$:
-                                    469 ;	temp_sensor.c:95: case DISPLAY_SFR: result = P2_0; break;
-      000038 BF B0 0E         [24]  470 	cjne	r7,#0xB0,00103$
-      00003B 80 07            [24]  471 	sjmp	00102$
-      00003D                        472 00101$:
-      00003D A2 A0            [12]  473 	mov	c,_P2_0
-      00003F E4               [12]  474 	clr	a
-      000040 33               [12]  475 	rlc	a
-      000041 FE               [12]  476 	mov	r6,a
-                                    477 ;	temp_sensor.c:96: case TEMP_SENSOR_SFR: result = P3_5; break;
-      000042 80 05            [24]  478 	sjmp	00103$
-      000044                        479 00102$:
-      000044 A2 B5            [12]  480 	mov	c,_P3_5
-      000046 E4               [12]  481 	clr	a
-      000047 33               [12]  482 	rlc	a
-      000048 FE               [12]  483 	mov	r6,a
-                                    484 ;	temp_sensor.c:97: }
-      000049                        485 00103$:
-                                    486 ;	temp_sensor.c:98: return result;
-      000049 8E 82            [24]  487 	mov	dpl,r6
-      00004B 22               [24]  488 	ret
-                                    489 ;------------------------------------------------------------
-                                    490 ;Allocation info for local variables in function 'i2c_scl_write'
-                                    491 ;------------------------------------------------------------
-                                    492 ;value                     Allocated with name '_i2c_scl_write_PARM_2'
-                                    493 ;sfr_address               Allocated to registers r7 
-                                    494 ;------------------------------------------------------------
-                                    495 ;	temp_sensor.c:101: void i2c_scl_write(unsigned char sfr_address, unsigned char value)
-                                    496 ;	-----------------------------------------
-                                    497 ;	 function i2c_scl_write
-                                    498 ;	-----------------------------------------
-      00004C                        499 _i2c_scl_write:
-      00004C AF 82            [24]  500 	mov	r7,dpl
-                                    501 ;	temp_sensor.c:103: switch (sfr_address)
-      00004E BF A0 02         [24]  502 	cjne	r7,#0xA0,00112$
-      000051 80 05            [24]  503 	sjmp	00101$
-      000053                        504 00112$:
-                                    505 ;	temp_sensor.c:105: case DISPLAY_SFR: P2_1 = value; break;
-      000053 BF B0 0F         [24]  506 	cjne	r7,#0xB0,00104$
-      000056 80 07            [24]  507 	sjmp	00102$
-      000058                        508 00101$:
-      000058 E5*00            [12]  509 	mov	a,_i2c_scl_write_PARM_2
-      00005A 24 FF            [12]  510 	add	a,#0xff
-      00005C 92 A1            [24]  511 	mov	_P2_1,c
-                                    512 ;	temp_sensor.c:106: case TEMP_SENSOR_SFR: P3_6 = value; break;
-      00005E 22               [24]  513 	ret
-      00005F                        514 00102$:
-      00005F E5*00            [12]  515 	mov	a,_i2c_scl_write_PARM_2
-      000061 24 FF            [12]  516 	add	a,#0xff
-      000063 92 B6            [24]  517 	mov	_P3_6,c
-                                    518 ;	temp_sensor.c:107: }
-      000065                        519 00104$:
-      000065 22               [24]  520 	ret
+      000034                        459 _i2c_sda_write:
+      000034 AF 82            [24]  460 	mov	r7,dpl
+                                    461 ;	temp_sensor.c:105: switch (sfr_address)
+      000036 BF A0 02         [24]  462 	cjne	r7,#0xA0,00112$
+      000039 80 05            [24]  463 	sjmp	00101$
+      00003B                        464 00112$:
+                                    465 ;	temp_sensor.c:107: case DISPLAY_SFR: P2_0 = value; break;
+      00003B BF B0 0F         [24]  466 	cjne	r7,#0xB0,00104$
+      00003E 80 07            [24]  467 	sjmp	00102$
+      000040                        468 00101$:
+      000040 E5*00            [12]  469 	mov	a,_i2c_sda_write_PARM_2
+      000042 24 FF            [12]  470 	add	a,#0xff
+      000044 92 A0            [24]  471 	mov	_P2_0,c
+                                    472 ;	temp_sensor.c:108: case TEMP_SENSOR_SFR: P3_5 = value; break;
+      000046 22               [24]  473 	ret
+      000047                        474 00102$:
+      000047 E5*00            [12]  475 	mov	a,_i2c_sda_write_PARM_2
+      000049 24 FF            [12]  476 	add	a,#0xff
+      00004B 92 B5            [24]  477 	mov	_P3_5,c
+                                    478 ;	temp_sensor.c:109: }
+      00004D                        479 00104$:
+      00004D 22               [24]  480 	ret
+                                    481 ;------------------------------------------------------------
+                                    482 ;Allocation info for local variables in function 'i2c_sda_read'
+                                    483 ;------------------------------------------------------------
+                                    484 ;sfr_address               Allocated to registers r7 
+                                    485 ;result                    Allocated to registers r6 
+                                    486 ;------------------------------------------------------------
+                                    487 ;	temp_sensor.c:112: unsigned char i2c_sda_read(unsigned char sfr_address)
+                                    488 ;	-----------------------------------------
+                                    489 ;	 function i2c_sda_read
+                                    490 ;	-----------------------------------------
+      00004E                        491 _i2c_sda_read:
+      00004E AF 82            [24]  492 	mov	r7,dpl
+                                    493 ;	temp_sensor.c:114: unsigned char result = 0;
+      000050 7E 00            [12]  494 	mov	r6,#0x00
+                                    495 ;	temp_sensor.c:115: switch (sfr_address)
+      000052 BF A0 02         [24]  496 	cjne	r7,#0xA0,00112$
+      000055 80 05            [24]  497 	sjmp	00101$
+      000057                        498 00112$:
+                                    499 ;	temp_sensor.c:117: case DISPLAY_SFR: result = P2_0; break;
+      000057 BF B0 0E         [24]  500 	cjne	r7,#0xB0,00103$
+      00005A 80 07            [24]  501 	sjmp	00102$
+      00005C                        502 00101$:
+      00005C A2 A0            [12]  503 	mov	c,_P2_0
+      00005E E4               [12]  504 	clr	a
+      00005F 33               [12]  505 	rlc	a
+      000060 FE               [12]  506 	mov	r6,a
+                                    507 ;	temp_sensor.c:118: case TEMP_SENSOR_SFR: result = P3_5; break;
+      000061 80 05            [24]  508 	sjmp	00103$
+      000063                        509 00102$:
+      000063 A2 B5            [12]  510 	mov	c,_P3_5
+      000065 E4               [12]  511 	clr	a
+      000066 33               [12]  512 	rlc	a
+      000067 FE               [12]  513 	mov	r6,a
+                                    514 ;	temp_sensor.c:119: }
+      000068                        515 00103$:
+                                    516 ;	temp_sensor.c:120: return result;
+      000068 8E 82            [24]  517 	mov	dpl,r6
+      00006A 22               [24]  518 	ret
+                                    519 ;------------------------------------------------------------
+                                    520 ;Allocation info for local variables in function 'i2c_scl_write'
                                     521 ;------------------------------------------------------------
-                                    522 ;Allocation info for local variables in function 'i2c_scl_read'
-                                    523 ;------------------------------------------------------------
-                                    524 ;sfr_address               Allocated to registers r7 
-                                    525 ;result                    Allocated to registers r6 
-                                    526 ;------------------------------------------------------------
-                                    527 ;	temp_sensor.c:110: unsigned char i2c_scl_read(unsigned char sfr_address)
+                                    522 ;value                     Allocated with name '_i2c_scl_write_PARM_2'
+                                    523 ;sfr_address               Allocated to registers r7 
+                                    524 ;------------------------------------------------------------
+                                    525 ;	temp_sensor.c:123: void i2c_scl_write(unsigned char sfr_address, unsigned char value)
+                                    526 ;	-----------------------------------------
+                                    527 ;	 function i2c_scl_write
                                     528 ;	-----------------------------------------
-                                    529 ;	 function i2c_scl_read
-                                    530 ;	-----------------------------------------
-      000066                        531 _i2c_scl_read:
-      000066 AF 82            [24]  532 	mov	r7,dpl
-                                    533 ;	temp_sensor.c:112: unsigned char result = 0;
-      000068 7E 00            [12]  534 	mov	r6,#0x00
-                                    535 ;	temp_sensor.c:113: switch (sfr_address)
-      00006A BF A0 02         [24]  536 	cjne	r7,#0xA0,00112$
-      00006D 80 05            [24]  537 	sjmp	00101$
-      00006F                        538 00112$:
-                                    539 ;	temp_sensor.c:115: case DISPLAY_SFR: result = P2_1; break;
-      00006F BF B0 0E         [24]  540 	cjne	r7,#0xB0,00103$
-      000072 80 07            [24]  541 	sjmp	00102$
-      000074                        542 00101$:
-      000074 A2 A1            [12]  543 	mov	c,_P2_1
-      000076 E4               [12]  544 	clr	a
-      000077 33               [12]  545 	rlc	a
-      000078 FE               [12]  546 	mov	r6,a
-                                    547 ;	temp_sensor.c:116: case TEMP_SENSOR_SFR: result = P3_6; break;
-      000079 80 05            [24]  548 	sjmp	00103$
-      00007B                        549 00102$:
-      00007B A2 B6            [12]  550 	mov	c,_P3_6
-      00007D E4               [12]  551 	clr	a
-      00007E 33               [12]  552 	rlc	a
-      00007F FE               [12]  553 	mov	r6,a
-                                    554 ;	temp_sensor.c:117: }
-      000080                        555 00103$:
-                                    556 ;	temp_sensor.c:118: return result;
-      000080 8E 82            [24]  557 	mov	dpl,r6
-      000082 22               [24]  558 	ret
-                                    559 ;------------------------------------------------------------
-                                    560 ;Allocation info for local variables in function 'i2c_start'
-                                    561 ;------------------------------------------------------------
-                                    562 ;sfr_address               Allocated to registers r7 
-                                    563 ;------------------------------------------------------------
-                                    564 ;	temp_sensor.c:121: void i2c_start(unsigned char sfr_address)
-                                    565 ;	-----------------------------------------
-                                    566 ;	 function i2c_start
-                                    567 ;	-----------------------------------------
-      000083                        568 _i2c_start:
-                                    569 ;	temp_sensor.c:123: i2c_scl_write(sfr_address, 0);
-      000083 AF 82            [24]  570 	mov	r7,dpl
-      000085 75*00 00         [24]  571 	mov	_i2c_scl_write_PARM_2,#0x00
-      000088 C0 07            [24]  572 	push	ar7
-      00008A 12r00r4C         [24]  573 	lcall	_i2c_scl_write
-      00008D D0 07            [24]  574 	pop	ar7
-                                    575 ;	temp_sensor.c:124: i2c_sda_write(sfr_address, 1);
-      00008F 75*00 01         [24]  576 	mov	_i2c_sda_write_PARM_2,#0x01
-      000092 8F 82            [24]  577 	mov	dpl,r7
-      000094 C0 07            [24]  578 	push	ar7
-      000096 12r00r15         [24]  579 	lcall	_i2c_sda_write
-                                    580 ;	temp_sensor.c:125: i2c_delay();
-      000099 12r00r00         [24]  581 	lcall	_i2c_delay
-      00009C D0 07            [24]  582 	pop	ar7
-                                    583 ;	temp_sensor.c:126: i2c_scl_write(sfr_address, 1);
-      00009E 75*00 01         [24]  584 	mov	_i2c_scl_write_PARM_2,#0x01
-      0000A1 8F 82            [24]  585 	mov	dpl,r7
-      0000A3 C0 07            [24]  586 	push	ar7
-      0000A5 12r00r4C         [24]  587 	lcall	_i2c_scl_write
-                                    588 ;	temp_sensor.c:127: i2c_delay();
-      0000A8 12r00r00         [24]  589 	lcall	_i2c_delay
-      0000AB D0 07            [24]  590 	pop	ar7
-                                    591 ;	temp_sensor.c:128: i2c_sda_write(sfr_address, 0);
-      0000AD 75*00 00         [24]  592 	mov	_i2c_sda_write_PARM_2,#0x00
-      0000B0 8F 82            [24]  593 	mov	dpl,r7
-      0000B2 C0 07            [24]  594 	push	ar7
-      0000B4 12r00r15         [24]  595 	lcall	_i2c_sda_write
-                                    596 ;	temp_sensor.c:129: i2c_delay();
-      0000B7 12r00r00         [24]  597 	lcall	_i2c_delay
-      0000BA D0 07            [24]  598 	pop	ar7
-                                    599 ;	temp_sensor.c:130: i2c_scl_write(sfr_address, 0);
-      0000BC 75*00 00         [24]  600 	mov	_i2c_scl_write_PARM_2,#0x00
-      0000BF 8F 82            [24]  601 	mov	dpl,r7
-      0000C1 02r00r4C         [24]  602 	ljmp	_i2c_scl_write
-                                    603 ;------------------------------------------------------------
-                                    604 ;Allocation info for local variables in function 'i2c_stop'
-                                    605 ;------------------------------------------------------------
-                                    606 ;sfr_address               Allocated to registers r7 
-                                    607 ;------------------------------------------------------------
-                                    608 ;	temp_sensor.c:133: void i2c_stop(unsigned char sfr_address)
-                                    609 ;	-----------------------------------------
-                                    610 ;	 function i2c_stop
-                                    611 ;	-----------------------------------------
-      0000C4                        612 _i2c_stop:
-                                    613 ;	temp_sensor.c:135: i2c_scl_write(sfr_address, 0);
-      0000C4 AF 82            [24]  614 	mov	r7,dpl
-      0000C6 75*00 00         [24]  615 	mov	_i2c_scl_write_PARM_2,#0x00
-      0000C9 C0 07            [24]  616 	push	ar7
-      0000CB 12r00r4C         [24]  617 	lcall	_i2c_scl_write
-                                    618 ;	temp_sensor.c:136: i2c_delay();
-      0000CE 12r00r00         [24]  619 	lcall	_i2c_delay
-      0000D1 D0 07            [24]  620 	pop	ar7
-                                    621 ;	temp_sensor.c:137: i2c_sda_write(sfr_address, 0);
-      0000D3 75*00 00         [24]  622 	mov	_i2c_sda_write_PARM_2,#0x00
-      0000D6 8F 82            [24]  623 	mov	dpl,r7
-      0000D8 C0 07            [24]  624 	push	ar7
-      0000DA 12r00r15         [24]  625 	lcall	_i2c_sda_write
-                                    626 ;	temp_sensor.c:138: i2c_delay();
-      0000DD 12r00r00         [24]  627 	lcall	_i2c_delay
-      0000E0 D0 07            [24]  628 	pop	ar7
-                                    629 ;	temp_sensor.c:139: i2c_scl_write(sfr_address, 1);
-      0000E2 75*00 01         [24]  630 	mov	_i2c_scl_write_PARM_2,#0x01
-      0000E5 8F 82            [24]  631 	mov	dpl,r7
-      0000E7 C0 07            [24]  632 	push	ar7
-      0000E9 12r00r4C         [24]  633 	lcall	_i2c_scl_write
-                                    634 ;	temp_sensor.c:140: i2c_delay();
-      0000EC 12r00r00         [24]  635 	lcall	_i2c_delay
-      0000EF D0 07            [24]  636 	pop	ar7
-                                    637 ;	temp_sensor.c:141: i2c_sda_write(sfr_address, 1);
-      0000F1 75*00 01         [24]  638 	mov	_i2c_sda_write_PARM_2,#0x01
-      0000F4 8F 82            [24]  639 	mov	dpl,r7
-      0000F6 02r00r15         [24]  640 	ljmp	_i2c_sda_write
-                                    641 ;------------------------------------------------------------
-                                    642 ;Allocation info for local variables in function 'i2c_send_byte'
-                                    643 ;------------------------------------------------------------
-                                    644 ;data_out                  Allocated with name '_i2c_send_byte_PARM_2'
-                                    645 ;sfr_address               Allocated to registers r7 
-                                    646 ;i                         Allocated to registers r6 
-                                    647 ;ack_bit                   Allocated to registers r6 
-                                    648 ;------------------------------------------------------------
-                                    649 ;	temp_sensor.c:144: unsigned char i2c_send_byte(unsigned char sfr_address, unsigned char data_out)
-                                    650 ;	-----------------------------------------
-                                    651 ;	 function i2c_send_byte
-                                    652 ;	-----------------------------------------
-      0000F9                        653 _i2c_send_byte:
-      0000F9 AF 82            [24]  654 	mov	r7,dpl
-                                    655 ;	temp_sensor.c:147: for (i = 0; i < 8; i++) {
-      0000FB 7E 00            [12]  656 	mov	r6,#0x00
-      0000FD                        657 00105$:
-                                    658 ;	temp_sensor.c:148: i2c_scl_write(sfr_address, 0);
-      0000FD 75*00 00         [24]  659 	mov	_i2c_scl_write_PARM_2,#0x00
-      000100 8F 82            [24]  660 	mov	dpl,r7
-      000102 C0 07            [24]  661 	push	ar7
-      000104 C0 06            [24]  662 	push	ar6
-      000106 12r00r4C         [24]  663 	lcall	_i2c_scl_write
-                                    664 ;	temp_sensor.c:149: i2c_delay();
-      000109 12r00r00         [24]  665 	lcall	_i2c_delay
-      00010C D0 06            [24]  666 	pop	ar6
-      00010E D0 07            [24]  667 	pop	ar7
-                                    668 ;	temp_sensor.c:150: if ((data_out & 0x80) == 0) {
-      000110 E5*1A            [12]  669 	mov	a,_i2c_send_byte_PARM_2
-      000112 20 E7 12         [24]  670 	jb	acc.7,00102$
-                                    671 ;	temp_sensor.c:151: i2c_sda_write(sfr_address, 0);
-      000115 75*00 00         [24]  672 	mov	_i2c_sda_write_PARM_2,#0x00
-      000118 8F 82            [24]  673 	mov	dpl,r7
-      00011A C0 07            [24]  674 	push	ar7
-      00011C C0 06            [24]  675 	push	ar6
-      00011E 12r00r15         [24]  676 	lcall	_i2c_sda_write
-      000121 D0 06            [24]  677 	pop	ar6
-      000123 D0 07            [24]  678 	pop	ar7
-      000125 80 10            [24]  679 	sjmp	00103$
-      000127                        680 00102$:
-                                    681 ;	temp_sensor.c:153: i2c_sda_write(sfr_address, 1);
-      000127 75*00 01         [24]  682 	mov	_i2c_sda_write_PARM_2,#0x01
-      00012A 8F 82            [24]  683 	mov	dpl,r7
-      00012C C0 07            [24]  684 	push	ar7
-      00012E C0 06            [24]  685 	push	ar6
-      000130 12r00r15         [24]  686 	lcall	_i2c_sda_write
-      000133 D0 06            [24]  687 	pop	ar6
-      000135 D0 07            [24]  688 	pop	ar7
-      000137                        689 00103$:
-                                    690 ;	temp_sensor.c:155: i2c_delay();
-      000137 C0 07            [24]  691 	push	ar7
-      000139 C0 06            [24]  692 	push	ar6
-      00013B 12r00r00         [24]  693 	lcall	_i2c_delay
-      00013E D0 06            [24]  694 	pop	ar6
-      000140 D0 07            [24]  695 	pop	ar7
-                                    696 ;	temp_sensor.c:156: i2c_scl_write(sfr_address, 1);
-      000142 75*00 01         [24]  697 	mov	_i2c_scl_write_PARM_2,#0x01
-      000145 8F 82            [24]  698 	mov	dpl,r7
-      000147 C0 07            [24]  699 	push	ar7
-      000149 C0 06            [24]  700 	push	ar6
-      00014B 12r00r4C         [24]  701 	lcall	_i2c_scl_write
-                                    702 ;	temp_sensor.c:157: i2c_delay();
-      00014E 12r00r00         [24]  703 	lcall	_i2c_delay
-      000151 D0 06            [24]  704 	pop	ar6
-      000153 D0 07            [24]  705 	pop	ar7
-                                    706 ;	temp_sensor.c:158: data_out<<=1;
-      000155 E5*1A            [12]  707 	mov	a,_i2c_send_byte_PARM_2
-      000157 25*1A            [12]  708 	add	a,_i2c_send_byte_PARM_2
-      000159 F5*1A            [12]  709 	mov	_i2c_send_byte_PARM_2,a
-                                    710 ;	temp_sensor.c:147: for (i = 0; i < 8; i++) {
-      00015B 0E               [12]  711 	inc	r6
-      00015C BE 08 00         [24]  712 	cjne	r6,#0x08,00120$
-      00015F                        713 00120$:
-      00015F 40 9C            [24]  714 	jc	00105$
-                                    715 ;	temp_sensor.c:160: i2c_scl_write(sfr_address, 0);
-      000161 75*00 00         [24]  716 	mov	_i2c_scl_write_PARM_2,#0x00
-      000164 8F 82            [24]  717 	mov	dpl,r7
-      000166 C0 07            [24]  718 	push	ar7
-      000168 12r00r4C         [24]  719 	lcall	_i2c_scl_write
-                                    720 ;	temp_sensor.c:161: i2c_delay();
-      00016B 12r00r00         [24]  721 	lcall	_i2c_delay
-      00016E D0 07            [24]  722 	pop	ar7
-                                    723 ;	temp_sensor.c:162: i2c_sda_write(sfr_address, 1);
-      000170 75*00 01         [24]  724 	mov	_i2c_sda_write_PARM_2,#0x01
-      000173 8F 82            [24]  725 	mov	dpl,r7
-      000175 C0 07            [24]  726 	push	ar7
-      000177 12r00r15         [24]  727 	lcall	_i2c_sda_write
-                                    728 ;	temp_sensor.c:163: i2c_delay();
-      00017A 12r00r00         [24]  729 	lcall	_i2c_delay
-      00017D D0 07            [24]  730 	pop	ar7
-                                    731 ;	temp_sensor.c:164: i2c_scl_write(sfr_address, 1);
-      00017F 75*00 01         [24]  732 	mov	_i2c_scl_write_PARM_2,#0x01
-      000182 8F 82            [24]  733 	mov	dpl,r7
-      000184 C0 07            [24]  734 	push	ar7
-      000186 12r00r4C         [24]  735 	lcall	_i2c_scl_write
-                                    736 ;	temp_sensor.c:165: i2c_delay();
-      000189 12r00r00         [24]  737 	lcall	_i2c_delay
-      00018C D0 07            [24]  738 	pop	ar7
-                                    739 ;	temp_sensor.c:167: ack_bit = i2c_sda_read(sfr_address);
-      00018E 8F 82            [24]  740 	mov	dpl,r7
-      000190 C0 07            [24]  741 	push	ar7
-      000192 12r00r2F         [24]  742 	lcall	_i2c_sda_read
-      000195 AE 82            [24]  743 	mov	r6,dpl
-                                    744 ;	temp_sensor.c:168: i2c_delay();
-      000197 C0 06            [24]  745 	push	ar6
-      000199 12r00r00         [24]  746 	lcall	_i2c_delay
-      00019C D0 06            [24]  747 	pop	ar6
-      00019E D0 07            [24]  748 	pop	ar7
-                                    749 ;	temp_sensor.c:169: i2c_scl_write(sfr_address, 0);
-      0001A0 75*00 00         [24]  750 	mov	_i2c_scl_write_PARM_2,#0x00
-      0001A3 8F 82            [24]  751 	mov	dpl,r7
-      0001A5 C0 06            [24]  752 	push	ar6
-      0001A7 12r00r4C         [24]  753 	lcall	_i2c_scl_write
-      0001AA D0 06            [24]  754 	pop	ar6
-                                    755 ;	temp_sensor.c:171: return ack_bit;
-      0001AC 8E 82            [24]  756 	mov	dpl,r6
-      0001AE 22               [24]  757 	ret
-                                    758 ;------------------------------------------------------------
-                                    759 ;Allocation info for local variables in function 'i2c_read_byte'
-                                    760 ;------------------------------------------------------------
-                                    761 ;sfr_address               Allocated to registers r7 
-                                    762 ;i                         Allocated to registers r5 
-                                    763 ;received                  Allocated to registers r6 
-                                    764 ;------------------------------------------------------------
-                                    765 ;	temp_sensor.c:174: unsigned char i2c_read_byte(unsigned char sfr_address)
-                                    766 ;	-----------------------------------------
-                                    767 ;	 function i2c_read_byte
-                                    768 ;	-----------------------------------------
-      0001AF                        769 _i2c_read_byte:
-      0001AF AF 82            [24]  770 	mov	r7,dpl
-                                    771 ;	temp_sensor.c:176: unsigned char i, received = 0;
-      0001B1 7E 00            [12]  772 	mov	r6,#0x00
-                                    773 ;	temp_sensor.c:177: for (i = 0; i < 8; i++) {
-      0001B3 7D 00            [12]  774 	mov	r5,#0x00
-      0001B5                        775 00106$:
-                                    776 ;	temp_sensor.c:178: i2c_scl_write(sfr_address, 1);
-      0001B5 75*00 01         [24]  777 	mov	_i2c_scl_write_PARM_2,#0x01
-      0001B8 8F 82            [24]  778 	mov	dpl,r7
-      0001BA C0 07            [24]  779 	push	ar7
-      0001BC C0 06            [24]  780 	push	ar6
-      0001BE C0 05            [24]  781 	push	ar5
-      0001C0 12r00r4C         [24]  782 	lcall	_i2c_scl_write
-      0001C3 D0 05            [24]  783 	pop	ar5
-      0001C5 D0 06            [24]  784 	pop	ar6
-      0001C7 D0 07            [24]  785 	pop	ar7
-                                    786 ;	temp_sensor.c:179: if(i2c_sda_read(sfr_address))
-      0001C9 8F 82            [24]  787 	mov	dpl,r7
-      0001CB C0 07            [24]  788 	push	ar7
-      0001CD C0 06            [24]  789 	push	ar6
-      0001CF C0 05            [24]  790 	push	ar5
-      0001D1 12r00r2F         [24]  791 	lcall	_i2c_sda_read
-      0001D4 E5 82            [12]  792 	mov	a,dpl
-      0001D6 D0 05            [24]  793 	pop	ar5
-      0001D8 D0 06            [24]  794 	pop	ar6
-      0001DA D0 07            [24]  795 	pop	ar7
-      0001DC 60 03            [24]  796 	jz	00102$
-                                    797 ;	temp_sensor.c:180: received |= 1;
-      0001DE 43 06 01         [24]  798 	orl	ar6,#0x01
-      0001E1                        799 00102$:
-                                    800 ;	temp_sensor.c:181: if(i < 7)
-      0001E1 BD 07 00         [24]  801 	cjne	r5,#0x07,00124$
-      0001E4                        802 00124$:
-      0001E4 50 03            [24]  803 	jnc	00104$
-                                    804 ;	temp_sensor.c:182: received <<= 1;
-      0001E6 EE               [12]  805 	mov	a,r6
-      0001E7 2E               [12]  806 	add	a,r6
-      0001E8 FE               [12]  807 	mov	r6,a
-      0001E9                        808 00104$:
-                                    809 ;	temp_sensor.c:183: i2c_scl_write(sfr_address, 0);
-      0001E9 75*00 00         [24]  810 	mov	_i2c_scl_write_PARM_2,#0x00
-      0001EC 8F 82            [24]  811 	mov	dpl,r7
-      0001EE C0 07            [24]  812 	push	ar7
-      0001F0 C0 06            [24]  813 	push	ar6
-      0001F2 C0 05            [24]  814 	push	ar5
-      0001F4 12r00r4C         [24]  815 	lcall	_i2c_scl_write
-      0001F7 D0 05            [24]  816 	pop	ar5
-      0001F9 D0 06            [24]  817 	pop	ar6
-      0001FB D0 07            [24]  818 	pop	ar7
-                                    819 ;	temp_sensor.c:177: for (i = 0; i < 8; i++) {
-      0001FD 0D               [12]  820 	inc	r5
-      0001FE BD 08 00         [24]  821 	cjne	r5,#0x08,00126$
-      000201                        822 00126$:
-      000201 40 B2            [24]  823 	jc	00106$
-                                    824 ;	temp_sensor.c:185: return received;
-      000203 8E 82            [24]  825 	mov	dpl,r6
-      000205 22               [24]  826 	ret
-                                    827 ;------------------------------------------------------------
-                                    828 ;Allocation info for local variables in function 'read_temp_sensor'
-                                    829 ;------------------------------------------------------------
-                                    830 ;first                     Allocated to registers r7 
-                                    831 ;second                    Allocated to registers 
-                                    832 ;slope                     Allocated with name '_read_temp_sensor_slope_1_50'
-                                    833 ;remainder                 Allocated with name '_read_temp_sensor_remainder_1_50'
-                                    834 ;address_byte              Allocated to registers 
-                                    835 ;ack                       Allocated to registers 
-                                    836 ;temperature               Allocated to registers r2 r3 r4 r7 
-                                    837 ;sloc0                     Allocated with name '_read_temp_sensor_sloc0_1_0'
-                                    838 ;------------------------------------------------------------
-                                    839 ;	temp_sensor.c:196: float read_temp_sensor(void)
-                                    840 ;	-----------------------------------------
-                                    841 ;	 function read_temp_sensor
-                                    842 ;	-----------------------------------------
-      000206                        843 _read_temp_sensor:
-                                    844 ;	temp_sensor.c:207: write_temp_sensor_command(READ_TEMPERATURE);
-      000206 75 82 AA         [24]  845 	mov	dpl,#0xAA
-      000209 12r03r6A         [24]  846 	lcall	_write_temp_sensor_command
-                                    847 ;	temp_sensor.c:210: i2c_start(TEMP_SENSOR_SFR);
-      00020C 75 82 B0         [24]  848 	mov	dpl,#0xB0
-      00020F 12r00r83         [24]  849 	lcall	_i2c_start
-                                    850 ;	temp_sensor.c:211: ack = i2c_send_byte(TEMP_SENSOR_SFR, address_byte);
-      000212 75*1A 91         [24]  851 	mov	_i2c_send_byte_PARM_2,#0x91
-      000215 75 82 B0         [24]  852 	mov	dpl,#0xB0
-      000218 12r00rF9         [24]  853 	lcall	_i2c_send_byte
-                                    854 ;	temp_sensor.c:212: first = i2c_read_byte(TEMP_SENSOR_SFR);
-      00021B 75 82 B0         [24]  855 	mov	dpl,#0xB0
-      00021E 12r01rAF         [24]  856 	lcall	_i2c_read_byte
-      000221 AF 82            [24]  857 	mov	r7,dpl
-                                    858 ;	temp_sensor.c:213: second = i2c_read_byte(TEMP_SENSOR_SFR);
-      000223 75 82 B0         [24]  859 	mov	dpl,#0xB0
-      000226 C0 07            [24]  860 	push	ar7
-      000228 12r01rAF         [24]  861 	lcall	_i2c_read_byte
-                                    862 ;	temp_sensor.c:215: write_temp_sensor_command(READ_COUNT_REMAINDER);
-      00022B 75 82 A8         [24]  863 	mov	dpl,#0xA8
-      00022E 12r03r6A         [24]  864 	lcall	_write_temp_sensor_command
-                                    865 ;	temp_sensor.c:216: i2c_start(TEMP_SENSOR_SFR);
-      000231 75 82 B0         [24]  866 	mov	dpl,#0xB0
-      000234 12r00r83         [24]  867 	lcall	_i2c_start
-                                    868 ;	temp_sensor.c:217: ack = i2c_send_byte(TEMP_SENSOR_SFR, address_byte);
-      000237 75*1A 91         [24]  869 	mov	_i2c_send_byte_PARM_2,#0x91
-      00023A 75 82 B0         [24]  870 	mov	dpl,#0xB0
-      00023D 12r00rF9         [24]  871 	lcall	_i2c_send_byte
-                                    872 ;	temp_sensor.c:218: remainder = i2c_read_byte(TEMP_SENSOR_SFR);
-      000240 75 82 B0         [24]  873 	mov	dpl,#0xB0
-      000243 12r01rAF         [24]  874 	lcall	_i2c_read_byte
-      000246 85 82*1C         [24]  875 	mov	_read_temp_sensor_remainder_1_50,dpl
-                                    876 ;	temp_sensor.c:220: write_temp_sensor_command(READ_SLOPE);
-      000249 75 82 A9         [24]  877 	mov	dpl,#0xA9
-      00024C 12r03r6A         [24]  878 	lcall	_write_temp_sensor_command
-                                    879 ;	temp_sensor.c:221: i2c_start(TEMP_SENSOR_SFR);
-      00024F 75 82 B0         [24]  880 	mov	dpl,#0xB0
-      000252 12r00r83         [24]  881 	lcall	_i2c_start
-                                    882 ;	temp_sensor.c:222: ack = i2c_send_byte(TEMP_SENSOR_SFR, address_byte);
-      000255 75*1A 91         [24]  883 	mov	_i2c_send_byte_PARM_2,#0x91
-      000258 75 82 B0         [24]  884 	mov	dpl,#0xB0
-      00025B 12r00rF9         [24]  885 	lcall	_i2c_send_byte
-                                    886 ;	temp_sensor.c:223: slope = i2c_read_byte(TEMP_SENSOR_SFR);
-      00025E 75 82 B0         [24]  887 	mov	dpl,#0xB0
-      000261 12r01rAF         [24]  888 	lcall	_i2c_read_byte
-      000264 85 82*1B         [24]  889 	mov	_read_temp_sensor_slope_1_50,dpl
-                                    890 ;	temp_sensor.c:225: i2c_stop(TEMP_SENSOR_SFR);
-      000267 75 82 B0         [24]  891 	mov	dpl,#0xB0
-      00026A 12r00rC4         [24]  892 	lcall	_i2c_stop
-      00026D D0 07            [24]  893 	pop	ar7
-                                    894 ;	temp_sensor.c:227: temperature += (float)first;
-      00026F 8F 82            [24]  895 	mov	dpl,r7
-      000271 12r00r00         [24]  896 	lcall	___schar2fs
-      000274 AA 82            [24]  897 	mov	r2,dpl
-      000276 AB 83            [24]  898 	mov	r3,dph
-      000278 AC F0            [24]  899 	mov	r4,b
-      00027A FF               [12]  900 	mov	r7,a
-                                    901 ;	temp_sensor.c:229: temperature = temperature - 0.25 + (slope - remainder) / slope;
-      00027B E4               [12]  902 	clr	a
-      00027C C0 E0            [24]  903 	push	acc
-      00027E C0 E0            [24]  904 	push	acc
-      000280 74 80            [12]  905 	mov	a,#0x80
-      000282 C0 E0            [24]  906 	push	acc
-      000284 74 3E            [12]  907 	mov	a,#0x3E
-      000286 C0 E0            [24]  908 	push	acc
-      000288 8A 82            [24]  909 	mov	dpl,r2
-      00028A 8B 83            [24]  910 	mov	dph,r3
-      00028C 8C F0            [24]  911 	mov	b,r4
-      00028E EF               [12]  912 	mov	a,r7
-      00028F 12r00r00         [24]  913 	lcall	___fssub
-      000292 85 82*1D         [24]  914 	mov	_read_temp_sensor_sloc0_1_0,dpl
-      000295 85 83*1E         [24]  915 	mov	(_read_temp_sensor_sloc0_1_0 + 1),dph
-      000298 85 F0*1F         [24]  916 	mov	(_read_temp_sensor_sloc0_1_0 + 2),b
-      00029B F5*20            [12]  917 	mov	(_read_temp_sensor_sloc0_1_0 + 3),a
-      00029D E5 81            [12]  918 	mov	a,sp
-      00029F 24 FC            [12]  919 	add	a,#0xfc
-      0002A1 F5 81            [12]  920 	mov	sp,a
-      0002A3 AD*1B            [24]  921 	mov	r5,_read_temp_sensor_slope_1_50
-      0002A5 7E 00            [12]  922 	mov	r6,#0x00
-      0002A7 A8*1C            [24]  923 	mov	r0,_read_temp_sensor_remainder_1_50
-      0002A9 79 00            [12]  924 	mov	r1,#0x00
-      0002AB ED               [12]  925 	mov	a,r5
-      0002AC C3               [12]  926 	clr	c
-      0002AD 98               [12]  927 	subb	a,r0
-      0002AE F5 82            [12]  928 	mov	dpl,a
-      0002B0 EE               [12]  929 	mov	a,r6
-      0002B1 99               [12]  930 	subb	a,r1
-      0002B2 F5 83            [12]  931 	mov	dph,a
-      0002B4 8D*00            [24]  932 	mov	__divsint_PARM_2,r5
-      0002B6 8E*01            [24]  933 	mov	(__divsint_PARM_2 + 1),r6
-      0002B8 12r00r00         [24]  934 	lcall	__divsint
-      0002BB 12r00r00         [24]  935 	lcall	___sint2fs
-      0002BE A8 82            [24]  936 	mov	r0,dpl
-      0002C0 A9 83            [24]  937 	mov	r1,dph
-      0002C2 AD F0            [24]  938 	mov	r5,b
-      0002C4 FE               [12]  939 	mov	r6,a
-      0002C5 C0 00            [24]  940 	push	ar0
-      0002C7 C0 01            [24]  941 	push	ar1
-      0002C9 C0 05            [24]  942 	push	ar5
-      0002CB C0 06            [24]  943 	push	ar6
-      0002CD 85*1D 82         [24]  944 	mov	dpl,_read_temp_sensor_sloc0_1_0
-      0002D0 85*1E 83         [24]  945 	mov	dph,(_read_temp_sensor_sloc0_1_0 + 1)
-      0002D3 85*1F F0         [24]  946 	mov	b,(_read_temp_sensor_sloc0_1_0 + 2)
-      0002D6 E5*20            [12]  947 	mov	a,(_read_temp_sensor_sloc0_1_0 + 3)
-      0002D8 12r00r00         [24]  948 	lcall	___fsadd
-      0002DB AA 82            [24]  949 	mov	r2,dpl
-      0002DD AB 83            [24]  950 	mov	r3,dph
-      0002DF AC F0            [24]  951 	mov	r4,b
-      0002E1 FF               [12]  952 	mov	r7,a
-      0002E2 E5 81            [12]  953 	mov	a,sp
-      0002E4 24 FC            [12]  954 	add	a,#0xfc
-      0002E6 F5 81            [12]  955 	mov	sp,a
-                                    956 ;	temp_sensor.c:239: return temperature;
-      0002E8 8A 82            [24]  957 	mov	dpl,r2
-      0002EA 8B 83            [24]  958 	mov	dph,r3
-      0002EC 8C F0            [24]  959 	mov	b,r4
-      0002EE EF               [12]  960 	mov	a,r7
-      0002EF 22               [24]  961 	ret
-                                    962 ;------------------------------------------------------------
-                                    963 ;Allocation info for local variables in function 'write_display'
-                                    964 ;------------------------------------------------------------
-                                    965 ;address                   Allocated to registers 
-                                    966 ;write_bit                 Allocated to registers 
-                                    967 ;address_with_write        Allocated to registers 
-                                    968 ;i                         Allocated to registers r7 
-                                    969 ;ack                       Allocated to registers 
-                                    970 ;------------------------------------------------------------
-                                    971 ;	temp_sensor.c:242: void write_display(void)
-                                    972 ;	-----------------------------------------
-                                    973 ;	 function write_display
-                                    974 ;	-----------------------------------------
-      0002F0                        975 _write_display:
-                                    976 ;	temp_sensor.c:251: i2c_start(DISPLAY_SFR);
-      0002F0 75 82 A0         [24]  977 	mov	dpl,#0xA0
-      0002F3 12r00r83         [24]  978 	lcall	_i2c_start
-                                    979 ;	temp_sensor.c:252: ack = i2c_send_byte(DISPLAY_SFR, address_with_write);
-      0002F6 75*1A E0         [24]  980 	mov	_i2c_send_byte_PARM_2,#0xE0
-      0002F9 75 82 A0         [24]  981 	mov	dpl,#0xA0
-      0002FC 12r00rF9         [24]  982 	lcall	_i2c_send_byte
-                                    983 ;	temp_sensor.c:262: ack = i2c_send_byte(DISPLAY_SFR, 0x00); //0x00 is the starting address of the 7-set disp
-      0002FF 75*1A 00         [24]  984 	mov	_i2c_send_byte_PARM_2,#0x00
-      000302 75 82 A0         [24]  985 	mov	dpl,#0xA0
-      000305 12r00rF9         [24]  986 	lcall	_i2c_send_byte
-                                    987 ;	temp_sensor.c:263: for (i=0; i<DISPLAY_BUFFER_SIZE; i++) {
-      000308 7F 00            [12]  988 	mov	r7,#0x00
-      00030A                        989 00102$:
-                                    990 ;	temp_sensor.c:264: i2c_delay();
-      00030A C0 07            [24]  991 	push	ar7
-      00030C 12r00r00         [24]  992 	lcall	_i2c_delay
-      00030F D0 07            [24]  993 	pop	ar7
-                                    994 ;	temp_sensor.c:265: ack = i2c_send_byte(DISPLAY_SFR, display_buffer[i]);
-      000311 EF               [12]  995 	mov	a,r7
-      000312 24r10            [12]  996 	add	a,#_display_buffer
-      000314 F9               [12]  997 	mov	r1,a
-      000315 87*1A            [24]  998 	mov	_i2c_send_byte_PARM_2,@r1
-      000317 75 82 A0         [24]  999 	mov	dpl,#0xA0
-      00031A C0 07            [24] 1000 	push	ar7
-      00031C 12r00rF9         [24] 1001 	lcall	_i2c_send_byte
-      00031F D0 07            [24] 1002 	pop	ar7
-                                   1003 ;	temp_sensor.c:263: for (i=0; i<DISPLAY_BUFFER_SIZE; i++) {
-      000321 0F               [12] 1004 	inc	r7
-      000322 BF 0A 00         [24] 1005 	cjne	r7,#0x0A,00113$
-      000325                       1006 00113$:
-      000325 40 E3            [24] 1007 	jc	00102$
-                                   1008 ;	temp_sensor.c:267: i2c_stop(DISPLAY_SFR);
-      000327 75 82 A0         [24] 1009 	mov	dpl,#0xA0
-      00032A 02r00rC4         [24] 1010 	ljmp	_i2c_stop
-                                   1011 ;------------------------------------------------------------
-                                   1012 ;Allocation info for local variables in function 'write_display_command'
-                                   1013 ;------------------------------------------------------------
-                                   1014 ;command_byte              Allocated to registers r7 
-                                   1015 ;address                   Allocated to registers 
-                                   1016 ;write_bit                 Allocated to registers 
-                                   1017 ;address_with_write        Allocated to registers 
-                                   1018 ;ack                       Allocated to registers 
-                                   1019 ;------------------------------------------------------------
-                                   1020 ;	temp_sensor.c:271: void write_display_command(unsigned char command_byte)
-                                   1021 ;	-----------------------------------------
-                                   1022 ;	 function write_display_command
-                                   1023 ;	-----------------------------------------
-      00032D                       1024 _write_display_command:
-      00032D AF 82            [24] 1025 	mov	r7,dpl
-                                   1026 ;	temp_sensor.c:284: i2c_start(DISPLAY_SFR);
-      00032F 75 82 A0         [24] 1027 	mov	dpl,#0xA0
-      000332 C0 07            [24] 1028 	push	ar7
-      000334 12r00r83         [24] 1029 	lcall	_i2c_start
-                                   1030 ;	temp_sensor.c:285: ack = i2c_send_byte(DISPLAY_SFR, address_with_write);
-      000337 75*1A E0         [24] 1031 	mov	_i2c_send_byte_PARM_2,#0xE0
-      00033A 75 82 A0         [24] 1032 	mov	dpl,#0xA0
-      00033D 12r00rF9         [24] 1033 	lcall	_i2c_send_byte
-      000340 D0 07            [24] 1034 	pop	ar7
-                                   1035 ;	temp_sensor.c:291: ack = i2c_send_byte(DISPLAY_SFR, command_byte);
-      000342 8F*1A            [24] 1036 	mov	_i2c_send_byte_PARM_2,r7
-      000344 75 82 A0         [24] 1037 	mov	dpl,#0xA0
-      000347 12r00rF9         [24] 1038 	lcall	_i2c_send_byte
-                                   1039 ;	temp_sensor.c:292: i2c_stop(DISPLAY_SFR);
-      00034A 75 82 A0         [24] 1040 	mov	dpl,#0xA0
-      00034D 02r00rC4         [24] 1041 	ljmp	_i2c_stop
+      00006B                        529 _i2c_scl_write:
+      00006B AF 82            [24]  530 	mov	r7,dpl
+                                    531 ;	temp_sensor.c:125: switch (sfr_address)
+      00006D BF A0 02         [24]  532 	cjne	r7,#0xA0,00112$
+      000070 80 05            [24]  533 	sjmp	00101$
+      000072                        534 00112$:
+                                    535 ;	temp_sensor.c:127: case DISPLAY_SFR: P2_1 = value; break;
+      000072 BF B0 10         [24]  536 	cjne	r7,#0xB0,00103$
+      000075 80 08            [24]  537 	sjmp	00102$
+      000077                        538 00101$:
+      000077 E5*1A            [12]  539 	mov	a,_i2c_scl_write_PARM_2
+      000079 24 FF            [12]  540 	add	a,#0xff
+      00007B 92 A1            [24]  541 	mov	_P2_1,c
+                                    542 ;	temp_sensor.c:128: case TEMP_SENSOR_SFR: P3_6 = value; break;
+      00007D 80 06            [24]  543 	sjmp	00103$
+      00007F                        544 00102$:
+      00007F E5*1A            [12]  545 	mov	a,_i2c_scl_write_PARM_2
+      000081 24 FF            [12]  546 	add	a,#0xff
+      000083 92 B6            [24]  547 	mov	_P3_6,c
+                                    548 ;	temp_sensor.c:129: }
+      000085                        549 00103$:
+                                    550 ;	temp_sensor.c:130: i2c_delay();
+      000085 02r00r1F         [24]  551 	ljmp	_i2c_delay
+                                    552 ;------------------------------------------------------------
+                                    553 ;Allocation info for local variables in function 'i2c_scl_read'
+                                    554 ;------------------------------------------------------------
+                                    555 ;sfr_address               Allocated to registers r7 
+                                    556 ;result                    Allocated to registers r6 
+                                    557 ;------------------------------------------------------------
+                                    558 ;	temp_sensor.c:133: unsigned char i2c_scl_read(unsigned char sfr_address)
+                                    559 ;	-----------------------------------------
+                                    560 ;	 function i2c_scl_read
+                                    561 ;	-----------------------------------------
+      000088                        562 _i2c_scl_read:
+      000088 AF 82            [24]  563 	mov	r7,dpl
+                                    564 ;	temp_sensor.c:135: unsigned char result = 0;
+      00008A 7E 00            [12]  565 	mov	r6,#0x00
+                                    566 ;	temp_sensor.c:136: switch (sfr_address)
+      00008C BF A0 02         [24]  567 	cjne	r7,#0xA0,00112$
+      00008F 80 05            [24]  568 	sjmp	00101$
+      000091                        569 00112$:
+                                    570 ;	temp_sensor.c:138: case DISPLAY_SFR: result = P2_1; break;
+      000091 BF B0 0E         [24]  571 	cjne	r7,#0xB0,00103$
+      000094 80 07            [24]  572 	sjmp	00102$
+      000096                        573 00101$:
+      000096 A2 A1            [12]  574 	mov	c,_P2_1
+      000098 E4               [12]  575 	clr	a
+      000099 33               [12]  576 	rlc	a
+      00009A FE               [12]  577 	mov	r6,a
+                                    578 ;	temp_sensor.c:139: case TEMP_SENSOR_SFR: result = P3_6; break;
+      00009B 80 05            [24]  579 	sjmp	00103$
+      00009D                        580 00102$:
+      00009D A2 B6            [12]  581 	mov	c,_P3_6
+      00009F E4               [12]  582 	clr	a
+      0000A0 33               [12]  583 	rlc	a
+      0000A1 FE               [12]  584 	mov	r6,a
+                                    585 ;	temp_sensor.c:140: }
+      0000A2                        586 00103$:
+                                    587 ;	temp_sensor.c:141: i2c_delay();
+      0000A2 C0 06            [24]  588 	push	ar6
+      0000A4 12r00r1F         [24]  589 	lcall	_i2c_delay
+      0000A7 D0 06            [24]  590 	pop	ar6
+                                    591 ;	temp_sensor.c:142: return result;
+      0000A9 8E 82            [24]  592 	mov	dpl,r6
+      0000AB 22               [24]  593 	ret
+                                    594 ;------------------------------------------------------------
+                                    595 ;Allocation info for local variables in function 'i2c_start'
+                                    596 ;------------------------------------------------------------
+                                    597 ;sfr_address               Allocated to registers r7 
+                                    598 ;------------------------------------------------------------
+                                    599 ;	temp_sensor.c:145: void i2c_start(unsigned char sfr_address)
+                                    600 ;	-----------------------------------------
+                                    601 ;	 function i2c_start
+                                    602 ;	-----------------------------------------
+      0000AC                        603 _i2c_start:
+                                    604 ;	temp_sensor.c:147: i2c_scl_write(sfr_address, 0);
+      0000AC AF 82            [24]  605 	mov	r7,dpl
+      0000AE 75*1A 00         [24]  606 	mov	_i2c_scl_write_PARM_2,#0x00
+      0000B1 C0 07            [24]  607 	push	ar7
+      0000B3 12r00r6B         [24]  608 	lcall	_i2c_scl_write
+      0000B6 D0 07            [24]  609 	pop	ar7
+                                    610 ;	temp_sensor.c:148: i2c_sda_write(sfr_address, 1);
+      0000B8 75*00 01         [24]  611 	mov	_i2c_sda_write_PARM_2,#0x01
+      0000BB 8F 82            [24]  612 	mov	dpl,r7
+      0000BD C0 07            [24]  613 	push	ar7
+      0000BF 12r00r34         [24]  614 	lcall	_i2c_sda_write
+      0000C2 D0 07            [24]  615 	pop	ar7
+                                    616 ;	temp_sensor.c:149: i2c_scl_write(sfr_address, 1);
+      0000C4 75*1A 01         [24]  617 	mov	_i2c_scl_write_PARM_2,#0x01
+      0000C7 8F 82            [24]  618 	mov	dpl,r7
+      0000C9 C0 07            [24]  619 	push	ar7
+      0000CB 12r00r6B         [24]  620 	lcall	_i2c_scl_write
+      0000CE D0 07            [24]  621 	pop	ar7
+                                    622 ;	temp_sensor.c:150: i2c_sda_write(sfr_address, 0);
+      0000D0 75*00 00         [24]  623 	mov	_i2c_sda_write_PARM_2,#0x00
+      0000D3 8F 82            [24]  624 	mov	dpl,r7
+      0000D5 C0 07            [24]  625 	push	ar7
+      0000D7 12r00r34         [24]  626 	lcall	_i2c_sda_write
+      0000DA D0 07            [24]  627 	pop	ar7
+                                    628 ;	temp_sensor.c:151: i2c_scl_write(sfr_address, 0);
+      0000DC 75*1A 00         [24]  629 	mov	_i2c_scl_write_PARM_2,#0x00
+      0000DF 8F 82            [24]  630 	mov	dpl,r7
+      0000E1 02r00r6B         [24]  631 	ljmp	_i2c_scl_write
+                                    632 ;------------------------------------------------------------
+                                    633 ;Allocation info for local variables in function 'i2c_stop'
+                                    634 ;------------------------------------------------------------
+                                    635 ;sfr_address               Allocated to registers r7 
+                                    636 ;------------------------------------------------------------
+                                    637 ;	temp_sensor.c:154: void i2c_stop(unsigned char sfr_address)
+                                    638 ;	-----------------------------------------
+                                    639 ;	 function i2c_stop
+                                    640 ;	-----------------------------------------
+      0000E4                        641 _i2c_stop:
+                                    642 ;	temp_sensor.c:156: i2c_scl_write(sfr_address, 0);
+      0000E4 AF 82            [24]  643 	mov	r7,dpl
+      0000E6 75*1A 00         [24]  644 	mov	_i2c_scl_write_PARM_2,#0x00
+      0000E9 C0 07            [24]  645 	push	ar7
+      0000EB 12r00r6B         [24]  646 	lcall	_i2c_scl_write
+      0000EE D0 07            [24]  647 	pop	ar7
+                                    648 ;	temp_sensor.c:157: i2c_sda_write(sfr_address, 0);
+      0000F0 75*00 00         [24]  649 	mov	_i2c_sda_write_PARM_2,#0x00
+      0000F3 8F 82            [24]  650 	mov	dpl,r7
+      0000F5 C0 07            [24]  651 	push	ar7
+      0000F7 12r00r34         [24]  652 	lcall	_i2c_sda_write
+      0000FA D0 07            [24]  653 	pop	ar7
+                                    654 ;	temp_sensor.c:158: i2c_scl_write(sfr_address, 1);
+      0000FC 75*1A 01         [24]  655 	mov	_i2c_scl_write_PARM_2,#0x01
+      0000FF 8F 82            [24]  656 	mov	dpl,r7
+      000101 C0 07            [24]  657 	push	ar7
+      000103 12r00r6B         [24]  658 	lcall	_i2c_scl_write
+      000106 D0 07            [24]  659 	pop	ar7
+                                    660 ;	temp_sensor.c:159: i2c_sda_write(sfr_address, 1);
+      000108 75*00 01         [24]  661 	mov	_i2c_sda_write_PARM_2,#0x01
+      00010B 8F 82            [24]  662 	mov	dpl,r7
+      00010D 02r00r34         [24]  663 	ljmp	_i2c_sda_write
+                                    664 ;------------------------------------------------------------
+                                    665 ;Allocation info for local variables in function 'i2c_send_byte'
+                                    666 ;------------------------------------------------------------
+                                    667 ;data_out                  Allocated with name '_i2c_send_byte_PARM_2'
+                                    668 ;sfr_address               Allocated to registers r7 
+                                    669 ;i                         Allocated to registers r6 
+                                    670 ;ack_bit                   Allocated to registers r6 
+                                    671 ;------------------------------------------------------------
+                                    672 ;	temp_sensor.c:162: unsigned char i2c_send_byte(unsigned char sfr_address, unsigned char data_out)
+                                    673 ;	-----------------------------------------
+                                    674 ;	 function i2c_send_byte
+                                    675 ;	-----------------------------------------
+      000110                        676 _i2c_send_byte:
+      000110 AF 82            [24]  677 	mov	r7,dpl
+                                    678 ;	temp_sensor.c:165: for (i = 0; i < 8; i++) {
+      000112 7E 00            [12]  679 	mov	r6,#0x00
+      000114                        680 00105$:
+                                    681 ;	temp_sensor.c:166: i2c_scl_write(sfr_address, 0);
+      000114 75*1A 00         [24]  682 	mov	_i2c_scl_write_PARM_2,#0x00
+      000117 8F 82            [24]  683 	mov	dpl,r7
+      000119 C0 07            [24]  684 	push	ar7
+      00011B C0 06            [24]  685 	push	ar6
+      00011D 12r00r6B         [24]  686 	lcall	_i2c_scl_write
+      000120 D0 06            [24]  687 	pop	ar6
+      000122 D0 07            [24]  688 	pop	ar7
+                                    689 ;	temp_sensor.c:167: if ((data_out & 0x80) == 0) {
+      000124 E5*1B            [12]  690 	mov	a,_i2c_send_byte_PARM_2
+      000126 20 E7 12         [24]  691 	jb	acc.7,00102$
+                                    692 ;	temp_sensor.c:168: i2c_sda_write(sfr_address, 0);
+      000129 75*00 00         [24]  693 	mov	_i2c_sda_write_PARM_2,#0x00
+      00012C 8F 82            [24]  694 	mov	dpl,r7
+      00012E C0 07            [24]  695 	push	ar7
+      000130 C0 06            [24]  696 	push	ar6
+      000132 12r00r34         [24]  697 	lcall	_i2c_sda_write
+      000135 D0 06            [24]  698 	pop	ar6
+      000137 D0 07            [24]  699 	pop	ar7
+      000139 80 10            [24]  700 	sjmp	00103$
+      00013B                        701 00102$:
+                                    702 ;	temp_sensor.c:170: i2c_sda_write(sfr_address, 1);
+      00013B 75*00 01         [24]  703 	mov	_i2c_sda_write_PARM_2,#0x01
+      00013E 8F 82            [24]  704 	mov	dpl,r7
+      000140 C0 07            [24]  705 	push	ar7
+      000142 C0 06            [24]  706 	push	ar6
+      000144 12r00r34         [24]  707 	lcall	_i2c_sda_write
+      000147 D0 06            [24]  708 	pop	ar6
+      000149 D0 07            [24]  709 	pop	ar7
+      00014B                        710 00103$:
+                                    711 ;	temp_sensor.c:172: i2c_scl_write(sfr_address, 1);
+      00014B 75*1A 01         [24]  712 	mov	_i2c_scl_write_PARM_2,#0x01
+      00014E 8F 82            [24]  713 	mov	dpl,r7
+      000150 C0 07            [24]  714 	push	ar7
+      000152 C0 06            [24]  715 	push	ar6
+      000154 12r00r6B         [24]  716 	lcall	_i2c_scl_write
+      000157 D0 06            [24]  717 	pop	ar6
+      000159 D0 07            [24]  718 	pop	ar7
+                                    719 ;	temp_sensor.c:173: data_out<<=1;
+      00015B E5*1B            [12]  720 	mov	a,_i2c_send_byte_PARM_2
+      00015D 25*1B            [12]  721 	add	a,_i2c_send_byte_PARM_2
+      00015F F5*1B            [12]  722 	mov	_i2c_send_byte_PARM_2,a
+                                    723 ;	temp_sensor.c:165: for (i = 0; i < 8; i++) {
+      000161 0E               [12]  724 	inc	r6
+      000162 BE 08 00         [24]  725 	cjne	r6,#0x08,00120$
+      000165                        726 00120$:
+      000165 40 AD            [24]  727 	jc	00105$
+                                    728 ;	temp_sensor.c:175: i2c_scl_write(sfr_address, 0);
+      000167 75*1A 00         [24]  729 	mov	_i2c_scl_write_PARM_2,#0x00
+      00016A 8F 82            [24]  730 	mov	dpl,r7
+      00016C C0 07            [24]  731 	push	ar7
+      00016E 12r00r6B         [24]  732 	lcall	_i2c_scl_write
+      000171 D0 07            [24]  733 	pop	ar7
+                                    734 ;	temp_sensor.c:176: i2c_sda_write(sfr_address, 1);
+      000173 75*00 01         [24]  735 	mov	_i2c_sda_write_PARM_2,#0x01
+      000176 8F 82            [24]  736 	mov	dpl,r7
+      000178 C0 07            [24]  737 	push	ar7
+      00017A 12r00r34         [24]  738 	lcall	_i2c_sda_write
+      00017D D0 07            [24]  739 	pop	ar7
+                                    740 ;	temp_sensor.c:177: i2c_scl_write(sfr_address, 1);
+      00017F 75*1A 01         [24]  741 	mov	_i2c_scl_write_PARM_2,#0x01
+      000182 8F 82            [24]  742 	mov	dpl,r7
+      000184 C0 07            [24]  743 	push	ar7
+      000186 12r00r6B         [24]  744 	lcall	_i2c_scl_write
+      000189 D0 07            [24]  745 	pop	ar7
+                                    746 ;	temp_sensor.c:178: ack_bit = i2c_sda_read(sfr_address);
+      00018B 8F 82            [24]  747 	mov	dpl,r7
+      00018D C0 07            [24]  748 	push	ar7
+      00018F 12r00r4E         [24]  749 	lcall	_i2c_sda_read
+      000192 AE 82            [24]  750 	mov	r6,dpl
+      000194 D0 07            [24]  751 	pop	ar7
+                                    752 ;	temp_sensor.c:179: i2c_scl_write(sfr_address, 0);
+      000196 75*1A 00         [24]  753 	mov	_i2c_scl_write_PARM_2,#0x00
+      000199 8F 82            [24]  754 	mov	dpl,r7
+      00019B C0 06            [24]  755 	push	ar6
+      00019D 12r00r6B         [24]  756 	lcall	_i2c_scl_write
+      0001A0 D0 06            [24]  757 	pop	ar6
+                                    758 ;	temp_sensor.c:181: return ack_bit;
+      0001A2 8E 82            [24]  759 	mov	dpl,r6
+      0001A4 22               [24]  760 	ret
+                                    761 ;------------------------------------------------------------
+                                    762 ;Allocation info for local variables in function 'i2c_read_byte'
+                                    763 ;------------------------------------------------------------
+                                    764 ;sfr_address               Allocated to registers r7 
+                                    765 ;i                         Allocated to registers r5 
+                                    766 ;received                  Allocated to registers r6 
+                                    767 ;------------------------------------------------------------
+                                    768 ;	temp_sensor.c:184: unsigned char i2c_read_byte(unsigned char sfr_address)
+                                    769 ;	-----------------------------------------
+                                    770 ;	 function i2c_read_byte
+                                    771 ;	-----------------------------------------
+      0001A5                        772 _i2c_read_byte:
+      0001A5 AF 82            [24]  773 	mov	r7,dpl
+                                    774 ;	temp_sensor.c:186: unsigned char i, received = 0;
+      0001A7 7E 00            [12]  775 	mov	r6,#0x00
+                                    776 ;	temp_sensor.c:187: for (i = 0; i < 8; i++) {
+      0001A9 7D 00            [12]  777 	mov	r5,#0x00
+      0001AB                        778 00106$:
+                                    779 ;	temp_sensor.c:188: i2c_scl_write(sfr_address, 1);
+      0001AB 75*1A 01         [24]  780 	mov	_i2c_scl_write_PARM_2,#0x01
+      0001AE 8F 82            [24]  781 	mov	dpl,r7
+      0001B0 C0 07            [24]  782 	push	ar7
+      0001B2 C0 06            [24]  783 	push	ar6
+      0001B4 C0 05            [24]  784 	push	ar5
+      0001B6 12r00r6B         [24]  785 	lcall	_i2c_scl_write
+      0001B9 D0 05            [24]  786 	pop	ar5
+      0001BB D0 06            [24]  787 	pop	ar6
+      0001BD D0 07            [24]  788 	pop	ar7
+                                    789 ;	temp_sensor.c:189: if(i2c_sda_read(sfr_address))
+      0001BF 8F 82            [24]  790 	mov	dpl,r7
+      0001C1 C0 07            [24]  791 	push	ar7
+      0001C3 C0 06            [24]  792 	push	ar6
+      0001C5 C0 05            [24]  793 	push	ar5
+      0001C7 12r00r4E         [24]  794 	lcall	_i2c_sda_read
+      0001CA E5 82            [12]  795 	mov	a,dpl
+      0001CC D0 05            [24]  796 	pop	ar5
+      0001CE D0 06            [24]  797 	pop	ar6
+      0001D0 D0 07            [24]  798 	pop	ar7
+      0001D2 60 03            [24]  799 	jz	00102$
+                                    800 ;	temp_sensor.c:190: received |= 1;
+      0001D4 43 06 01         [24]  801 	orl	ar6,#0x01
+      0001D7                        802 00102$:
+                                    803 ;	temp_sensor.c:191: if(i < 7)
+      0001D7 BD 07 00         [24]  804 	cjne	r5,#0x07,00124$
+      0001DA                        805 00124$:
+      0001DA 50 03            [24]  806 	jnc	00104$
+                                    807 ;	temp_sensor.c:192: received <<= 1;
+      0001DC EE               [12]  808 	mov	a,r6
+      0001DD 2E               [12]  809 	add	a,r6
+      0001DE FE               [12]  810 	mov	r6,a
+      0001DF                        811 00104$:
+                                    812 ;	temp_sensor.c:193: i2c_scl_write(sfr_address, 0);
+      0001DF 75*1A 00         [24]  813 	mov	_i2c_scl_write_PARM_2,#0x00
+      0001E2 8F 82            [24]  814 	mov	dpl,r7
+      0001E4 C0 07            [24]  815 	push	ar7
+      0001E6 C0 06            [24]  816 	push	ar6
+      0001E8 C0 05            [24]  817 	push	ar5
+      0001EA 12r00r6B         [24]  818 	lcall	_i2c_scl_write
+      0001ED D0 05            [24]  819 	pop	ar5
+      0001EF D0 06            [24]  820 	pop	ar6
+      0001F1 D0 07            [24]  821 	pop	ar7
+                                    822 ;	temp_sensor.c:187: for (i = 0; i < 8; i++) {
+      0001F3 0D               [12]  823 	inc	r5
+      0001F4 BD 08 00         [24]  824 	cjne	r5,#0x08,00126$
+      0001F7                        825 00126$:
+      0001F7 40 B2            [24]  826 	jc	00106$
+                                    827 ;	temp_sensor.c:195: return received;
+      0001F9 8E 82            [24]  828 	mov	dpl,r6
+      0001FB 22               [24]  829 	ret
+                                    830 ;------------------------------------------------------------
+                                    831 ;Allocation info for local variables in function 'read_temp_sensor'
+                                    832 ;------------------------------------------------------------
+                                    833 ;address_byte              Allocated to registers 
+                                    834 ;ack                       Allocated to registers 
+                                    835 ;millisecond               Allocated to registers 
+                                    836 ;temperature               Allocated to registers r4 r5 r6 r7 
+                                    837 ;slope                     Allocated with name '_read_temp_sensor_slope_1_54'
+                                    838 ;count_remaining           Allocated with name '_read_temp_sensor_count_remaining_1_54'
+                                    839 ;------------------------------------------------------------
+                                    840 ;	temp_sensor.c:206: float read_temp_sensor(void)
+                                    841 ;	-----------------------------------------
+                                    842 ;	 function read_temp_sensor
+                                    843 ;	-----------------------------------------
+      0001FC                        844 _read_temp_sensor:
+                                    845 ;	temp_sensor.c:223: write_temp_sensor_command(START_TEMP_SENSOR_CONVERSION);
+      0001FC 75 82 EE         [24]  846 	mov	dpl,#0xEE
+      0001FF 12r03rC8         [24]  847 	lcall	_write_temp_sensor_command
+                                    848 ;	temp_sensor.c:224: i2c_stop(TEMP_SENSOR_SFR);
+      000202 75 82 B0         [24]  849 	mov	dpl,#0xB0
+      000205 12r00rE4         [24]  850 	lcall	_i2c_stop
+                                    851 ;	temp_sensor.c:227: delay(1000*millisecond);//multiplication... this wait  maaay be (read: probably will be) longer than 1000ms
+      000208 90 42 40         [24]  852 	mov	dptr,#0x4240
+      00020B 12r00r00         [24]  853 	lcall	_delay
+                                    854 ;	temp_sensor.c:229: write_temp_sensor_command(READ_TEMPERATURE);
+      00020E 75 82 AA         [24]  855 	mov	dpl,#0xAA
+      000211 12r03rC8         [24]  856 	lcall	_write_temp_sensor_command
+                                    857 ;	temp_sensor.c:232: i2c_start(TEMP_SENSOR_SFR);
+      000214 75 82 B0         [24]  858 	mov	dpl,#0xB0
+      000217 12r00rAC         [24]  859 	lcall	_i2c_start
+                                    860 ;	temp_sensor.c:233: ack = i2c_send_byte(TEMP_SENSOR_SFR, address_byte);
+      00021A 75*1B 91         [24]  861 	mov	_i2c_send_byte_PARM_2,#0x91
+      00021D 75 82 B0         [24]  862 	mov	dpl,#0xB0
+      000220 12r01r10         [24]  863 	lcall	_i2c_send_byte
+                                    864 ;	temp_sensor.c:234: temperature = i2c_read_byte(TEMP_SENSOR_SFR);
+      000223 75 82 B0         [24]  865 	mov	dpl,#0xB0
+      000226 12r01rA5         [24]  866 	lcall	_i2c_read_byte
+      000229 12r00r00         [24]  867 	lcall	___uchar2fs
+      00022C AC 82            [24]  868 	mov	r4,dpl
+      00022E AD 83            [24]  869 	mov	r5,dph
+      000230 AE F0            [24]  870 	mov	r6,b
+      000232 FF               [12]  871 	mov	r7,a
+                                    872 ;	temp_sensor.c:237: i2c_read_byte(TEMP_SENSOR_SFR);
+      000233 75 82 B0         [24]  873 	mov	dpl,#0xB0
+      000236 C0 07            [24]  874 	push	ar7
+      000238 C0 06            [24]  875 	push	ar6
+      00023A C0 05            [24]  876 	push	ar5
+      00023C C0 04            [24]  877 	push	ar4
+      00023E 12r01rA5         [24]  878 	lcall	_i2c_read_byte
+                                    879 ;	temp_sensor.c:238: i2c_stop(TEMP_SENSOR_SFR);
+      000241 75 82 B0         [24]  880 	mov	dpl,#0xB0
+      000244 12r00rE4         [24]  881 	lcall	_i2c_stop
+                                    882 ;	temp_sensor.c:240: write_temp_sensor_command(READ_COUNT_REMAIN);
+      000247 75 82 A8         [24]  883 	mov	dpl,#0xA8
+      00024A 12r03rC8         [24]  884 	lcall	_write_temp_sensor_command
+                                    885 ;	temp_sensor.c:241: i2c_start(TEMP_SENSOR_SFR);
+      00024D 75 82 B0         [24]  886 	mov	dpl,#0xB0
+      000250 12r00rAC         [24]  887 	lcall	_i2c_start
+                                    888 ;	temp_sensor.c:242: ack = i2c_send_byte(TEMP_SENSOR_SFR, address_byte);
+      000253 75*1B 91         [24]  889 	mov	_i2c_send_byte_PARM_2,#0x91
+      000256 75 82 B0         [24]  890 	mov	dpl,#0xB0
+      000259 12r01r10         [24]  891 	lcall	_i2c_send_byte
+                                    892 ;	temp_sensor.c:243: count_remaining = i2c_read_byte(TEMP_SENSOR_SFR);
+      00025C 75 82 B0         [24]  893 	mov	dpl,#0xB0
+      00025F 12r01rA5         [24]  894 	lcall	_i2c_read_byte
+      000262 12r00r00         [24]  895 	lcall	___uchar2fs
+      000265 85 82*20         [24]  896 	mov	_read_temp_sensor_count_remaining_1_54,dpl
+      000268 85 83*21         [24]  897 	mov	(_read_temp_sensor_count_remaining_1_54 + 1),dph
+      00026B 85 F0*22         [24]  898 	mov	(_read_temp_sensor_count_remaining_1_54 + 2),b
+      00026E F5*23            [12]  899 	mov	(_read_temp_sensor_count_remaining_1_54 + 3),a
+                                    900 ;	temp_sensor.c:244: i2c_stop(TEMP_SENSOR_SFR);
+      000270 75 82 B0         [24]  901 	mov	dpl,#0xB0
+      000273 12r00rE4         [24]  902 	lcall	_i2c_stop
+                                    903 ;	temp_sensor.c:246: write_temp_sensor_command(READ_SLOPE);
+      000276 75 82 A9         [24]  904 	mov	dpl,#0xA9
+      000279 12r03rC8         [24]  905 	lcall	_write_temp_sensor_command
+                                    906 ;	temp_sensor.c:247: i2c_start(TEMP_SENSOR_SFR);
+      00027C 75 82 B0         [24]  907 	mov	dpl,#0xB0
+      00027F 12r00rAC         [24]  908 	lcall	_i2c_start
+                                    909 ;	temp_sensor.c:248: ack = i2c_send_byte(TEMP_SENSOR_SFR, address_byte);
+      000282 75*1B 91         [24]  910 	mov	_i2c_send_byte_PARM_2,#0x91
+      000285 75 82 B0         [24]  911 	mov	dpl,#0xB0
+      000288 12r01r10         [24]  912 	lcall	_i2c_send_byte
+                                    913 ;	temp_sensor.c:249: slope = i2c_read_byte(TEMP_SENSOR_SFR);
+      00028B 75 82 B0         [24]  914 	mov	dpl,#0xB0
+      00028E 12r01rA5         [24]  915 	lcall	_i2c_read_byte
+      000291 12r00r00         [24]  916 	lcall	___uchar2fs
+      000294 85 82*1C         [24]  917 	mov	_read_temp_sensor_slope_1_54,dpl
+      000297 85 83*1D         [24]  918 	mov	(_read_temp_sensor_slope_1_54 + 1),dph
+      00029A 85 F0*1E         [24]  919 	mov	(_read_temp_sensor_slope_1_54 + 2),b
+      00029D F5*1F            [12]  920 	mov	(_read_temp_sensor_slope_1_54 + 3),a
+                                    921 ;	temp_sensor.c:250: i2c_stop(TEMP_SENSOR_SFR);
+      00029F 75 82 B0         [24]  922 	mov	dpl,#0xB0
+      0002A2 12r00rE4         [24]  923 	lcall	_i2c_stop
+                                    924 ;	temp_sensor.c:254: temperature = temperature - (0.25 + (slope - count_remaining) / slope);
+      0002A5 C0*20            [24]  925 	push	_read_temp_sensor_count_remaining_1_54
+      0002A7 C0*21            [24]  926 	push	(_read_temp_sensor_count_remaining_1_54 + 1)
+      0002A9 C0*22            [24]  927 	push	(_read_temp_sensor_count_remaining_1_54 + 2)
+      0002AB C0*23            [24]  928 	push	(_read_temp_sensor_count_remaining_1_54 + 3)
+      0002AD 85*1C 82         [24]  929 	mov	dpl,_read_temp_sensor_slope_1_54
+      0002B0 85*1D 83         [24]  930 	mov	dph,(_read_temp_sensor_slope_1_54 + 1)
+      0002B3 85*1E F0         [24]  931 	mov	b,(_read_temp_sensor_slope_1_54 + 2)
+      0002B6 E5*1F            [12]  932 	mov	a,(_read_temp_sensor_slope_1_54 + 3)
+      0002B8 12r00r00         [24]  933 	lcall	___fssub
+      0002BB A8 82            [24]  934 	mov	r0,dpl
+      0002BD A9 83            [24]  935 	mov	r1,dph
+      0002BF AA F0            [24]  936 	mov	r2,b
+      0002C1 FB               [12]  937 	mov	r3,a
+      0002C2 E5 81            [12]  938 	mov	a,sp
+      0002C4 24 FC            [12]  939 	add	a,#0xfc
+      0002C6 F5 81            [12]  940 	mov	sp,a
+      0002C8 C0*1C            [24]  941 	push	_read_temp_sensor_slope_1_54
+      0002CA C0*1D            [24]  942 	push	(_read_temp_sensor_slope_1_54 + 1)
+      0002CC C0*1E            [24]  943 	push	(_read_temp_sensor_slope_1_54 + 2)
+      0002CE C0*1F            [24]  944 	push	(_read_temp_sensor_slope_1_54 + 3)
+      0002D0 88 82            [24]  945 	mov	dpl,r0
+      0002D2 89 83            [24]  946 	mov	dph,r1
+      0002D4 8A F0            [24]  947 	mov	b,r2
+      0002D6 EB               [12]  948 	mov	a,r3
+      0002D7 12r00r00         [24]  949 	lcall	___fsdiv
+      0002DA A8 82            [24]  950 	mov	r0,dpl
+      0002DC A9 83            [24]  951 	mov	r1,dph
+      0002DE AA F0            [24]  952 	mov	r2,b
+      0002E0 FB               [12]  953 	mov	r3,a
+      0002E1 E5 81            [12]  954 	mov	a,sp
+      0002E3 24 FC            [12]  955 	add	a,#0xfc
+      0002E5 F5 81            [12]  956 	mov	sp,a
+      0002E7 E4               [12]  957 	clr	a
+      0002E8 C0 E0            [24]  958 	push	acc
+      0002EA C0 E0            [24]  959 	push	acc
+      0002EC 74 80            [12]  960 	mov	a,#0x80
+      0002EE C0 E0            [24]  961 	push	acc
+      0002F0 74 3E            [12]  962 	mov	a,#0x3E
+      0002F2 C0 E0            [24]  963 	push	acc
+      0002F4 88 82            [24]  964 	mov	dpl,r0
+      0002F6 89 83            [24]  965 	mov	dph,r1
+      0002F8 8A F0            [24]  966 	mov	b,r2
+      0002FA EB               [12]  967 	mov	a,r3
+      0002FB 12r00r00         [24]  968 	lcall	___fsadd
+      0002FE A8 82            [24]  969 	mov	r0,dpl
+      000300 A9 83            [24]  970 	mov	r1,dph
+      000302 AA F0            [24]  971 	mov	r2,b
+      000304 FB               [12]  972 	mov	r3,a
+      000305 E5 81            [12]  973 	mov	a,sp
+      000307 24 FC            [12]  974 	add	a,#0xfc
+      000309 F5 81            [12]  975 	mov	sp,a
+      00030B D0 04            [24]  976 	pop	ar4
+      00030D D0 05            [24]  977 	pop	ar5
+      00030F D0 06            [24]  978 	pop	ar6
+      000311 D0 07            [24]  979 	pop	ar7
+      000313 C0 00            [24]  980 	push	ar0
+      000315 C0 01            [24]  981 	push	ar1
+      000317 C0 02            [24]  982 	push	ar2
+      000319 C0 03            [24]  983 	push	ar3
+      00031B 8C 82            [24]  984 	mov	dpl,r4
+      00031D 8D 83            [24]  985 	mov	dph,r5
+      00031F 8E F0            [24]  986 	mov	b,r6
+      000321 EF               [12]  987 	mov	a,r7
+      000322 12r00r00         [24]  988 	lcall	___fssub
+      000325 AC 82            [24]  989 	mov	r4,dpl
+      000327 AD 83            [24]  990 	mov	r5,dph
+      000329 AE F0            [24]  991 	mov	r6,b
+      00032B FF               [12]  992 	mov	r7,a
+      00032C E5 81            [12]  993 	mov	a,sp
+      00032E 24 FC            [12]  994 	add	a,#0xfc
+      000330 F5 81            [12]  995 	mov	sp,a
+                                    996 ;	temp_sensor.c:264: return temperature;
+      000332 8C 82            [24]  997 	mov	dpl,r4
+      000334 8D 83            [24]  998 	mov	dph,r5
+      000336 8E F0            [24]  999 	mov	b,r6
+      000338 EF               [12] 1000 	mov	a,r7
+      000339 22               [24] 1001 	ret
+                                   1002 ;------------------------------------------------------------
+                                   1003 ;Allocation info for local variables in function 'clear_display_buffer'
+                                   1004 ;------------------------------------------------------------
+                                   1005 ;i                         Allocated to registers r6 r7 
+                                   1006 ;------------------------------------------------------------
+                                   1007 ;	temp_sensor.c:267: void clear_display_buffer(void)
+                                   1008 ;	-----------------------------------------
+                                   1009 ;	 function clear_display_buffer
+                                   1010 ;	-----------------------------------------
+      00033A                       1011 _clear_display_buffer:
+                                   1012 ;	temp_sensor.c:270: for (i = 0; i < DISPLAY_BUFFER_SIZE; i++)
+      00033A 7E 00            [12] 1013 	mov	r6,#0x00
+      00033C 7F 00            [12] 1014 	mov	r7,#0x00
+      00033E                       1015 00102$:
+                                   1016 ;	temp_sensor.c:272: display_buffer[i] = 0x00;
+      00033E EE               [12] 1017 	mov	a,r6
+      00033F 24r10            [12] 1018 	add	a,#_display_buffer
+      000341 F8               [12] 1019 	mov	r0,a
+      000342 76 00            [12] 1020 	mov	@r0,#0x00
+                                   1021 ;	temp_sensor.c:270: for (i = 0; i < DISPLAY_BUFFER_SIZE; i++)
+      000344 0E               [12] 1022 	inc	r6
+      000345 BE 00 01         [24] 1023 	cjne	r6,#0x00,00110$
+      000348 0F               [12] 1024 	inc	r7
+      000349                       1025 00110$:
+      000349 C3               [12] 1026 	clr	c
+      00034A EE               [12] 1027 	mov	a,r6
+      00034B 94 0A            [12] 1028 	subb	a,#0x0A
+      00034D EF               [12] 1029 	mov	a,r7
+      00034E 64 80            [12] 1030 	xrl	a,#0x80
+      000350 94 80            [12] 1031 	subb	a,#0x80
+      000352 40 EA            [24] 1032 	jc	00102$
+      000354 22               [24] 1033 	ret
+                                   1034 ;------------------------------------------------------------
+                                   1035 ;Allocation info for local variables in function 'write_display'
+                                   1036 ;------------------------------------------------------------
+                                   1037 ;address                   Allocated to registers 
+                                   1038 ;write_bit                 Allocated to registers 
+                                   1039 ;address_with_write        Allocated to registers 
+                                   1040 ;i                         Allocated to registers r7 
+                                   1041 ;ack                       Allocated to registers 
                                    1042 ;------------------------------------------------------------
-                                   1043 ;Allocation info for local variables in function 'write_temp_sensor_config'
-                                   1044 ;------------------------------------------------------------
-                                   1045 ;config                    Allocated to registers r7 
-                                   1046 ;address_byte              Allocated to registers 
-                                   1047 ;ack                       Allocated to registers 
-                                   1048 ;------------------------------------------------------------
-                                   1049 ;	temp_sensor.c:295: void write_temp_sensor_config(unsigned char config)
-                                   1050 ;	-----------------------------------------
-                                   1051 ;	 function write_temp_sensor_config
-                                   1052 ;	-----------------------------------------
-      000350                       1053 _write_temp_sensor_config:
-      000350 AF 82            [24] 1054 	mov	r7,dpl
-                                   1055 ;	temp_sensor.c:300: write_temp_sensor_command(ACCESS_TEMP_SENSOR_CONFIG);
-      000352 75 82 AC         [24] 1056 	mov	dpl,#0xAC
-      000355 C0 07            [24] 1057 	push	ar7
-      000357 12r03r6A         [24] 1058 	lcall	_write_temp_sensor_command
-      00035A D0 07            [24] 1059 	pop	ar7
-                                   1060 ;	temp_sensor.c:301: ack = i2c_send_byte(TEMP_SENSOR_SFR, config);
-      00035C 8F*1A            [24] 1061 	mov	_i2c_send_byte_PARM_2,r7
-      00035E 75 82 B0         [24] 1062 	mov	dpl,#0xB0
-      000361 12r00rF9         [24] 1063 	lcall	_i2c_send_byte
-                                   1064 ;	temp_sensor.c:302: i2c_stop(TEMP_SENSOR_SFR);
-      000364 75 82 B0         [24] 1065 	mov	dpl,#0xB0
-      000367 02r00rC4         [24] 1066 	ljmp	_i2c_stop
-                                   1067 ;------------------------------------------------------------
-                                   1068 ;Allocation info for local variables in function 'write_temp_sensor_command'
-                                   1069 ;------------------------------------------------------------
-                                   1070 ;command_byte              Allocated to registers r7 
-                                   1071 ;control_byte              Allocated to registers 
-                                   1072 ;write_bit                 Allocated to registers 
-                                   1073 ;address_with_write        Allocated to registers 
-                                   1074 ;ack                       Allocated to registers 
-                                   1075 ;------------------------------------------------------------
-                                   1076 ;	temp_sensor.c:306: void write_temp_sensor_command(unsigned char command_byte)
-                                   1077 ;	-----------------------------------------
-                                   1078 ;	 function write_temp_sensor_command
-                                   1079 ;	-----------------------------------------
-      00036A                       1080 _write_temp_sensor_command:
-      00036A AF 82            [24] 1081 	mov	r7,dpl
-                                   1082 ;	temp_sensor.c:340: i2c_start(TEMP_SENSOR_SFR);
-      00036C 75 82 B0         [24] 1083 	mov	dpl,#0xB0
-      00036F C0 07            [24] 1084 	push	ar7
-      000371 12r00r83         [24] 1085 	lcall	_i2c_start
-                                   1086 ;	temp_sensor.c:341: ack = i2c_send_byte(TEMP_SENSOR_SFR, address_with_write);
-      000374 75*1A 90         [24] 1087 	mov	_i2c_send_byte_PARM_2,#0x90
-      000377 75 82 B0         [24] 1088 	mov	dpl,#0xB0
-      00037A 12r00rF9         [24] 1089 	lcall	_i2c_send_byte
-      00037D D0 07            [24] 1090 	pop	ar7
-                                   1091 ;	temp_sensor.c:342: ack = i2c_send_byte(TEMP_SENSOR_SFR, command_byte);
-      00037F 8F*1A            [24] 1092 	mov	_i2c_send_byte_PARM_2,r7
-      000381 75 82 B0         [24] 1093 	mov	dpl,#0xB0
-      000384 02r00rF9         [24] 1094 	ljmp	_i2c_send_byte
-                                   1095 ;------------------------------------------------------------
-                                   1096 ;Allocation info for local variables in function 'delay'
-                                   1097 ;------------------------------------------------------------
-                                   1098 ;i                         Allocated to registers r6 r7 
-                                   1099 ;------------------------------------------------------------
-                                   1100 ;	temp_sensor.c:345: void delay(void)
-                                   1101 ;	-----------------------------------------
-                                   1102 ;	 function delay
-                                   1103 ;	-----------------------------------------
-      000387                       1104 _delay:
-                                   1105 ;	temp_sensor.c:348: for(i=0;i<500;i++);
-      000387 7E F4            [12] 1106 	mov	r6,#0xF4
-      000389 7F 01            [12] 1107 	mov	r7,#0x01
-      00038B                       1108 00104$:
-      00038B EE               [12] 1109 	mov	a,r6
-      00038C 24 FF            [12] 1110 	add	a,#0xFF
-      00038E FC               [12] 1111 	mov	r4,a
-      00038F EF               [12] 1112 	mov	a,r7
-      000390 34 FF            [12] 1113 	addc	a,#0xFF
-      000392 FD               [12] 1114 	mov	r5,a
-      000393 8C 06            [24] 1115 	mov	ar6,r4
-      000395 8D 07            [24] 1116 	mov	ar7,r5
-      000397 EC               [12] 1117 	mov	a,r4
-      000398 4D               [12] 1118 	orl	a,r5
-      000399 70 F0            [24] 1119 	jnz	00104$
-      00039B 22               [24] 1120 	ret
-                                   1121 ;------------------------------------------------------------
-                                   1122 ;Allocation info for local variables in function 'main'
-                                   1123 ;------------------------------------------------------------
-                                   1124 ;temp_sensor_config        Allocated to registers 
-                                   1125 ;first_num                 Allocated to registers r7 
-                                   1126 ;second_num                Allocated to registers r6 
-                                   1127 ;current_temp              Allocated with name '_main_current_temp_1_63'
-                                   1128 ;last_temp                 Allocated with name '_main_last_temp_1_63'
-                                   1129 ;temp_fraction             Allocated to registers r4 r5 r6 r7 
-                                   1130 ;temp_int                  Allocated with name '_main_temp_int_1_63'
-                                   1131 ;------------------------------------------------------------
-                                   1132 ;	temp_sensor.c:351: void main(void)
-                                   1133 ;	-----------------------------------------
-                                   1134 ;	 function main
-                                   1135 ;	-----------------------------------------
-      00039C                       1136 _main:
-                                   1137 ;	temp_sensor.c:353: bool update_display = true;
-      00039C D2*00            [12] 1138 	setb	_main_update_display_1_63
-                                   1139 ;	temp_sensor.c:357: float current_temp = 0, last_temp = 0;
-      00039E E4               [12] 1140 	clr	a
-      00039F F5*25            [12] 1141 	mov	_main_last_temp_1_63,a
-      0003A1 F5*26            [12] 1142 	mov	(_main_last_temp_1_63 + 1),a
-      0003A3 F5*27            [12] 1143 	mov	(_main_last_temp_1_63 + 2),a
-      0003A5 F5*28            [12] 1144 	mov	(_main_last_temp_1_63 + 3),a
-                                   1145 ;	temp_sensor.c:358: float temp_fraction = 0.0, temp_int = 0.0;
-      0003A7 F5*29            [12] 1146 	mov	_main_temp_int_1_63,a
-      0003A9 F5*2A            [12] 1147 	mov	(_main_temp_int_1_63 + 1),a
-      0003AB F5*2B            [12] 1148 	mov	(_main_temp_int_1_63 + 2),a
-      0003AD F5*2C            [12] 1149 	mov	(_main_temp_int_1_63 + 3),a
-                                   1150 ;	temp_sensor.c:360: delay();
-      0003AF 12r03r87         [24] 1151 	lcall	_delay
-                                   1152 ;	temp_sensor.c:363: write_display_command(ENABLE_DISPLAY_OSCILLATOR);
-      0003B2 75 82 21         [24] 1153 	mov	dpl,#0x21
-      0003B5 12r03r2D         [24] 1154 	lcall	_write_display_command
-                                   1155 ;	temp_sensor.c:364: write_display_command(ENABLE_DISPLAY);
-      0003B8 75 82 81         [24] 1156 	mov	dpl,#0x81
-      0003BB 12r03r2D         [24] 1157 	lcall	_write_display_command
-                                   1158 ;	temp_sensor.c:370: write_temp_sensor_config(temp_sensor_config);
-      0003BE 75 82 02         [24] 1159 	mov	dpl,#0x02
-      0003C1 12r03r50         [24] 1160 	lcall	_write_temp_sensor_config
-                                   1161 ;	temp_sensor.c:371: write_temp_sensor_command(START_TEMP_SENSOR_CONVERSION);
-      0003C4 75 82 EE         [24] 1162 	mov	dpl,#0xEE
-      0003C7 12r03r6A         [24] 1163 	lcall	_write_temp_sensor_command
-                                   1164 ;	temp_sensor.c:372: i2c_stop(TEMP_SENSOR_SFR);
-      0003CA 75 82 B0         [24] 1165 	mov	dpl,#0xB0
-      0003CD 12r00rC4         [24] 1166 	lcall	_i2c_stop
-                                   1167 ;	temp_sensor.c:378: while (true) 
-      0003D0                       1168 00108$:
-                                   1169 ;	temp_sensor.c:380: current_temp = read_temp_sensor();
-      0003D0 12r02r06         [24] 1170 	lcall	_read_temp_sensor
-      0003D3 85 82*21         [24] 1171 	mov	_main_current_temp_1_63,dpl
-      0003D6 85 83*22         [24] 1172 	mov	(_main_current_temp_1_63 + 1),dph
-      0003D9 85 F0*23         [24] 1173 	mov	(_main_current_temp_1_63 + 2),b
-      0003DC F5*24            [12] 1174 	mov	(_main_current_temp_1_63 + 3),a
-                                   1175 ;	temp_sensor.c:381: if (last_temp != current_temp)
-      0003DE C0*21            [24] 1176 	push	_main_current_temp_1_63
-      0003E0 C0*22            [24] 1177 	push	(_main_current_temp_1_63 + 1)
-      0003E2 C0*23            [24] 1178 	push	(_main_current_temp_1_63 + 2)
-      0003E4 C0*24            [24] 1179 	push	(_main_current_temp_1_63 + 3)
-      0003E6 85*25 82         [24] 1180 	mov	dpl,_main_last_temp_1_63
-      0003E9 85*26 83         [24] 1181 	mov	dph,(_main_last_temp_1_63 + 1)
-      0003EC 85*27 F0         [24] 1182 	mov	b,(_main_last_temp_1_63 + 2)
-      0003EF E5*28            [12] 1183 	mov	a,(_main_last_temp_1_63 + 3)
-      0003F1 12r00r00         [24] 1184 	lcall	___fseq
-      0003F4 AD 82            [24] 1185 	mov	r5,dpl
-      0003F6 E5 81            [12] 1186 	mov	a,sp
-      0003F8 24 FC            [12] 1187 	add	a,#0xfc
-      0003FA F5 81            [12] 1188 	mov	sp,a
-      0003FC ED               [12] 1189 	mov	a,r5
-      0003FD 60 03            [24] 1190 	jz	00124$
-      0003FF 02r05r01         [24] 1191 	ljmp	00104$
-      000402                       1192 00124$:
-                                   1193 ;	temp_sensor.c:384: if (current_temp < 0) 
-      000402 E4               [12] 1194 	clr	a
-      000403 C0 E0            [24] 1195 	push	acc
-      000405 C0 E0            [24] 1196 	push	acc
-      000407 C0 E0            [24] 1197 	push	acc
-      000409 C0 E0            [24] 1198 	push	acc
-      00040B 85*21 82         [24] 1199 	mov	dpl,_main_current_temp_1_63
-      00040E 85*22 83         [24] 1200 	mov	dph,(_main_current_temp_1_63 + 1)
-      000411 85*23 F0         [24] 1201 	mov	b,(_main_current_temp_1_63 + 2)
-      000414 E5*24            [12] 1202 	mov	a,(_main_current_temp_1_63 + 3)
-      000416 12r00r00         [24] 1203 	lcall	___fslt
-      000419 AD 82            [24] 1204 	mov	r5,dpl
-      00041B E5 81            [12] 1205 	mov	a,sp
-      00041D 24 FC            [12] 1206 	add	a,#0xfc
-      00041F F5 81            [12] 1207 	mov	sp,a
-      000421 ED               [12] 1208 	mov	a,r5
-      000422 60 06            [24] 1209 	jz	00102$
-                                   1210 ;	temp_sensor.c:387: current_temp *= -1;
-      000424 E5*24            [12] 1211 	mov	a,(_main_current_temp_1_63 + 3)
-      000426 B2 E7            [12] 1212 	cpl	acc.7
-      000428 F5*24            [12] 1213 	mov	(_main_current_temp_1_63 + 3),a
-      00042A                       1214 00102$:
-                                   1215 ;	temp_sensor.c:389: first_num = number_table[(int)current_temp / 10];
-      00042A 85*21 82         [24] 1216 	mov	dpl,_main_current_temp_1_63
-      00042D 85*22 83         [24] 1217 	mov	dph,(_main_current_temp_1_63 + 1)
-      000430 85*23 F0         [24] 1218 	mov	b,(_main_current_temp_1_63 + 2)
-      000433 E5*24            [12] 1219 	mov	a,(_main_current_temp_1_63 + 3)
-      000435 12r00r00         [24] 1220 	lcall	___fs2sint
-      000438 AC 82            [24] 1221 	mov	r4,dpl
-      00043A AD 83            [24] 1222 	mov	r5,dph
-      00043C 75*00 0A         [24] 1223 	mov	__divsint_PARM_2,#0x0A
-      00043F 75*01 00         [24] 1224 	mov	(__divsint_PARM_2 + 1),#0x00
-      000442 C0 05            [24] 1225 	push	ar5
-      000444 C0 04            [24] 1226 	push	ar4
-      000446 12r00r00         [24] 1227 	lcall	__divsint
-      000449 AE 82            [24] 1228 	mov	r6,dpl
-      00044B D0 04            [24] 1229 	pop	ar4
-      00044D D0 05            [24] 1230 	pop	ar5
-      00044F EE               [12] 1231 	mov	a,r6
-      000450 24r00            [12] 1232 	add	a,#_number_table
-      000452 F9               [12] 1233 	mov	r1,a
-      000453 87 07            [24] 1234 	mov	ar7,@r1
-                                   1235 ;	temp_sensor.c:390: second_num = number_table[(int)current_temp % 10] | 0x80;
-      000455 75*00 0A         [24] 1236 	mov	__modsint_PARM_2,#0x0A
-      000458 75*01 00         [24] 1237 	mov	(__modsint_PARM_2 + 1),#0x00
-      00045B 8C 82            [24] 1238 	mov	dpl,r4
-      00045D 8D 83            [24] 1239 	mov	dph,r5
-      00045F C0 07            [24] 1240 	push	ar7
-      000461 12r00r00         [24] 1241 	lcall	__modsint
-      000464 AD 82            [24] 1242 	mov	r5,dpl
-      000466 D0 07            [24] 1243 	pop	ar7
-      000468 ED               [12] 1244 	mov	a,r5
-      000469 24r00            [12] 1245 	add	a,#_number_table
-      00046B F9               [12] 1246 	mov	r1,a
-      00046C 87 06            [24] 1247 	mov	ar6,@r1
-      00046E 43 06 80         [24] 1248 	orl	ar6,#0x80
-                                   1249 ;	temp_sensor.c:392: display_buffer[0] = first_num;
-      000471 8F*10            [24] 1250 	mov	_display_buffer,r7
-                                   1251 ;	temp_sensor.c:393: display_buffer[2] = second_num;
-      000473 8E*12            [24] 1252 	mov	(_display_buffer + 0x0002),r6
-                                   1253 ;	temp_sensor.c:394: temp_fraction = modff(current_temp, &temp_int);
-      000475 75*00r29         [24] 1254 	mov	_modff_PARM_2,#_main_temp_int_1_63
-      000478 75*01 00         [24] 1255 	mov	(_modff_PARM_2 + 1),#0x00
-      00047B 75*02 40         [24] 1256 	mov	(_modff_PARM_2 + 2),#0x40
-      00047E 85*21 82         [24] 1257 	mov	dpl,_main_current_temp_1_63
-      000481 85*22 83         [24] 1258 	mov	dph,(_main_current_temp_1_63 + 1)
-      000484 85*23 F0         [24] 1259 	mov	b,(_main_current_temp_1_63 + 2)
-      000487 E5*24            [12] 1260 	mov	a,(_main_current_temp_1_63 + 3)
-      000489 12r00r00         [24] 1261 	lcall	_modff
-      00048C AC 82            [24] 1262 	mov	r4,dpl
-      00048E AD 83            [24] 1263 	mov	r5,dph
-      000490 AE F0            [24] 1264 	mov	r6,b
-      000492 FF               [12] 1265 	mov	r7,a
-                                   1266 ;	temp_sensor.c:395: temp_fraction *= 100;
-      000493 C0 04            [24] 1267 	push	ar4
-      000495 C0 05            [24] 1268 	push	ar5
-      000497 C0 06            [24] 1269 	push	ar6
-      000499 C0 07            [24] 1270 	push	ar7
-      00049B 90 00 00         [24] 1271 	mov	dptr,#0x0000
-      00049E 75 F0 C8         [24] 1272 	mov	b,#0xC8
-      0004A1 74 42            [12] 1273 	mov	a,#0x42
-      0004A3 12r00r00         [24] 1274 	lcall	___fsmul
-      0004A6 AC 82            [24] 1275 	mov	r4,dpl
-      0004A8 AD 83            [24] 1276 	mov	r5,dph
-      0004AA AE F0            [24] 1277 	mov	r6,b
-      0004AC FF               [12] 1278 	mov	r7,a
-      0004AD E5 81            [12] 1279 	mov	a,sp
-      0004AF 24 FC            [12] 1280 	add	a,#0xfc
-      0004B1 F5 81            [12] 1281 	mov	sp,a
-                                   1282 ;	temp_sensor.c:396: display_buffer[6] = number_table[(int)temp_fraction / 10];
-      0004B3 8C 82            [24] 1283 	mov	dpl,r4
-      0004B5 8D 83            [24] 1284 	mov	dph,r5
-      0004B7 8E F0            [24] 1285 	mov	b,r6
-      0004B9 EF               [12] 1286 	mov	a,r7
-      0004BA 12r00r00         [24] 1287 	lcall	___fs2sint
-      0004BD AE 82            [24] 1288 	mov	r6,dpl
-      0004BF AF 83            [24] 1289 	mov	r7,dph
-      0004C1 75*00 0A         [24] 1290 	mov	__divsint_PARM_2,#0x0A
-      0004C4 75*01 00         [24] 1291 	mov	(__divsint_PARM_2 + 1),#0x00
-      0004C7 C0 07            [24] 1292 	push	ar7
-      0004C9 C0 06            [24] 1293 	push	ar6
-      0004CB 12r00r00         [24] 1294 	lcall	__divsint
-      0004CE AC 82            [24] 1295 	mov	r4,dpl
-      0004D0 D0 06            [24] 1296 	pop	ar6
-      0004D2 D0 07            [24] 1297 	pop	ar7
-      0004D4 EC               [12] 1298 	mov	a,r4
-      0004D5 24r00            [12] 1299 	add	a,#_number_table
-      0004D7 F9               [12] 1300 	mov	r1,a
-      0004D8 87 05            [24] 1301 	mov	ar5,@r1
-      0004DA 8D*16            [24] 1302 	mov	(_display_buffer + 0x0006),r5
-                                   1303 ;	temp_sensor.c:397: display_buffer[8] = number_table[(int)temp_fraction % 10];
-      0004DC 75*00 0A         [24] 1304 	mov	__modsint_PARM_2,#0x0A
-      0004DF 75*01 00         [24] 1305 	mov	(__modsint_PARM_2 + 1),#0x00
-      0004E2 8E 82            [24] 1306 	mov	dpl,r6
-      0004E4 8F 83            [24] 1307 	mov	dph,r7
-      0004E6 12r00r00         [24] 1308 	lcall	__modsint
-      0004E9 AE 82            [24] 1309 	mov	r6,dpl
-      0004EB EE               [12] 1310 	mov	a,r6
-      0004EC 24r00            [12] 1311 	add	a,#_number_table
-      0004EE F9               [12] 1312 	mov	r1,a
-      0004EF 87 07            [24] 1313 	mov	ar7,@r1
-      0004F1 8F*18            [24] 1314 	mov	(_display_buffer + 0x0008),r7
-                                   1315 ;	temp_sensor.c:399: update_display = true;
-      0004F3 D2*00            [12] 1316 	setb	_main_update_display_1_63
-                                   1317 ;	temp_sensor.c:400: last_temp = current_temp;
-      0004F5 85*21*25         [24] 1318 	mov	_main_last_temp_1_63,_main_current_temp_1_63
-      0004F8 85*22*26         [24] 1319 	mov	(_main_last_temp_1_63 + 1),(_main_current_temp_1_63 + 1)
-      0004FB 85*23*27         [24] 1320 	mov	(_main_last_temp_1_63 + 2),(_main_current_temp_1_63 + 2)
-      0004FE 85*24*28         [24] 1321 	mov	(_main_last_temp_1_63 + 3),(_main_current_temp_1_63 + 3)
-      000501                       1322 00104$:
-                                   1323 ;	temp_sensor.c:402: if (update_display) 
-      000501 20*00 03         [24] 1324 	jb	_main_update_display_1_63,00126$
-      000504 02r03rD0         [24] 1325 	ljmp	00108$
-      000507                       1326 00126$:
-                                   1327 ;	temp_sensor.c:407: write_display();
-      000507 12r02rF0         [24] 1328 	lcall	_write_display
-                                   1329 ;	temp_sensor.c:408: update_display = false;
-      00050A C2*00            [12] 1330 	clr	_main_update_display_1_63
-      00050C 02r03rD0         [24] 1331 	ljmp	00108$
-                                   1332 	.area CSEG    (CODE)
-                                   1333 	.area CONST   (CODE)
-                                   1334 	.area XINIT   (CODE)
-                                   1335 	.area CABS    (ABS,CODE)
+                                   1043 ;	temp_sensor.c:276: void write_display(void)
+                                   1044 ;	-----------------------------------------
+                                   1045 ;	 function write_display
+                                   1046 ;	-----------------------------------------
+      000355                       1047 _write_display:
+                                   1048 ;	temp_sensor.c:285: i2c_start(DISPLAY_SFR);
+      000355 75 82 A0         [24] 1049 	mov	dpl,#0xA0
+      000358 12r00rAC         [24] 1050 	lcall	_i2c_start
+                                   1051 ;	temp_sensor.c:286: ack = i2c_send_byte(DISPLAY_SFR, address_with_write);
+      00035B 75*1B E0         [24] 1052 	mov	_i2c_send_byte_PARM_2,#0xE0
+      00035E 75 82 A0         [24] 1053 	mov	dpl,#0xA0
+      000361 12r01r10         [24] 1054 	lcall	_i2c_send_byte
+                                   1055 ;	temp_sensor.c:296: ack = i2c_send_byte(DISPLAY_SFR, 0x00); //0x00 is the starting address of the 7-set disp
+      000364 75*1B 00         [24] 1056 	mov	_i2c_send_byte_PARM_2,#0x00
+      000367 75 82 A0         [24] 1057 	mov	dpl,#0xA0
+      00036A 12r01r10         [24] 1058 	lcall	_i2c_send_byte
+                                   1059 ;	temp_sensor.c:297: for (i=0; i<DISPLAY_BUFFER_SIZE; i++) {
+      00036D 7F 00            [12] 1060 	mov	r7,#0x00
+      00036F                       1061 00102$:
+                                   1062 ;	temp_sensor.c:298: ack = i2c_send_byte(DISPLAY_SFR, display_buffer[i]);
+      00036F EF               [12] 1063 	mov	a,r7
+      000370 24r10            [12] 1064 	add	a,#_display_buffer
+      000372 F9               [12] 1065 	mov	r1,a
+      000373 87*1B            [24] 1066 	mov	_i2c_send_byte_PARM_2,@r1
+      000375 75 82 A0         [24] 1067 	mov	dpl,#0xA0
+      000378 C0 07            [24] 1068 	push	ar7
+      00037A 12r01r10         [24] 1069 	lcall	_i2c_send_byte
+      00037D D0 07            [24] 1070 	pop	ar7
+                                   1071 ;	temp_sensor.c:297: for (i=0; i<DISPLAY_BUFFER_SIZE; i++) {
+      00037F 0F               [12] 1072 	inc	r7
+      000380 BF 0A 00         [24] 1073 	cjne	r7,#0x0A,00113$
+      000383                       1074 00113$:
+      000383 40 EA            [24] 1075 	jc	00102$
+                                   1076 ;	temp_sensor.c:300: i2c_stop(DISPLAY_SFR);
+      000385 75 82 A0         [24] 1077 	mov	dpl,#0xA0
+      000388 02r00rE4         [24] 1078 	ljmp	_i2c_stop
+                                   1079 ;------------------------------------------------------------
+                                   1080 ;Allocation info for local variables in function 'write_display_command'
+                                   1081 ;------------------------------------------------------------
+                                   1082 ;command_byte              Allocated to registers r7 
+                                   1083 ;address                   Allocated to registers 
+                                   1084 ;write_bit                 Allocated to registers 
+                                   1085 ;address_with_write        Allocated to registers 
+                                   1086 ;ack                       Allocated to registers 
+                                   1087 ;------------------------------------------------------------
+                                   1088 ;	temp_sensor.c:304: void write_display_command(unsigned char command_byte)
+                                   1089 ;	-----------------------------------------
+                                   1090 ;	 function write_display_command
+                                   1091 ;	-----------------------------------------
+      00038B                       1092 _write_display_command:
+      00038B AF 82            [24] 1093 	mov	r7,dpl
+                                   1094 ;	temp_sensor.c:317: i2c_start(DISPLAY_SFR);
+      00038D 75 82 A0         [24] 1095 	mov	dpl,#0xA0
+      000390 C0 07            [24] 1096 	push	ar7
+      000392 12r00rAC         [24] 1097 	lcall	_i2c_start
+                                   1098 ;	temp_sensor.c:318: ack = i2c_send_byte(DISPLAY_SFR, address_with_write);
+      000395 75*1B E0         [24] 1099 	mov	_i2c_send_byte_PARM_2,#0xE0
+      000398 75 82 A0         [24] 1100 	mov	dpl,#0xA0
+      00039B 12r01r10         [24] 1101 	lcall	_i2c_send_byte
+      00039E D0 07            [24] 1102 	pop	ar7
+                                   1103 ;	temp_sensor.c:324: ack = i2c_send_byte(DISPLAY_SFR, command_byte);
+      0003A0 8F*1B            [24] 1104 	mov	_i2c_send_byte_PARM_2,r7
+      0003A2 75 82 A0         [24] 1105 	mov	dpl,#0xA0
+      0003A5 12r01r10         [24] 1106 	lcall	_i2c_send_byte
+                                   1107 ;	temp_sensor.c:325: i2c_stop(DISPLAY_SFR);
+      0003A8 75 82 A0         [24] 1108 	mov	dpl,#0xA0
+      0003AB 02r00rE4         [24] 1109 	ljmp	_i2c_stop
+                                   1110 ;------------------------------------------------------------
+                                   1111 ;Allocation info for local variables in function 'write_temp_sensor_config'
+                                   1112 ;------------------------------------------------------------
+                                   1113 ;config                    Allocated to registers r7 
+                                   1114 ;address_byte              Allocated to registers 
+                                   1115 ;ack                       Allocated to registers 
+                                   1116 ;------------------------------------------------------------
+                                   1117 ;	temp_sensor.c:328: void write_temp_sensor_config(unsigned char config)
+                                   1118 ;	-----------------------------------------
+                                   1119 ;	 function write_temp_sensor_config
+                                   1120 ;	-----------------------------------------
+      0003AE                       1121 _write_temp_sensor_config:
+      0003AE AF 82            [24] 1122 	mov	r7,dpl
+                                   1123 ;	temp_sensor.c:333: write_temp_sensor_command(ACCESS_TEMP_SENSOR_CONFIG);
+      0003B0 75 82 AC         [24] 1124 	mov	dpl,#0xAC
+      0003B3 C0 07            [24] 1125 	push	ar7
+      0003B5 12r03rC8         [24] 1126 	lcall	_write_temp_sensor_command
+      0003B8 D0 07            [24] 1127 	pop	ar7
+                                   1128 ;	temp_sensor.c:334: ack = i2c_send_byte(TEMP_SENSOR_SFR, config);
+      0003BA 8F*1B            [24] 1129 	mov	_i2c_send_byte_PARM_2,r7
+      0003BC 75 82 B0         [24] 1130 	mov	dpl,#0xB0
+      0003BF 12r01r10         [24] 1131 	lcall	_i2c_send_byte
+                                   1132 ;	temp_sensor.c:335: i2c_stop(TEMP_SENSOR_SFR);
+      0003C2 75 82 B0         [24] 1133 	mov	dpl,#0xB0
+      0003C5 02r00rE4         [24] 1134 	ljmp	_i2c_stop
+                                   1135 ;------------------------------------------------------------
+                                   1136 ;Allocation info for local variables in function 'write_temp_sensor_command'
+                                   1137 ;------------------------------------------------------------
+                                   1138 ;command_byte              Allocated to registers r7 
+                                   1139 ;control_byte              Allocated to registers 
+                                   1140 ;write_bit                 Allocated to registers 
+                                   1141 ;address_with_write        Allocated to registers 
+                                   1142 ;ack                       Allocated to registers 
+                                   1143 ;------------------------------------------------------------
+                                   1144 ;	temp_sensor.c:339: void write_temp_sensor_command(unsigned char command_byte)
+                                   1145 ;	-----------------------------------------
+                                   1146 ;	 function write_temp_sensor_command
+                                   1147 ;	-----------------------------------------
+      0003C8                       1148 _write_temp_sensor_command:
+      0003C8 AF 82            [24] 1149 	mov	r7,dpl
+                                   1150 ;	temp_sensor.c:373: i2c_start(TEMP_SENSOR_SFR);
+      0003CA 75 82 B0         [24] 1151 	mov	dpl,#0xB0
+      0003CD C0 07            [24] 1152 	push	ar7
+      0003CF 12r00rAC         [24] 1153 	lcall	_i2c_start
+                                   1154 ;	temp_sensor.c:374: ack = i2c_send_byte(TEMP_SENSOR_SFR, address_with_write);
+      0003D2 75*1B 90         [24] 1155 	mov	_i2c_send_byte_PARM_2,#0x90
+      0003D5 75 82 B0         [24] 1156 	mov	dpl,#0xB0
+      0003D8 12r01r10         [24] 1157 	lcall	_i2c_send_byte
+      0003DB D0 07            [24] 1158 	pop	ar7
+                                   1159 ;	temp_sensor.c:375: ack = i2c_send_byte(TEMP_SENSOR_SFR, command_byte);
+      0003DD 8F*1B            [24] 1160 	mov	_i2c_send_byte_PARM_2,r7
+      0003DF 75 82 B0         [24] 1161 	mov	dpl,#0xB0
+      0003E2 02r01r10         [24] 1162 	ljmp	_i2c_send_byte
+                                   1163 ;------------------------------------------------------------
+                                   1164 ;Allocation info for local variables in function 'main'
+                                   1165 ;------------------------------------------------------------
+                                   1166 ;temp_sensor_config        Allocated to registers 
+                                   1167 ;first_num                 Allocated to registers r7 
+                                   1168 ;second_num                Allocated to registers r6 
+                                   1169 ;current_temp              Allocated with name '_main_current_temp_1_68'
+                                   1170 ;last_temp                 Allocated with name '_main_last_temp_1_68'
+                                   1171 ;temp_fraction             Allocated to registers r4 r5 r6 r7 
+                                   1172 ;temp_int                  Allocated with name '_main_temp_int_1_68'
+                                   1173 ;------------------------------------------------------------
+                                   1174 ;	temp_sensor.c:378: void main(void)
+                                   1175 ;	-----------------------------------------
+                                   1176 ;	 function main
+                                   1177 ;	-----------------------------------------
+      0003E5                       1178 _main:
+                                   1179 ;	temp_sensor.c:380: bool update_display = true;
+      0003E5 D2*00            [12] 1180 	setb	_main_update_display_1_68
+                                   1181 ;	temp_sensor.c:384: float current_temp = 0, last_temp = 0;
+      0003E7 E4               [12] 1182 	clr	a
+      0003E8 F5*28            [12] 1183 	mov	_main_last_temp_1_68,a
+      0003EA F5*29            [12] 1184 	mov	(_main_last_temp_1_68 + 1),a
+      0003EC F5*2A            [12] 1185 	mov	(_main_last_temp_1_68 + 2),a
+      0003EE F5*2B            [12] 1186 	mov	(_main_last_temp_1_68 + 3),a
+                                   1187 ;	temp_sensor.c:385: float temp_fraction = 0.0, temp_int = 0.0;
+      0003F0 F5*2C            [12] 1188 	mov	_main_temp_int_1_68,a
+      0003F2 F5*2D            [12] 1189 	mov	(_main_temp_int_1_68 + 1),a
+      0003F4 F5*2E            [12] 1190 	mov	(_main_temp_int_1_68 + 2),a
+      0003F6 F5*2F            [12] 1191 	mov	(_main_temp_int_1_68 + 3),a
+                                   1192 ;	temp_sensor.c:387: delay(10); //delay is # clock cycles
+      0003F8 90 00 0A         [24] 1193 	mov	dptr,#0x000A
+      0003FB 12r00r00         [24] 1194 	lcall	_delay
+                                   1195 ;	temp_sensor.c:390: write_display_command(ENABLE_DISPLAY_OSCILLATOR);
+      0003FE 75 82 21         [24] 1196 	mov	dpl,#0x21
+      000401 12r03r8B         [24] 1197 	lcall	_write_display_command
+                                   1198 ;	temp_sensor.c:391: write_display_command(ENABLE_DISPLAY);
+      000404 75 82 81         [24] 1199 	mov	dpl,#0x81
+      000407 12r03r8B         [24] 1200 	lcall	_write_display_command
+                                   1201 ;	temp_sensor.c:397: write_temp_sensor_config(temp_sensor_config);
+      00040A 75 82 03         [24] 1202 	mov	dpl,#0x03
+      00040D 12r03rAE         [24] 1203 	lcall	_write_temp_sensor_config
+                                   1204 ;	temp_sensor.c:403: while (true) 
+      000410                       1205 00108$:
+                                   1206 ;	temp_sensor.c:405: current_temp = read_temp_sensor();
+      000410 12r01rFC         [24] 1207 	lcall	_read_temp_sensor
+      000413 85 82*24         [24] 1208 	mov	_main_current_temp_1_68,dpl
+      000416 85 83*25         [24] 1209 	mov	(_main_current_temp_1_68 + 1),dph
+      000419 85 F0*26         [24] 1210 	mov	(_main_current_temp_1_68 + 2),b
+      00041C F5*27            [12] 1211 	mov	(_main_current_temp_1_68 + 3),a
+                                   1212 ;	temp_sensor.c:406: if (last_temp != current_temp)
+      00041E C0*24            [24] 1213 	push	_main_current_temp_1_68
+      000420 C0*25            [24] 1214 	push	(_main_current_temp_1_68 + 1)
+      000422 C0*26            [24] 1215 	push	(_main_current_temp_1_68 + 2)
+      000424 C0*27            [24] 1216 	push	(_main_current_temp_1_68 + 3)
+      000426 85*28 82         [24] 1217 	mov	dpl,_main_last_temp_1_68
+      000429 85*29 83         [24] 1218 	mov	dph,(_main_last_temp_1_68 + 1)
+      00042C 85*2A F0         [24] 1219 	mov	b,(_main_last_temp_1_68 + 2)
+      00042F E5*2B            [12] 1220 	mov	a,(_main_last_temp_1_68 + 3)
+      000431 12r00r00         [24] 1221 	lcall	___fseq
+      000434 AD 82            [24] 1222 	mov	r5,dpl
+      000436 E5 81            [12] 1223 	mov	a,sp
+      000438 24 FC            [12] 1224 	add	a,#0xfc
+      00043A F5 81            [12] 1225 	mov	sp,a
+      00043C ED               [12] 1226 	mov	a,r5
+      00043D 60 03            [24] 1227 	jz	00124$
+      00043F 02r05r47         [24] 1228 	ljmp	00104$
+      000442                       1229 00124$:
+                                   1230 ;	temp_sensor.c:409: if (current_temp < 0) 
+      000442 E4               [12] 1231 	clr	a
+      000443 C0 E0            [24] 1232 	push	acc
+      000445 C0 E0            [24] 1233 	push	acc
+      000447 C0 E0            [24] 1234 	push	acc
+      000449 C0 E0            [24] 1235 	push	acc
+      00044B 85*24 82         [24] 1236 	mov	dpl,_main_current_temp_1_68
+      00044E 85*25 83         [24] 1237 	mov	dph,(_main_current_temp_1_68 + 1)
+      000451 85*26 F0         [24] 1238 	mov	b,(_main_current_temp_1_68 + 2)
+      000454 E5*27            [12] 1239 	mov	a,(_main_current_temp_1_68 + 3)
+      000456 12r00r00         [24] 1240 	lcall	___fslt
+      000459 AD 82            [24] 1241 	mov	r5,dpl
+      00045B E5 81            [12] 1242 	mov	a,sp
+      00045D 24 FC            [12] 1243 	add	a,#0xfc
+      00045F F5 81            [12] 1244 	mov	sp,a
+      000461 ED               [12] 1245 	mov	a,r5
+      000462 60 06            [24] 1246 	jz	00102$
+                                   1247 ;	temp_sensor.c:412: current_temp *= -1;
+      000464 E5*27            [12] 1248 	mov	a,(_main_current_temp_1_68 + 3)
+      000466 B2 E7            [12] 1249 	cpl	acc.7
+      000468 F5*27            [12] 1250 	mov	(_main_current_temp_1_68 + 3),a
+      00046A                       1251 00102$:
+                                   1252 ;	temp_sensor.c:414: first_num = number_table[(int)current_temp / 10];
+      00046A 85*24 82         [24] 1253 	mov	dpl,_main_current_temp_1_68
+      00046D 85*25 83         [24] 1254 	mov	dph,(_main_current_temp_1_68 + 1)
+      000470 85*26 F0         [24] 1255 	mov	b,(_main_current_temp_1_68 + 2)
+      000473 E5*27            [12] 1256 	mov	a,(_main_current_temp_1_68 + 3)
+      000475 12r00r00         [24] 1257 	lcall	___fs2sint
+      000478 AC 82            [24] 1258 	mov	r4,dpl
+      00047A AD 83            [24] 1259 	mov	r5,dph
+      00047C 75*00 0A         [24] 1260 	mov	__divsint_PARM_2,#0x0A
+      00047F 75*01 00         [24] 1261 	mov	(__divsint_PARM_2 + 1),#0x00
+      000482 C0 05            [24] 1262 	push	ar5
+      000484 C0 04            [24] 1263 	push	ar4
+      000486 12r00r00         [24] 1264 	lcall	__divsint
+      000489 AE 82            [24] 1265 	mov	r6,dpl
+      00048B D0 04            [24] 1266 	pop	ar4
+      00048D D0 05            [24] 1267 	pop	ar5
+      00048F EE               [12] 1268 	mov	a,r6
+      000490 24r00            [12] 1269 	add	a,#_number_table
+      000492 F9               [12] 1270 	mov	r1,a
+      000493 87 07            [24] 1271 	mov	ar7,@r1
+                                   1272 ;	temp_sensor.c:415: second_num = number_table[(int)current_temp % 10] | PERIOD_CHARACTER;
+      000495 75*00 0A         [24] 1273 	mov	__modsint_PARM_2,#0x0A
+      000498 75*01 00         [24] 1274 	mov	(__modsint_PARM_2 + 1),#0x00
+      00049B 8C 82            [24] 1275 	mov	dpl,r4
+      00049D 8D 83            [24] 1276 	mov	dph,r5
+      00049F C0 07            [24] 1277 	push	ar7
+      0004A1 12r00r00         [24] 1278 	lcall	__modsint
+      0004A4 E5 82            [12] 1279 	mov	a,dpl
+      0004A6 24r00            [12] 1280 	add	a,#_number_table
+      0004A8 F9               [12] 1281 	mov	r1,a
+      0004A9 87 06            [24] 1282 	mov	ar6,@r1
+      0004AB 43 06 80         [24] 1283 	orl	ar6,#0x80
+                                   1284 ;	temp_sensor.c:417: clear_display_buffer();
+      0004AE C0 06            [24] 1285 	push	ar6
+      0004B0 12r03r3A         [24] 1286 	lcall	_clear_display_buffer
+      0004B3 D0 06            [24] 1287 	pop	ar6
+      0004B5 D0 07            [24] 1288 	pop	ar7
+                                   1289 ;	temp_sensor.c:419: display_buffer[0] = first_num;
+      0004B7 8F*10            [24] 1290 	mov	_display_buffer,r7
+                                   1291 ;	temp_sensor.c:420: display_buffer[2] = second_num;
+      0004B9 8E*12            [24] 1292 	mov	(_display_buffer + 0x0002),r6
+                                   1293 ;	temp_sensor.c:421: temp_fraction = modff(current_temp, &temp_int);
+      0004BB 75*00r2C         [24] 1294 	mov	_modff_PARM_2,#_main_temp_int_1_68
+      0004BE 75*01 00         [24] 1295 	mov	(_modff_PARM_2 + 1),#0x00
+      0004C1 75*02 40         [24] 1296 	mov	(_modff_PARM_2 + 2),#0x40
+      0004C4 85*24 82         [24] 1297 	mov	dpl,_main_current_temp_1_68
+      0004C7 85*25 83         [24] 1298 	mov	dph,(_main_current_temp_1_68 + 1)
+      0004CA 85*26 F0         [24] 1299 	mov	b,(_main_current_temp_1_68 + 2)
+      0004CD E5*27            [12] 1300 	mov	a,(_main_current_temp_1_68 + 3)
+      0004CF 12r00r00         [24] 1301 	lcall	_modff
+      0004D2 AC 82            [24] 1302 	mov	r4,dpl
+      0004D4 AD 83            [24] 1303 	mov	r5,dph
+      0004D6 AE F0            [24] 1304 	mov	r6,b
+      0004D8 FF               [12] 1305 	mov	r7,a
+                                   1306 ;	temp_sensor.c:422: temp_fraction *= 100;
+      0004D9 C0 04            [24] 1307 	push	ar4
+      0004DB C0 05            [24] 1308 	push	ar5
+      0004DD C0 06            [24] 1309 	push	ar6
+      0004DF C0 07            [24] 1310 	push	ar7
+      0004E1 90 00 00         [24] 1311 	mov	dptr,#0x0000
+      0004E4 75 F0 C8         [24] 1312 	mov	b,#0xC8
+      0004E7 74 42            [12] 1313 	mov	a,#0x42
+      0004E9 12r00r00         [24] 1314 	lcall	___fsmul
+      0004EC AC 82            [24] 1315 	mov	r4,dpl
+      0004EE AD 83            [24] 1316 	mov	r5,dph
+      0004F0 AE F0            [24] 1317 	mov	r6,b
+      0004F2 FF               [12] 1318 	mov	r7,a
+      0004F3 E5 81            [12] 1319 	mov	a,sp
+      0004F5 24 FC            [12] 1320 	add	a,#0xfc
+      0004F7 F5 81            [12] 1321 	mov	sp,a
+                                   1322 ;	temp_sensor.c:423: display_buffer[6] = number_table[(int)temp_fraction / 10];
+      0004F9 8C 82            [24] 1323 	mov	dpl,r4
+      0004FB 8D 83            [24] 1324 	mov	dph,r5
+      0004FD 8E F0            [24] 1325 	mov	b,r6
+      0004FF EF               [12] 1326 	mov	a,r7
+      000500 12r00r00         [24] 1327 	lcall	___fs2sint
+      000503 AE 82            [24] 1328 	mov	r6,dpl
+      000505 AF 83            [24] 1329 	mov	r7,dph
+      000507 75*00 0A         [24] 1330 	mov	__divsint_PARM_2,#0x0A
+      00050A 75*01 00         [24] 1331 	mov	(__divsint_PARM_2 + 1),#0x00
+      00050D C0 07            [24] 1332 	push	ar7
+      00050F C0 06            [24] 1333 	push	ar6
+      000511 12r00r00         [24] 1334 	lcall	__divsint
+      000514 AC 82            [24] 1335 	mov	r4,dpl
+      000516 D0 06            [24] 1336 	pop	ar6
+      000518 D0 07            [24] 1337 	pop	ar7
+      00051A EC               [12] 1338 	mov	a,r4
+      00051B 24r00            [12] 1339 	add	a,#_number_table
+      00051D F9               [12] 1340 	mov	r1,a
+      00051E 87 05            [24] 1341 	mov	ar5,@r1
+      000520 8D*16            [24] 1342 	mov	(_display_buffer + 0x0006),r5
+                                   1343 ;	temp_sensor.c:424: display_buffer[8] = number_table[(int)temp_fraction % 10];
+      000522 75*00 0A         [24] 1344 	mov	__modsint_PARM_2,#0x0A
+      000525 75*01 00         [24] 1345 	mov	(__modsint_PARM_2 + 1),#0x00
+      000528 8E 82            [24] 1346 	mov	dpl,r6
+      00052A 8F 83            [24] 1347 	mov	dph,r7
+      00052C 12r00r00         [24] 1348 	lcall	__modsint
+      00052F E5 82            [12] 1349 	mov	a,dpl
+      000531 FE               [12] 1350 	mov	r6,a
+      000532 24r00            [12] 1351 	add	a,#_number_table
+      000534 F9               [12] 1352 	mov	r1,a
+      000535 87 07            [24] 1353 	mov	ar7,@r1
+      000537 8F*18            [24] 1354 	mov	(_display_buffer + 0x0008),r7
+                                   1355 ;	temp_sensor.c:426: update_display = true;
+      000539 D2*00            [12] 1356 	setb	_main_update_display_1_68
+                                   1357 ;	temp_sensor.c:427: last_temp = current_temp;
+      00053B 85*24*28         [24] 1358 	mov	_main_last_temp_1_68,_main_current_temp_1_68
+      00053E 85*25*29         [24] 1359 	mov	(_main_last_temp_1_68 + 1),(_main_current_temp_1_68 + 1)
+      000541 85*26*2A         [24] 1360 	mov	(_main_last_temp_1_68 + 2),(_main_current_temp_1_68 + 2)
+      000544 85*27*2B         [24] 1361 	mov	(_main_last_temp_1_68 + 3),(_main_current_temp_1_68 + 3)
+      000547                       1362 00104$:
+                                   1363 ;	temp_sensor.c:429: if (update_display) 
+      000547 20*00 03         [24] 1364 	jb	_main_update_display_1_68,00126$
+      00054A 02r04r10         [24] 1365 	ljmp	00108$
+      00054D                       1366 00126$:
+                                   1367 ;	temp_sensor.c:434: write_display();
+      00054D 12r03r55         [24] 1368 	lcall	_write_display
+                                   1369 ;	temp_sensor.c:435: update_display = false;
+      000550 C2*00            [12] 1370 	clr	_main_update_display_1_68
+      000552 02r04r10         [24] 1371 	ljmp	00108$
+                                   1372 	.area CSEG    (CODE)
+                                   1373 	.area CONST   (CODE)
+                                   1374 	.area XINIT   (CODE)
+                                   1375 	.area CABS    (ABS,CODE)

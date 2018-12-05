@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.5.0 #9253 (Apr  3 2018) (Linux)
-; This file was generated Tue Dec  4 05:30:11 2018
+; This file was generated Wed Dec  5 08:35:54 2018
 ;--------------------------------------------------------
 	.module temp_sensor
 	.optsdcc -mmcs51 --model-small
@@ -9,13 +9,10 @@
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
-	.globl _i2c_scl_write_PARM_2
 	.globl _i2c_sda_write_PARM_2
 	.globl _main
-	.globl _delay
 	.globl _write_temp_sensor_config
 	.globl _write_display_command
-	.globl _write_display
 	.globl _read_temp_sensor
 	.globl _i2c_read_byte
 	.globl _i2c_send_byte
@@ -26,6 +23,7 @@
 	.globl _i2c_sda_read
 	.globl _i2c_sda_write
 	.globl _i2c_delay
+	.globl _delay
 	.globl _modff
 	.globl _CY
 	.globl _AC
@@ -124,8 +122,11 @@
 	.globl _SP
 	.globl _P0
 	.globl _i2c_send_byte_PARM_2
+	.globl _i2c_scl_write_PARM_2
 	.globl _display_buffer
 	.globl _number_table
+	.globl _clear_display_buffer
+	.globl _write_display
 	.globl _write_temp_sensor_command
 ;--------------------------------------------------------
 ; special function registers
@@ -246,30 +247,27 @@ _number_table::
 	.ds 16
 _display_buffer::
 	.ds 10
+_i2c_scl_write_PARM_2:
+	.ds 1
 _i2c_send_byte_PARM_2:
 	.ds 1
-_read_temp_sensor_slope_1_50:
-	.ds 1
-_read_temp_sensor_remainder_1_50:
-	.ds 1
-_read_temp_sensor_sloc0_1_0:
+_read_temp_sensor_slope_1_54:
 	.ds 4
-_main_current_temp_1_63:
+_read_temp_sensor_count_remaining_1_54:
 	.ds 4
-_main_last_temp_1_63:
+_main_current_temp_1_68:
 	.ds 4
-_main_temp_int_1_63:
+_main_last_temp_1_68:
+	.ds 4
+_main_temp_int_1_68:
 	.ds 4
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
 	.area	OSEG    (OVR,DATA)
 	.area	OSEG    (OVR,DATA)
+	.area	OSEG    (OVR,DATA)
 _i2c_sda_write_PARM_2:
-	.ds 1
-	.area	OSEG    (OVR,DATA)
-	.area	OSEG    (OVR,DATA)
-_i2c_scl_write_PARM_2:
 	.ds 1
 	.area	OSEG    (OVR,DATA)
 	.area	OSEG    (OVR,DATA)
@@ -293,7 +291,7 @@ __start__stack:
 ; bit data
 ;--------------------------------------------------------
 	.area BSEG    (BIT)
-_main_update_display_1_63:
+_main_update_display_1_68:
 	.ds 1
 ;--------------------------------------------------------
 ; paged external ram data
@@ -340,7 +338,7 @@ __interrupt_vect:
 	.globl __mcs51_genXINIT
 	.globl __mcs51_genXRAMCLEAR
 	.globl __mcs51_genRAMCLEAR
-;	temp_sensor.c:37: unsigned char number_table[] = {
+;	temp_sensor.c:39: unsigned char number_table[] = {
 	mov	_number_table,#0x3F
 	mov	(_number_table + 0x0001),#0x06
 	mov	(_number_table + 0x0002),#0x5B
@@ -357,7 +355,7 @@ __interrupt_vect:
 	mov	(_number_table + 0x000d),#0x5E
 	mov	(_number_table + 0x000e),#0x79
 	mov	(_number_table + 0x000f),#0x71
-;	temp_sensor.c:57: unsigned char display_buffer[] = {
+;	temp_sensor.c:59: unsigned char display_buffer[] = {
 	mov	_display_buffer,#0x00
 	mov	(_display_buffer + 0x0001),#0x00
 	mov	(_display_buffer + 0x0002),#0x00
@@ -383,15 +381,16 @@ __sdcc_program_startup:
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'i2c_delay'
+;Allocation info for local variables in function 'delay'
 ;------------------------------------------------------------
-;i                         Allocated to registers r6 r7 
+;min_clock_cycles_to_wait  Allocated to registers r6 r7 
+;i                         Allocated to registers r4 r5 
 ;------------------------------------------------------------
-;	temp_sensor.c:75: void i2c_delay()
+;	temp_sensor.c:85: void delay(int min_clock_cycles_to_wait)
 ;	-----------------------------------------
-;	 function i2c_delay
+;	 function delay
 ;	-----------------------------------------
-_i2c_delay:
+_delay:
 	ar7 = 0x07
 	ar6 = 0x06
 	ar5 = 0x05
@@ -400,7 +399,38 @@ _i2c_delay:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-;	temp_sensor.c:78: for (i = 0; i < 5; i++);
+	mov	r6,dpl
+	mov	r7,dph
+;	temp_sensor.c:88: for(i = 0;i < min_clock_cycles_to_wait; i++);
+	mov	r4,#0x00
+	mov	r5,#0x00
+00103$:
+	clr	c
+	mov	a,r4
+	subb	a,r6
+	mov	a,r5
+	xrl	a,#0x80
+	mov	b,r7
+	xrl	b,#0x80
+	subb	a,b
+	jnc	00105$
+	inc	r4
+	cjne	r4,#0x00,00103$
+	inc	r5
+	sjmp	00103$
+00105$:
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'i2c_delay'
+;------------------------------------------------------------
+;i                         Allocated to registers r6 r7 
+;------------------------------------------------------------
+;	temp_sensor.c:97: void i2c_delay()
+;	-----------------------------------------
+;	 function i2c_delay
+;	-----------------------------------------
+_i2c_delay:
+;	temp_sensor.c:100: for (i = 0; i < 5; i++);
 	mov	r6,#0x05
 	mov	r7,#0x00
 00104$:
@@ -422,30 +452,30 @@ _i2c_delay:
 ;value                     Allocated with name '_i2c_sda_write_PARM_2'
 ;sfr_address               Allocated to registers r7 
 ;------------------------------------------------------------
-;	temp_sensor.c:81: void i2c_sda_write(unsigned char sfr_address, unsigned char value)
+;	temp_sensor.c:103: void i2c_sda_write(unsigned char sfr_address, unsigned char value)
 ;	-----------------------------------------
 ;	 function i2c_sda_write
 ;	-----------------------------------------
 _i2c_sda_write:
 	mov	r7,dpl
-;	temp_sensor.c:83: switch (sfr_address)
+;	temp_sensor.c:105: switch (sfr_address)
 	cjne	r7,#0xA0,00112$
 	sjmp	00101$
 00112$:
-;	temp_sensor.c:85: case DISPLAY_SFR: P2_0 = value; break;
+;	temp_sensor.c:107: case DISPLAY_SFR: P2_0 = value; break;
 	cjne	r7,#0xB0,00104$
 	sjmp	00102$
 00101$:
 	mov	a,_i2c_sda_write_PARM_2
 	add	a,#0xff
 	mov	_P2_0,c
-;	temp_sensor.c:86: case TEMP_SENSOR_SFR: P3_5 = value; break;
+;	temp_sensor.c:108: case TEMP_SENSOR_SFR: P3_5 = value; break;
 	ret
 00102$:
 	mov	a,_i2c_sda_write_PARM_2
 	add	a,#0xff
 	mov	_P3_5,c
-;	temp_sensor.c:87: }
+;	temp_sensor.c:109: }
 00104$:
 	ret
 ;------------------------------------------------------------
@@ -454,19 +484,19 @@ _i2c_sda_write:
 ;sfr_address               Allocated to registers r7 
 ;result                    Allocated to registers r6 
 ;------------------------------------------------------------
-;	temp_sensor.c:90: unsigned char i2c_sda_read(unsigned char sfr_address)
+;	temp_sensor.c:112: unsigned char i2c_sda_read(unsigned char sfr_address)
 ;	-----------------------------------------
 ;	 function i2c_sda_read
 ;	-----------------------------------------
 _i2c_sda_read:
 	mov	r7,dpl
-;	temp_sensor.c:92: unsigned char result = 0;
+;	temp_sensor.c:114: unsigned char result = 0;
 	mov	r6,#0x00
-;	temp_sensor.c:93: switch (sfr_address)
+;	temp_sensor.c:115: switch (sfr_address)
 	cjne	r7,#0xA0,00112$
 	sjmp	00101$
 00112$:
-;	temp_sensor.c:95: case DISPLAY_SFR: result = P2_0; break;
+;	temp_sensor.c:117: case DISPLAY_SFR: result = P2_0; break;
 	cjne	r7,#0xB0,00103$
 	sjmp	00102$
 00101$:
@@ -474,16 +504,16 @@ _i2c_sda_read:
 	clr	a
 	rlc	a
 	mov	r6,a
-;	temp_sensor.c:96: case TEMP_SENSOR_SFR: result = P3_5; break;
+;	temp_sensor.c:118: case TEMP_SENSOR_SFR: result = P3_5; break;
 	sjmp	00103$
 00102$:
 	mov	c,_P3_5
 	clr	a
 	rlc	a
 	mov	r6,a
-;	temp_sensor.c:97: }
+;	temp_sensor.c:119: }
 00103$:
-;	temp_sensor.c:98: return result;
+;	temp_sensor.c:120: return result;
 	mov	dpl,r6
 	ret
 ;------------------------------------------------------------
@@ -492,51 +522,52 @@ _i2c_sda_read:
 ;value                     Allocated with name '_i2c_scl_write_PARM_2'
 ;sfr_address               Allocated to registers r7 
 ;------------------------------------------------------------
-;	temp_sensor.c:101: void i2c_scl_write(unsigned char sfr_address, unsigned char value)
+;	temp_sensor.c:123: void i2c_scl_write(unsigned char sfr_address, unsigned char value)
 ;	-----------------------------------------
 ;	 function i2c_scl_write
 ;	-----------------------------------------
 _i2c_scl_write:
 	mov	r7,dpl
-;	temp_sensor.c:103: switch (sfr_address)
+;	temp_sensor.c:125: switch (sfr_address)
 	cjne	r7,#0xA0,00112$
 	sjmp	00101$
 00112$:
-;	temp_sensor.c:105: case DISPLAY_SFR: P2_1 = value; break;
-	cjne	r7,#0xB0,00104$
+;	temp_sensor.c:127: case DISPLAY_SFR: P2_1 = value; break;
+	cjne	r7,#0xB0,00103$
 	sjmp	00102$
 00101$:
 	mov	a,_i2c_scl_write_PARM_2
 	add	a,#0xff
 	mov	_P2_1,c
-;	temp_sensor.c:106: case TEMP_SENSOR_SFR: P3_6 = value; break;
-	ret
+;	temp_sensor.c:128: case TEMP_SENSOR_SFR: P3_6 = value; break;
+	sjmp	00103$
 00102$:
 	mov	a,_i2c_scl_write_PARM_2
 	add	a,#0xff
 	mov	_P3_6,c
-;	temp_sensor.c:107: }
-00104$:
-	ret
+;	temp_sensor.c:129: }
+00103$:
+;	temp_sensor.c:130: i2c_delay();
+	ljmp	_i2c_delay
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'i2c_scl_read'
 ;------------------------------------------------------------
 ;sfr_address               Allocated to registers r7 
 ;result                    Allocated to registers r6 
 ;------------------------------------------------------------
-;	temp_sensor.c:110: unsigned char i2c_scl_read(unsigned char sfr_address)
+;	temp_sensor.c:133: unsigned char i2c_scl_read(unsigned char sfr_address)
 ;	-----------------------------------------
 ;	 function i2c_scl_read
 ;	-----------------------------------------
 _i2c_scl_read:
 	mov	r7,dpl
-;	temp_sensor.c:112: unsigned char result = 0;
+;	temp_sensor.c:135: unsigned char result = 0;
 	mov	r6,#0x00
-;	temp_sensor.c:113: switch (sfr_address)
+;	temp_sensor.c:136: switch (sfr_address)
 	cjne	r7,#0xA0,00112$
 	sjmp	00101$
 00112$:
-;	temp_sensor.c:115: case DISPLAY_SFR: result = P2_1; break;
+;	temp_sensor.c:138: case DISPLAY_SFR: result = P2_1; break;
 	cjne	r7,#0xB0,00103$
 	sjmp	00102$
 00101$:
@@ -544,16 +575,20 @@ _i2c_scl_read:
 	clr	a
 	rlc	a
 	mov	r6,a
-;	temp_sensor.c:116: case TEMP_SENSOR_SFR: result = P3_6; break;
+;	temp_sensor.c:139: case TEMP_SENSOR_SFR: result = P3_6; break;
 	sjmp	00103$
 00102$:
 	mov	c,_P3_6
 	clr	a
 	rlc	a
 	mov	r6,a
-;	temp_sensor.c:117: }
+;	temp_sensor.c:140: }
 00103$:
-;	temp_sensor.c:118: return result;
+;	temp_sensor.c:141: i2c_delay();
+	push	ar6
+	lcall	_i2c_delay
+	pop	ar6
+;	temp_sensor.c:142: return result;
 	mov	dpl,r6
 	ret
 ;------------------------------------------------------------
@@ -561,42 +596,36 @@ _i2c_scl_read:
 ;------------------------------------------------------------
 ;sfr_address               Allocated to registers r7 
 ;------------------------------------------------------------
-;	temp_sensor.c:121: void i2c_start(unsigned char sfr_address)
+;	temp_sensor.c:145: void i2c_start(unsigned char sfr_address)
 ;	-----------------------------------------
 ;	 function i2c_start
 ;	-----------------------------------------
 _i2c_start:
-;	temp_sensor.c:123: i2c_scl_write(sfr_address, 0);
+;	temp_sensor.c:147: i2c_scl_write(sfr_address, 0);
 	mov	r7,dpl
 	mov	_i2c_scl_write_PARM_2,#0x00
 	push	ar7
 	lcall	_i2c_scl_write
 	pop	ar7
-;	temp_sensor.c:124: i2c_sda_write(sfr_address, 1);
+;	temp_sensor.c:148: i2c_sda_write(sfr_address, 1);
 	mov	_i2c_sda_write_PARM_2,#0x01
 	mov	dpl,r7
 	push	ar7
 	lcall	_i2c_sda_write
-;	temp_sensor.c:125: i2c_delay();
-	lcall	_i2c_delay
 	pop	ar7
-;	temp_sensor.c:126: i2c_scl_write(sfr_address, 1);
+;	temp_sensor.c:149: i2c_scl_write(sfr_address, 1);
 	mov	_i2c_scl_write_PARM_2,#0x01
 	mov	dpl,r7
 	push	ar7
 	lcall	_i2c_scl_write
-;	temp_sensor.c:127: i2c_delay();
-	lcall	_i2c_delay
 	pop	ar7
-;	temp_sensor.c:128: i2c_sda_write(sfr_address, 0);
+;	temp_sensor.c:150: i2c_sda_write(sfr_address, 0);
 	mov	_i2c_sda_write_PARM_2,#0x00
 	mov	dpl,r7
 	push	ar7
 	lcall	_i2c_sda_write
-;	temp_sensor.c:129: i2c_delay();
-	lcall	_i2c_delay
 	pop	ar7
-;	temp_sensor.c:130: i2c_scl_write(sfr_address, 0);
+;	temp_sensor.c:151: i2c_scl_write(sfr_address, 0);
 	mov	_i2c_scl_write_PARM_2,#0x00
 	mov	dpl,r7
 	ljmp	_i2c_scl_write
@@ -605,36 +634,30 @@ _i2c_start:
 ;------------------------------------------------------------
 ;sfr_address               Allocated to registers r7 
 ;------------------------------------------------------------
-;	temp_sensor.c:133: void i2c_stop(unsigned char sfr_address)
+;	temp_sensor.c:154: void i2c_stop(unsigned char sfr_address)
 ;	-----------------------------------------
 ;	 function i2c_stop
 ;	-----------------------------------------
 _i2c_stop:
-;	temp_sensor.c:135: i2c_scl_write(sfr_address, 0);
+;	temp_sensor.c:156: i2c_scl_write(sfr_address, 0);
 	mov	r7,dpl
 	mov	_i2c_scl_write_PARM_2,#0x00
 	push	ar7
 	lcall	_i2c_scl_write
-;	temp_sensor.c:136: i2c_delay();
-	lcall	_i2c_delay
 	pop	ar7
-;	temp_sensor.c:137: i2c_sda_write(sfr_address, 0);
+;	temp_sensor.c:157: i2c_sda_write(sfr_address, 0);
 	mov	_i2c_sda_write_PARM_2,#0x00
 	mov	dpl,r7
 	push	ar7
 	lcall	_i2c_sda_write
-;	temp_sensor.c:138: i2c_delay();
-	lcall	_i2c_delay
 	pop	ar7
-;	temp_sensor.c:139: i2c_scl_write(sfr_address, 1);
+;	temp_sensor.c:158: i2c_scl_write(sfr_address, 1);
 	mov	_i2c_scl_write_PARM_2,#0x01
 	mov	dpl,r7
 	push	ar7
 	lcall	_i2c_scl_write
-;	temp_sensor.c:140: i2c_delay();
-	lcall	_i2c_delay
 	pop	ar7
-;	temp_sensor.c:141: i2c_sda_write(sfr_address, 1);
+;	temp_sensor.c:159: i2c_sda_write(sfr_address, 1);
 	mov	_i2c_sda_write_PARM_2,#0x01
 	mov	dpl,r7
 	ljmp	_i2c_sda_write
@@ -646,29 +669,27 @@ _i2c_stop:
 ;i                         Allocated to registers r6 
 ;ack_bit                   Allocated to registers r6 
 ;------------------------------------------------------------
-;	temp_sensor.c:144: unsigned char i2c_send_byte(unsigned char sfr_address, unsigned char data_out)
+;	temp_sensor.c:162: unsigned char i2c_send_byte(unsigned char sfr_address, unsigned char data_out)
 ;	-----------------------------------------
 ;	 function i2c_send_byte
 ;	-----------------------------------------
 _i2c_send_byte:
 	mov	r7,dpl
-;	temp_sensor.c:147: for (i = 0; i < 8; i++) {
+;	temp_sensor.c:165: for (i = 0; i < 8; i++) {
 	mov	r6,#0x00
 00105$:
-;	temp_sensor.c:148: i2c_scl_write(sfr_address, 0);
+;	temp_sensor.c:166: i2c_scl_write(sfr_address, 0);
 	mov	_i2c_scl_write_PARM_2,#0x00
 	mov	dpl,r7
 	push	ar7
 	push	ar6
 	lcall	_i2c_scl_write
-;	temp_sensor.c:149: i2c_delay();
-	lcall	_i2c_delay
 	pop	ar6
 	pop	ar7
-;	temp_sensor.c:150: if ((data_out & 0x80) == 0) {
+;	temp_sensor.c:167: if ((data_out & 0x80) == 0) {
 	mov	a,_i2c_send_byte_PARM_2
 	jb	acc.7,00102$
-;	temp_sensor.c:151: i2c_sda_write(sfr_address, 0);
+;	temp_sensor.c:168: i2c_sda_write(sfr_address, 0);
 	mov	_i2c_sda_write_PARM_2,#0x00
 	mov	dpl,r7
 	push	ar7
@@ -678,7 +699,7 @@ _i2c_send_byte:
 	pop	ar7
 	sjmp	00103$
 00102$:
-;	temp_sensor.c:153: i2c_sda_write(sfr_address, 1);
+;	temp_sensor.c:170: i2c_sda_write(sfr_address, 1);
 	mov	_i2c_sda_write_PARM_2,#0x01
 	mov	dpl,r7
 	push	ar7
@@ -687,72 +708,54 @@ _i2c_send_byte:
 	pop	ar6
 	pop	ar7
 00103$:
-;	temp_sensor.c:155: i2c_delay();
-	push	ar7
-	push	ar6
-	lcall	_i2c_delay
-	pop	ar6
-	pop	ar7
-;	temp_sensor.c:156: i2c_scl_write(sfr_address, 1);
+;	temp_sensor.c:172: i2c_scl_write(sfr_address, 1);
 	mov	_i2c_scl_write_PARM_2,#0x01
 	mov	dpl,r7
 	push	ar7
 	push	ar6
 	lcall	_i2c_scl_write
-;	temp_sensor.c:157: i2c_delay();
-	lcall	_i2c_delay
 	pop	ar6
 	pop	ar7
-;	temp_sensor.c:158: data_out<<=1;
+;	temp_sensor.c:173: data_out<<=1;
 	mov	a,_i2c_send_byte_PARM_2
 	add	a,_i2c_send_byte_PARM_2
 	mov	_i2c_send_byte_PARM_2,a
-;	temp_sensor.c:147: for (i = 0; i < 8; i++) {
+;	temp_sensor.c:165: for (i = 0; i < 8; i++) {
 	inc	r6
 	cjne	r6,#0x08,00120$
 00120$:
 	jc	00105$
-;	temp_sensor.c:160: i2c_scl_write(sfr_address, 0);
+;	temp_sensor.c:175: i2c_scl_write(sfr_address, 0);
 	mov	_i2c_scl_write_PARM_2,#0x00
 	mov	dpl,r7
 	push	ar7
 	lcall	_i2c_scl_write
-;	temp_sensor.c:161: i2c_delay();
-	lcall	_i2c_delay
 	pop	ar7
-;	temp_sensor.c:162: i2c_sda_write(sfr_address, 1);
+;	temp_sensor.c:176: i2c_sda_write(sfr_address, 1);
 	mov	_i2c_sda_write_PARM_2,#0x01
 	mov	dpl,r7
 	push	ar7
 	lcall	_i2c_sda_write
-;	temp_sensor.c:163: i2c_delay();
-	lcall	_i2c_delay
 	pop	ar7
-;	temp_sensor.c:164: i2c_scl_write(sfr_address, 1);
+;	temp_sensor.c:177: i2c_scl_write(sfr_address, 1);
 	mov	_i2c_scl_write_PARM_2,#0x01
 	mov	dpl,r7
 	push	ar7
 	lcall	_i2c_scl_write
-;	temp_sensor.c:165: i2c_delay();
-	lcall	_i2c_delay
 	pop	ar7
-;	temp_sensor.c:167: ack_bit = i2c_sda_read(sfr_address);
+;	temp_sensor.c:178: ack_bit = i2c_sda_read(sfr_address);
 	mov	dpl,r7
 	push	ar7
 	lcall	_i2c_sda_read
 	mov	r6,dpl
-;	temp_sensor.c:168: i2c_delay();
-	push	ar6
-	lcall	_i2c_delay
-	pop	ar6
 	pop	ar7
-;	temp_sensor.c:169: i2c_scl_write(sfr_address, 0);
+;	temp_sensor.c:179: i2c_scl_write(sfr_address, 0);
 	mov	_i2c_scl_write_PARM_2,#0x00
 	mov	dpl,r7
 	push	ar6
 	lcall	_i2c_scl_write
 	pop	ar6
-;	temp_sensor.c:171: return ack_bit;
+;	temp_sensor.c:181: return ack_bit;
 	mov	dpl,r6
 	ret
 ;------------------------------------------------------------
@@ -762,18 +765,18 @@ _i2c_send_byte:
 ;i                         Allocated to registers r5 
 ;received                  Allocated to registers r6 
 ;------------------------------------------------------------
-;	temp_sensor.c:174: unsigned char i2c_read_byte(unsigned char sfr_address)
+;	temp_sensor.c:184: unsigned char i2c_read_byte(unsigned char sfr_address)
 ;	-----------------------------------------
 ;	 function i2c_read_byte
 ;	-----------------------------------------
 _i2c_read_byte:
 	mov	r7,dpl
-;	temp_sensor.c:176: unsigned char i, received = 0;
+;	temp_sensor.c:186: unsigned char i, received = 0;
 	mov	r6,#0x00
-;	temp_sensor.c:177: for (i = 0; i < 8; i++) {
+;	temp_sensor.c:187: for (i = 0; i < 8; i++) {
 	mov	r5,#0x00
 00106$:
-;	temp_sensor.c:178: i2c_scl_write(sfr_address, 1);
+;	temp_sensor.c:188: i2c_scl_write(sfr_address, 1);
 	mov	_i2c_scl_write_PARM_2,#0x01
 	mov	dpl,r7
 	push	ar7
@@ -783,7 +786,7 @@ _i2c_read_byte:
 	pop	ar5
 	pop	ar6
 	pop	ar7
-;	temp_sensor.c:179: if(i2c_sda_read(sfr_address))
+;	temp_sensor.c:189: if(i2c_sda_read(sfr_address))
 	mov	dpl,r7
 	push	ar7
 	push	ar6
@@ -794,19 +797,19 @@ _i2c_read_byte:
 	pop	ar6
 	pop	ar7
 	jz	00102$
-;	temp_sensor.c:180: received |= 1;
+;	temp_sensor.c:190: received |= 1;
 	orl	ar6,#0x01
 00102$:
-;	temp_sensor.c:181: if(i < 7)
+;	temp_sensor.c:191: if(i < 7)
 	cjne	r5,#0x07,00124$
 00124$:
 	jnc	00104$
-;	temp_sensor.c:182: received <<= 1;
+;	temp_sensor.c:192: received <<= 1;
 	mov	a,r6
 	add	a,r6
 	mov	r6,a
 00104$:
-;	temp_sensor.c:183: i2c_scl_write(sfr_address, 0);
+;	temp_sensor.c:193: i2c_scl_write(sfr_address, 0);
 	mov	_i2c_scl_write_PARM_2,#0x00
 	mov	dpl,r7
 	push	ar7
@@ -816,89 +819,141 @@ _i2c_read_byte:
 	pop	ar5
 	pop	ar6
 	pop	ar7
-;	temp_sensor.c:177: for (i = 0; i < 8; i++) {
+;	temp_sensor.c:187: for (i = 0; i < 8; i++) {
 	inc	r5
 	cjne	r5,#0x08,00126$
 00126$:
 	jc	00106$
-;	temp_sensor.c:185: return received;
+;	temp_sensor.c:195: return received;
 	mov	dpl,r6
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'read_temp_sensor'
 ;------------------------------------------------------------
-;first                     Allocated to registers r7 
-;second                    Allocated to registers 
-;slope                     Allocated with name '_read_temp_sensor_slope_1_50'
-;remainder                 Allocated with name '_read_temp_sensor_remainder_1_50'
 ;address_byte              Allocated to registers 
 ;ack                       Allocated to registers 
-;temperature               Allocated to registers r2 r3 r4 r7 
-;sloc0                     Allocated with name '_read_temp_sensor_sloc0_1_0'
+;millisecond               Allocated to registers 
+;temperature               Allocated to registers r4 r5 r6 r7 
+;slope                     Allocated with name '_read_temp_sensor_slope_1_54'
+;count_remaining           Allocated with name '_read_temp_sensor_count_remaining_1_54'
 ;------------------------------------------------------------
-;	temp_sensor.c:196: float read_temp_sensor(void)
+;	temp_sensor.c:206: float read_temp_sensor(void)
 ;	-----------------------------------------
 ;	 function read_temp_sensor
 ;	-----------------------------------------
 _read_temp_sensor:
-;	temp_sensor.c:207: write_temp_sensor_command(READ_TEMPERATURE);
-	mov	dpl,#0xAA
+;	temp_sensor.c:223: write_temp_sensor_command(START_TEMP_SENSOR_CONVERSION);
+	mov	dpl,#0xEE
 	lcall	_write_temp_sensor_command
-;	temp_sensor.c:210: i2c_start(TEMP_SENSOR_SFR);
-	mov	dpl,#0xB0
-	lcall	_i2c_start
-;	temp_sensor.c:211: ack = i2c_send_byte(TEMP_SENSOR_SFR, address_byte);
-	mov	_i2c_send_byte_PARM_2,#0x91
-	mov	dpl,#0xB0
-	lcall	_i2c_send_byte
-;	temp_sensor.c:212: first = i2c_read_byte(TEMP_SENSOR_SFR);
-	mov	dpl,#0xB0
-	lcall	_i2c_read_byte
-	mov	r7,dpl
-;	temp_sensor.c:213: second = i2c_read_byte(TEMP_SENSOR_SFR);
-	mov	dpl,#0xB0
-	push	ar7
-	lcall	_i2c_read_byte
-;	temp_sensor.c:215: write_temp_sensor_command(READ_COUNT_REMAINDER);
-	mov	dpl,#0xA8
-	lcall	_write_temp_sensor_command
-;	temp_sensor.c:216: i2c_start(TEMP_SENSOR_SFR);
-	mov	dpl,#0xB0
-	lcall	_i2c_start
-;	temp_sensor.c:217: ack = i2c_send_byte(TEMP_SENSOR_SFR, address_byte);
-	mov	_i2c_send_byte_PARM_2,#0x91
-	mov	dpl,#0xB0
-	lcall	_i2c_send_byte
-;	temp_sensor.c:218: remainder = i2c_read_byte(TEMP_SENSOR_SFR);
-	mov	dpl,#0xB0
-	lcall	_i2c_read_byte
-	mov	_read_temp_sensor_remainder_1_50,dpl
-;	temp_sensor.c:220: write_temp_sensor_command(READ_SLOPE);
-	mov	dpl,#0xA9
-	lcall	_write_temp_sensor_command
-;	temp_sensor.c:221: i2c_start(TEMP_SENSOR_SFR);
-	mov	dpl,#0xB0
-	lcall	_i2c_start
-;	temp_sensor.c:222: ack = i2c_send_byte(TEMP_SENSOR_SFR, address_byte);
-	mov	_i2c_send_byte_PARM_2,#0x91
-	mov	dpl,#0xB0
-	lcall	_i2c_send_byte
-;	temp_sensor.c:223: slope = i2c_read_byte(TEMP_SENSOR_SFR);
-	mov	dpl,#0xB0
-	lcall	_i2c_read_byte
-	mov	_read_temp_sensor_slope_1_50,dpl
-;	temp_sensor.c:225: i2c_stop(TEMP_SENSOR_SFR);
+;	temp_sensor.c:224: i2c_stop(TEMP_SENSOR_SFR);
 	mov	dpl,#0xB0
 	lcall	_i2c_stop
-	pop	ar7
-;	temp_sensor.c:227: temperature += (float)first;
-	mov	dpl,r7
-	lcall	___schar2fs
-	mov	r2,dpl
-	mov	r3,dph
-	mov	r4,b
+;	temp_sensor.c:227: delay(1000*millisecond);//multiplication... this wait  maaay be (read: probably will be) longer than 1000ms
+	mov	dptr,#0x4240
+	lcall	_delay
+;	temp_sensor.c:229: write_temp_sensor_command(READ_TEMPERATURE);
+	mov	dpl,#0xAA
+	lcall	_write_temp_sensor_command
+;	temp_sensor.c:232: i2c_start(TEMP_SENSOR_SFR);
+	mov	dpl,#0xB0
+	lcall	_i2c_start
+;	temp_sensor.c:233: ack = i2c_send_byte(TEMP_SENSOR_SFR, address_byte);
+	mov	_i2c_send_byte_PARM_2,#0x91
+	mov	dpl,#0xB0
+	lcall	_i2c_send_byte
+;	temp_sensor.c:234: temperature = i2c_read_byte(TEMP_SENSOR_SFR);
+	mov	dpl,#0xB0
+	lcall	_i2c_read_byte
+	lcall	___uchar2fs
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r6,b
 	mov	r7,a
-;	temp_sensor.c:229: temperature = temperature - 0.25 + (slope - remainder) / slope;
+;	temp_sensor.c:237: i2c_read_byte(TEMP_SENSOR_SFR);
+	mov	dpl,#0xB0
+	push	ar7
+	push	ar6
+	push	ar5
+	push	ar4
+	lcall	_i2c_read_byte
+;	temp_sensor.c:238: i2c_stop(TEMP_SENSOR_SFR);
+	mov	dpl,#0xB0
+	lcall	_i2c_stop
+;	temp_sensor.c:240: write_temp_sensor_command(READ_COUNT_REMAIN);
+	mov	dpl,#0xA8
+	lcall	_write_temp_sensor_command
+;	temp_sensor.c:241: i2c_start(TEMP_SENSOR_SFR);
+	mov	dpl,#0xB0
+	lcall	_i2c_start
+;	temp_sensor.c:242: ack = i2c_send_byte(TEMP_SENSOR_SFR, address_byte);
+	mov	_i2c_send_byte_PARM_2,#0x91
+	mov	dpl,#0xB0
+	lcall	_i2c_send_byte
+;	temp_sensor.c:243: count_remaining = i2c_read_byte(TEMP_SENSOR_SFR);
+	mov	dpl,#0xB0
+	lcall	_i2c_read_byte
+	lcall	___uchar2fs
+	mov	_read_temp_sensor_count_remaining_1_54,dpl
+	mov	(_read_temp_sensor_count_remaining_1_54 + 1),dph
+	mov	(_read_temp_sensor_count_remaining_1_54 + 2),b
+	mov	(_read_temp_sensor_count_remaining_1_54 + 3),a
+;	temp_sensor.c:244: i2c_stop(TEMP_SENSOR_SFR);
+	mov	dpl,#0xB0
+	lcall	_i2c_stop
+;	temp_sensor.c:246: write_temp_sensor_command(READ_SLOPE);
+	mov	dpl,#0xA9
+	lcall	_write_temp_sensor_command
+;	temp_sensor.c:247: i2c_start(TEMP_SENSOR_SFR);
+	mov	dpl,#0xB0
+	lcall	_i2c_start
+;	temp_sensor.c:248: ack = i2c_send_byte(TEMP_SENSOR_SFR, address_byte);
+	mov	_i2c_send_byte_PARM_2,#0x91
+	mov	dpl,#0xB0
+	lcall	_i2c_send_byte
+;	temp_sensor.c:249: slope = i2c_read_byte(TEMP_SENSOR_SFR);
+	mov	dpl,#0xB0
+	lcall	_i2c_read_byte
+	lcall	___uchar2fs
+	mov	_read_temp_sensor_slope_1_54,dpl
+	mov	(_read_temp_sensor_slope_1_54 + 1),dph
+	mov	(_read_temp_sensor_slope_1_54 + 2),b
+	mov	(_read_temp_sensor_slope_1_54 + 3),a
+;	temp_sensor.c:250: i2c_stop(TEMP_SENSOR_SFR);
+	mov	dpl,#0xB0
+	lcall	_i2c_stop
+;	temp_sensor.c:254: temperature = temperature - (0.25 + (slope - count_remaining) / slope);
+	push	_read_temp_sensor_count_remaining_1_54
+	push	(_read_temp_sensor_count_remaining_1_54 + 1)
+	push	(_read_temp_sensor_count_remaining_1_54 + 2)
+	push	(_read_temp_sensor_count_remaining_1_54 + 3)
+	mov	dpl,_read_temp_sensor_slope_1_54
+	mov	dph,(_read_temp_sensor_slope_1_54 + 1)
+	mov	b,(_read_temp_sensor_slope_1_54 + 2)
+	mov	a,(_read_temp_sensor_slope_1_54 + 3)
+	lcall	___fssub
+	mov	r0,dpl
+	mov	r1,dph
+	mov	r2,b
+	mov	r3,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	push	_read_temp_sensor_slope_1_54
+	push	(_read_temp_sensor_slope_1_54 + 1)
+	push	(_read_temp_sensor_slope_1_54 + 2)
+	push	(_read_temp_sensor_slope_1_54 + 3)
+	mov	dpl,r0
+	mov	dph,r1
+	mov	b,r2
+	mov	a,r3
+	lcall	___fsdiv
+	mov	r0,dpl
+	mov	r1,dph
+	mov	r2,b
+	mov	r3,a
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
 	clr	a
 	push	acc
 	push	acc
@@ -906,58 +961,75 @@ _read_temp_sensor:
 	push	acc
 	mov	a,#0x3E
 	push	acc
-	mov	dpl,r2
-	mov	dph,r3
-	mov	b,r4
-	mov	a,r7
-	lcall	___fssub
-	mov	_read_temp_sensor_sloc0_1_0,dpl
-	mov	(_read_temp_sensor_sloc0_1_0 + 1),dph
-	mov	(_read_temp_sensor_sloc0_1_0 + 2),b
-	mov	(_read_temp_sensor_sloc0_1_0 + 3),a
+	mov	dpl,r0
+	mov	dph,r1
+	mov	b,r2
+	mov	a,r3
+	lcall	___fsadd
+	mov	r0,dpl
+	mov	r1,dph
+	mov	r2,b
+	mov	r3,a
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
-	mov	r5,_read_temp_sensor_slope_1_50
-	mov	r6,#0x00
-	mov	r0,_read_temp_sensor_remainder_1_50
-	mov	r1,#0x00
-	mov	a,r5
-	clr	c
-	subb	a,r0
-	mov	dpl,a
-	mov	a,r6
-	subb	a,r1
-	mov	dph,a
-	mov	__divsint_PARM_2,r5
-	mov	(__divsint_PARM_2 + 1),r6
-	lcall	__divsint
-	lcall	___sint2fs
-	mov	r0,dpl
-	mov	r1,dph
-	mov	r5,b
-	mov	r6,a
+	pop	ar4
+	pop	ar5
+	pop	ar6
+	pop	ar7
 	push	ar0
 	push	ar1
-	push	ar5
-	push	ar6
-	mov	dpl,_read_temp_sensor_sloc0_1_0
-	mov	dph,(_read_temp_sensor_sloc0_1_0 + 1)
-	mov	b,(_read_temp_sensor_sloc0_1_0 + 2)
-	mov	a,(_read_temp_sensor_sloc0_1_0 + 3)
-	lcall	___fsadd
-	mov	r2,dpl
-	mov	r3,dph
-	mov	r4,b
+	push	ar2
+	push	ar3
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r6
+	mov	a,r7
+	lcall	___fssub
+	mov	r4,dpl
+	mov	r5,dph
+	mov	r6,b
 	mov	r7,a
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
-;	temp_sensor.c:239: return temperature;
-	mov	dpl,r2
-	mov	dph,r3
-	mov	b,r4
+;	temp_sensor.c:264: return temperature;
+	mov	dpl,r4
+	mov	dph,r5
+	mov	b,r6
 	mov	a,r7
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'clear_display_buffer'
+;------------------------------------------------------------
+;i                         Allocated to registers r6 r7 
+;------------------------------------------------------------
+;	temp_sensor.c:267: void clear_display_buffer(void)
+;	-----------------------------------------
+;	 function clear_display_buffer
+;	-----------------------------------------
+_clear_display_buffer:
+;	temp_sensor.c:270: for (i = 0; i < DISPLAY_BUFFER_SIZE; i++)
+	mov	r6,#0x00
+	mov	r7,#0x00
+00102$:
+;	temp_sensor.c:272: display_buffer[i] = 0x00;
+	mov	a,r6
+	add	a,#_display_buffer
+	mov	r0,a
+	mov	@r0,#0x00
+;	temp_sensor.c:270: for (i = 0; i < DISPLAY_BUFFER_SIZE; i++)
+	inc	r6
+	cjne	r6,#0x00,00110$
+	inc	r7
+00110$:
+	clr	c
+	mov	a,r6
+	subb	a,#0x0A
+	mov	a,r7
+	xrl	a,#0x80
+	subb	a,#0x80
+	jc	00102$
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'write_display'
@@ -968,30 +1040,26 @@ _read_temp_sensor:
 ;i                         Allocated to registers r7 
 ;ack                       Allocated to registers 
 ;------------------------------------------------------------
-;	temp_sensor.c:242: void write_display(void)
+;	temp_sensor.c:276: void write_display(void)
 ;	-----------------------------------------
 ;	 function write_display
 ;	-----------------------------------------
 _write_display:
-;	temp_sensor.c:251: i2c_start(DISPLAY_SFR);
+;	temp_sensor.c:285: i2c_start(DISPLAY_SFR);
 	mov	dpl,#0xA0
 	lcall	_i2c_start
-;	temp_sensor.c:252: ack = i2c_send_byte(DISPLAY_SFR, address_with_write);
+;	temp_sensor.c:286: ack = i2c_send_byte(DISPLAY_SFR, address_with_write);
 	mov	_i2c_send_byte_PARM_2,#0xE0
 	mov	dpl,#0xA0
 	lcall	_i2c_send_byte
-;	temp_sensor.c:262: ack = i2c_send_byte(DISPLAY_SFR, 0x00); //0x00 is the starting address of the 7-set disp
+;	temp_sensor.c:296: ack = i2c_send_byte(DISPLAY_SFR, 0x00); //0x00 is the starting address of the 7-set disp
 	mov	_i2c_send_byte_PARM_2,#0x00
 	mov	dpl,#0xA0
 	lcall	_i2c_send_byte
-;	temp_sensor.c:263: for (i=0; i<DISPLAY_BUFFER_SIZE; i++) {
+;	temp_sensor.c:297: for (i=0; i<DISPLAY_BUFFER_SIZE; i++) {
 	mov	r7,#0x00
 00102$:
-;	temp_sensor.c:264: i2c_delay();
-	push	ar7
-	lcall	_i2c_delay
-	pop	ar7
-;	temp_sensor.c:265: ack = i2c_send_byte(DISPLAY_SFR, display_buffer[i]);
+;	temp_sensor.c:298: ack = i2c_send_byte(DISPLAY_SFR, display_buffer[i]);
 	mov	a,r7
 	add	a,#_display_buffer
 	mov	r1,a
@@ -1000,12 +1068,12 @@ _write_display:
 	push	ar7
 	lcall	_i2c_send_byte
 	pop	ar7
-;	temp_sensor.c:263: for (i=0; i<DISPLAY_BUFFER_SIZE; i++) {
+;	temp_sensor.c:297: for (i=0; i<DISPLAY_BUFFER_SIZE; i++) {
 	inc	r7
 	cjne	r7,#0x0A,00113$
 00113$:
 	jc	00102$
-;	temp_sensor.c:267: i2c_stop(DISPLAY_SFR);
+;	temp_sensor.c:300: i2c_stop(DISPLAY_SFR);
 	mov	dpl,#0xA0
 	ljmp	_i2c_stop
 ;------------------------------------------------------------
@@ -1017,26 +1085,26 @@ _write_display:
 ;address_with_write        Allocated to registers 
 ;ack                       Allocated to registers 
 ;------------------------------------------------------------
-;	temp_sensor.c:271: void write_display_command(unsigned char command_byte)
+;	temp_sensor.c:304: void write_display_command(unsigned char command_byte)
 ;	-----------------------------------------
 ;	 function write_display_command
 ;	-----------------------------------------
 _write_display_command:
 	mov	r7,dpl
-;	temp_sensor.c:284: i2c_start(DISPLAY_SFR);
+;	temp_sensor.c:317: i2c_start(DISPLAY_SFR);
 	mov	dpl,#0xA0
 	push	ar7
 	lcall	_i2c_start
-;	temp_sensor.c:285: ack = i2c_send_byte(DISPLAY_SFR, address_with_write);
+;	temp_sensor.c:318: ack = i2c_send_byte(DISPLAY_SFR, address_with_write);
 	mov	_i2c_send_byte_PARM_2,#0xE0
 	mov	dpl,#0xA0
 	lcall	_i2c_send_byte
 	pop	ar7
-;	temp_sensor.c:291: ack = i2c_send_byte(DISPLAY_SFR, command_byte);
+;	temp_sensor.c:324: ack = i2c_send_byte(DISPLAY_SFR, command_byte);
 	mov	_i2c_send_byte_PARM_2,r7
 	mov	dpl,#0xA0
 	lcall	_i2c_send_byte
-;	temp_sensor.c:292: i2c_stop(DISPLAY_SFR);
+;	temp_sensor.c:325: i2c_stop(DISPLAY_SFR);
 	mov	dpl,#0xA0
 	ljmp	_i2c_stop
 ;------------------------------------------------------------
@@ -1046,22 +1114,22 @@ _write_display_command:
 ;address_byte              Allocated to registers 
 ;ack                       Allocated to registers 
 ;------------------------------------------------------------
-;	temp_sensor.c:295: void write_temp_sensor_config(unsigned char config)
+;	temp_sensor.c:328: void write_temp_sensor_config(unsigned char config)
 ;	-----------------------------------------
 ;	 function write_temp_sensor_config
 ;	-----------------------------------------
 _write_temp_sensor_config:
 	mov	r7,dpl
-;	temp_sensor.c:300: write_temp_sensor_command(ACCESS_TEMP_SENSOR_CONFIG);
+;	temp_sensor.c:333: write_temp_sensor_command(ACCESS_TEMP_SENSOR_CONFIG);
 	mov	dpl,#0xAC
 	push	ar7
 	lcall	_write_temp_sensor_command
 	pop	ar7
-;	temp_sensor.c:301: ack = i2c_send_byte(TEMP_SENSOR_SFR, config);
+;	temp_sensor.c:334: ack = i2c_send_byte(TEMP_SENSOR_SFR, config);
 	mov	_i2c_send_byte_PARM_2,r7
 	mov	dpl,#0xB0
 	lcall	_i2c_send_byte
-;	temp_sensor.c:302: i2c_stop(TEMP_SENSOR_SFR);
+;	temp_sensor.c:335: i2c_stop(TEMP_SENSOR_SFR);
 	mov	dpl,#0xB0
 	ljmp	_i2c_stop
 ;------------------------------------------------------------
@@ -1073,114 +1141,83 @@ _write_temp_sensor_config:
 ;address_with_write        Allocated to registers 
 ;ack                       Allocated to registers 
 ;------------------------------------------------------------
-;	temp_sensor.c:306: void write_temp_sensor_command(unsigned char command_byte)
+;	temp_sensor.c:339: void write_temp_sensor_command(unsigned char command_byte)
 ;	-----------------------------------------
 ;	 function write_temp_sensor_command
 ;	-----------------------------------------
 _write_temp_sensor_command:
 	mov	r7,dpl
-;	temp_sensor.c:340: i2c_start(TEMP_SENSOR_SFR);
+;	temp_sensor.c:373: i2c_start(TEMP_SENSOR_SFR);
 	mov	dpl,#0xB0
 	push	ar7
 	lcall	_i2c_start
-;	temp_sensor.c:341: ack = i2c_send_byte(TEMP_SENSOR_SFR, address_with_write);
+;	temp_sensor.c:374: ack = i2c_send_byte(TEMP_SENSOR_SFR, address_with_write);
 	mov	_i2c_send_byte_PARM_2,#0x90
 	mov	dpl,#0xB0
 	lcall	_i2c_send_byte
 	pop	ar7
-;	temp_sensor.c:342: ack = i2c_send_byte(TEMP_SENSOR_SFR, command_byte);
+;	temp_sensor.c:375: ack = i2c_send_byte(TEMP_SENSOR_SFR, command_byte);
 	mov	_i2c_send_byte_PARM_2,r7
 	mov	dpl,#0xB0
 	ljmp	_i2c_send_byte
-;------------------------------------------------------------
-;Allocation info for local variables in function 'delay'
-;------------------------------------------------------------
-;i                         Allocated to registers r6 r7 
-;------------------------------------------------------------
-;	temp_sensor.c:345: void delay(void)
-;	-----------------------------------------
-;	 function delay
-;	-----------------------------------------
-_delay:
-;	temp_sensor.c:348: for(i=0;i<500;i++);
-	mov	r6,#0xF4
-	mov	r7,#0x01
-00104$:
-	mov	a,r6
-	add	a,#0xFF
-	mov	r4,a
-	mov	a,r7
-	addc	a,#0xFF
-	mov	r5,a
-	mov	ar6,r4
-	mov	ar7,r5
-	mov	a,r4
-	orl	a,r5
-	jnz	00104$
-	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
 ;temp_sensor_config        Allocated to registers 
 ;first_num                 Allocated to registers r7 
 ;second_num                Allocated to registers r6 
-;current_temp              Allocated with name '_main_current_temp_1_63'
-;last_temp                 Allocated with name '_main_last_temp_1_63'
+;current_temp              Allocated with name '_main_current_temp_1_68'
+;last_temp                 Allocated with name '_main_last_temp_1_68'
 ;temp_fraction             Allocated to registers r4 r5 r6 r7 
-;temp_int                  Allocated with name '_main_temp_int_1_63'
+;temp_int                  Allocated with name '_main_temp_int_1_68'
 ;------------------------------------------------------------
-;	temp_sensor.c:351: void main(void)
+;	temp_sensor.c:378: void main(void)
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	temp_sensor.c:353: bool update_display = true;
-	setb	_main_update_display_1_63
-;	temp_sensor.c:357: float current_temp = 0, last_temp = 0;
+;	temp_sensor.c:380: bool update_display = true;
+	setb	_main_update_display_1_68
+;	temp_sensor.c:384: float current_temp = 0, last_temp = 0;
 	clr	a
-	mov	_main_last_temp_1_63,a
-	mov	(_main_last_temp_1_63 + 1),a
-	mov	(_main_last_temp_1_63 + 2),a
-	mov	(_main_last_temp_1_63 + 3),a
-;	temp_sensor.c:358: float temp_fraction = 0.0, temp_int = 0.0;
-	mov	_main_temp_int_1_63,a
-	mov	(_main_temp_int_1_63 + 1),a
-	mov	(_main_temp_int_1_63 + 2),a
-	mov	(_main_temp_int_1_63 + 3),a
-;	temp_sensor.c:360: delay();
+	mov	_main_last_temp_1_68,a
+	mov	(_main_last_temp_1_68 + 1),a
+	mov	(_main_last_temp_1_68 + 2),a
+	mov	(_main_last_temp_1_68 + 3),a
+;	temp_sensor.c:385: float temp_fraction = 0.0, temp_int = 0.0;
+	mov	_main_temp_int_1_68,a
+	mov	(_main_temp_int_1_68 + 1),a
+	mov	(_main_temp_int_1_68 + 2),a
+	mov	(_main_temp_int_1_68 + 3),a
+;	temp_sensor.c:387: delay(10); //delay is # clock cycles
+	mov	dptr,#0x000A
 	lcall	_delay
-;	temp_sensor.c:363: write_display_command(ENABLE_DISPLAY_OSCILLATOR);
+;	temp_sensor.c:390: write_display_command(ENABLE_DISPLAY_OSCILLATOR);
 	mov	dpl,#0x21
 	lcall	_write_display_command
-;	temp_sensor.c:364: write_display_command(ENABLE_DISPLAY);
+;	temp_sensor.c:391: write_display_command(ENABLE_DISPLAY);
 	mov	dpl,#0x81
 	lcall	_write_display_command
-;	temp_sensor.c:370: write_temp_sensor_config(temp_sensor_config);
-	mov	dpl,#0x02
+;	temp_sensor.c:397: write_temp_sensor_config(temp_sensor_config);
+	mov	dpl,#0x03
 	lcall	_write_temp_sensor_config
-;	temp_sensor.c:371: write_temp_sensor_command(START_TEMP_SENSOR_CONVERSION);
-	mov	dpl,#0xEE
-	lcall	_write_temp_sensor_command
-;	temp_sensor.c:372: i2c_stop(TEMP_SENSOR_SFR);
-	mov	dpl,#0xB0
-	lcall	_i2c_stop
-;	temp_sensor.c:378: while (true) 
+;	temp_sensor.c:403: while (true) 
 00108$:
-;	temp_sensor.c:380: current_temp = read_temp_sensor();
+;	temp_sensor.c:405: current_temp = read_temp_sensor();
 	lcall	_read_temp_sensor
-	mov	_main_current_temp_1_63,dpl
-	mov	(_main_current_temp_1_63 + 1),dph
-	mov	(_main_current_temp_1_63 + 2),b
-	mov	(_main_current_temp_1_63 + 3),a
-;	temp_sensor.c:381: if (last_temp != current_temp)
-	push	_main_current_temp_1_63
-	push	(_main_current_temp_1_63 + 1)
-	push	(_main_current_temp_1_63 + 2)
-	push	(_main_current_temp_1_63 + 3)
-	mov	dpl,_main_last_temp_1_63
-	mov	dph,(_main_last_temp_1_63 + 1)
-	mov	b,(_main_last_temp_1_63 + 2)
-	mov	a,(_main_last_temp_1_63 + 3)
+	mov	_main_current_temp_1_68,dpl
+	mov	(_main_current_temp_1_68 + 1),dph
+	mov	(_main_current_temp_1_68 + 2),b
+	mov	(_main_current_temp_1_68 + 3),a
+;	temp_sensor.c:406: if (last_temp != current_temp)
+	push	_main_current_temp_1_68
+	push	(_main_current_temp_1_68 + 1)
+	push	(_main_current_temp_1_68 + 2)
+	push	(_main_current_temp_1_68 + 3)
+	mov	dpl,_main_last_temp_1_68
+	mov	dph,(_main_last_temp_1_68 + 1)
+	mov	b,(_main_last_temp_1_68 + 2)
+	mov	a,(_main_last_temp_1_68 + 3)
 	lcall	___fseq
 	mov	r5,dpl
 	mov	a,sp
@@ -1190,16 +1227,16 @@ _main:
 	jz	00124$
 	ljmp	00104$
 00124$:
-;	temp_sensor.c:384: if (current_temp < 0) 
+;	temp_sensor.c:409: if (current_temp < 0) 
 	clr	a
 	push	acc
 	push	acc
 	push	acc
 	push	acc
-	mov	dpl,_main_current_temp_1_63
-	mov	dph,(_main_current_temp_1_63 + 1)
-	mov	b,(_main_current_temp_1_63 + 2)
-	mov	a,(_main_current_temp_1_63 + 3)
+	mov	dpl,_main_current_temp_1_68
+	mov	dph,(_main_current_temp_1_68 + 1)
+	mov	b,(_main_current_temp_1_68 + 2)
+	mov	a,(_main_current_temp_1_68 + 3)
 	lcall	___fslt
 	mov	r5,dpl
 	mov	a,sp
@@ -1207,16 +1244,16 @@ _main:
 	mov	sp,a
 	mov	a,r5
 	jz	00102$
-;	temp_sensor.c:387: current_temp *= -1;
-	mov	a,(_main_current_temp_1_63 + 3)
+;	temp_sensor.c:412: current_temp *= -1;
+	mov	a,(_main_current_temp_1_68 + 3)
 	cpl	acc.7
-	mov	(_main_current_temp_1_63 + 3),a
+	mov	(_main_current_temp_1_68 + 3),a
 00102$:
-;	temp_sensor.c:389: first_num = number_table[(int)current_temp / 10];
-	mov	dpl,_main_current_temp_1_63
-	mov	dph,(_main_current_temp_1_63 + 1)
-	mov	b,(_main_current_temp_1_63 + 2)
-	mov	a,(_main_current_temp_1_63 + 3)
+;	temp_sensor.c:414: first_num = number_table[(int)current_temp / 10];
+	mov	dpl,_main_current_temp_1_68
+	mov	dph,(_main_current_temp_1_68 + 1)
+	mov	b,(_main_current_temp_1_68 + 2)
+	mov	a,(_main_current_temp_1_68 + 3)
 	lcall	___fs2sint
 	mov	r4,dpl
 	mov	r5,dph
@@ -1232,38 +1269,41 @@ _main:
 	add	a,#_number_table
 	mov	r1,a
 	mov	ar7,@r1
-;	temp_sensor.c:390: second_num = number_table[(int)current_temp % 10] | 0x80;
+;	temp_sensor.c:415: second_num = number_table[(int)current_temp % 10] | PERIOD_CHARACTER;
 	mov	__modsint_PARM_2,#0x0A
 	mov	(__modsint_PARM_2 + 1),#0x00
 	mov	dpl,r4
 	mov	dph,r5
 	push	ar7
 	lcall	__modsint
-	mov	r5,dpl
-	pop	ar7
-	mov	a,r5
+	mov	a,dpl
 	add	a,#_number_table
 	mov	r1,a
 	mov	ar6,@r1
 	orl	ar6,#0x80
-;	temp_sensor.c:392: display_buffer[0] = first_num;
+;	temp_sensor.c:417: clear_display_buffer();
+	push	ar6
+	lcall	_clear_display_buffer
+	pop	ar6
+	pop	ar7
+;	temp_sensor.c:419: display_buffer[0] = first_num;
 	mov	_display_buffer,r7
-;	temp_sensor.c:393: display_buffer[2] = second_num;
+;	temp_sensor.c:420: display_buffer[2] = second_num;
 	mov	(_display_buffer + 0x0002),r6
-;	temp_sensor.c:394: temp_fraction = modff(current_temp, &temp_int);
-	mov	_modff_PARM_2,#_main_temp_int_1_63
+;	temp_sensor.c:421: temp_fraction = modff(current_temp, &temp_int);
+	mov	_modff_PARM_2,#_main_temp_int_1_68
 	mov	(_modff_PARM_2 + 1),#0x00
 	mov	(_modff_PARM_2 + 2),#0x40
-	mov	dpl,_main_current_temp_1_63
-	mov	dph,(_main_current_temp_1_63 + 1)
-	mov	b,(_main_current_temp_1_63 + 2)
-	mov	a,(_main_current_temp_1_63 + 3)
+	mov	dpl,_main_current_temp_1_68
+	mov	dph,(_main_current_temp_1_68 + 1)
+	mov	b,(_main_current_temp_1_68 + 2)
+	mov	a,(_main_current_temp_1_68 + 3)
 	lcall	_modff
 	mov	r4,dpl
 	mov	r5,dph
 	mov	r6,b
 	mov	r7,a
-;	temp_sensor.c:395: temp_fraction *= 100;
+;	temp_sensor.c:422: temp_fraction *= 100;
 	push	ar4
 	push	ar5
 	push	ar6
@@ -1279,7 +1319,7 @@ _main:
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
-;	temp_sensor.c:396: display_buffer[6] = number_table[(int)temp_fraction / 10];
+;	temp_sensor.c:423: display_buffer[6] = number_table[(int)temp_fraction / 10];
 	mov	dpl,r4
 	mov	dph,r5
 	mov	b,r6
@@ -1300,34 +1340,34 @@ _main:
 	mov	r1,a
 	mov	ar5,@r1
 	mov	(_display_buffer + 0x0006),r5
-;	temp_sensor.c:397: display_buffer[8] = number_table[(int)temp_fraction % 10];
+;	temp_sensor.c:424: display_buffer[8] = number_table[(int)temp_fraction % 10];
 	mov	__modsint_PARM_2,#0x0A
 	mov	(__modsint_PARM_2 + 1),#0x00
 	mov	dpl,r6
 	mov	dph,r7
 	lcall	__modsint
-	mov	r6,dpl
-	mov	a,r6
+	mov	a,dpl
+	mov	r6,a
 	add	a,#_number_table
 	mov	r1,a
 	mov	ar7,@r1
 	mov	(_display_buffer + 0x0008),r7
-;	temp_sensor.c:399: update_display = true;
-	setb	_main_update_display_1_63
-;	temp_sensor.c:400: last_temp = current_temp;
-	mov	_main_last_temp_1_63,_main_current_temp_1_63
-	mov	(_main_last_temp_1_63 + 1),(_main_current_temp_1_63 + 1)
-	mov	(_main_last_temp_1_63 + 2),(_main_current_temp_1_63 + 2)
-	mov	(_main_last_temp_1_63 + 3),(_main_current_temp_1_63 + 3)
+;	temp_sensor.c:426: update_display = true;
+	setb	_main_update_display_1_68
+;	temp_sensor.c:427: last_temp = current_temp;
+	mov	_main_last_temp_1_68,_main_current_temp_1_68
+	mov	(_main_last_temp_1_68 + 1),(_main_current_temp_1_68 + 1)
+	mov	(_main_last_temp_1_68 + 2),(_main_current_temp_1_68 + 2)
+	mov	(_main_last_temp_1_68 + 3),(_main_current_temp_1_68 + 3)
 00104$:
-;	temp_sensor.c:402: if (update_display) 
-	jb	_main_update_display_1_63,00126$
+;	temp_sensor.c:429: if (update_display) 
+	jb	_main_update_display_1_68,00126$
 	ljmp	00108$
 00126$:
-;	temp_sensor.c:407: write_display();
+;	temp_sensor.c:434: write_display();
 	lcall	_write_display
-;	temp_sensor.c:408: update_display = false;
-	clr	_main_update_display_1_63
+;	temp_sensor.c:435: update_display = false;
+	clr	_main_update_display_1_68
 	ljmp	00108$
 	.area CSEG    (CODE)
 	.area CONST   (CODE)

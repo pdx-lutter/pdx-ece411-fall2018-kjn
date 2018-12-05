@@ -18,7 +18,7 @@
 #define TEMP_SENSOR_SFR 0xB0
 
 #define READ_TEMPERATURE 0xAA
-#define READ_COUNT_REMAINDER 0xA8
+#define READ_COUNT_REMAIN 0xA8
 #define READ_SLOPE 0xA9
 #define START_TEMP_SENSOR_CONVERSION 0xEE
 #define STOP_TEMP_SENSOR_CONVERSION 0x22
@@ -30,10 +30,12 @@
 //Config setting bits for the temperature sensor
 #define TEMP_SENSOR_OUTPUT_HIGH 0x02
 #define TEMP_SENSOR_CONTINUOUS_CONVERSION 0x00
+#define TEMP_SENSOR_ONE_SHOT_CONVERSION 0x01
 
-void write_temp_sensor_command(unsigned char command_byte);
+#define PERIOD_CHARACTER 0x80
+#define LETTER_R 0x50
+#define LETTER_C 0x39
 
-#define PERIOD_CHARACTER = 0x80
 unsigned char number_table[] = {
 	0x3F, /* 0 */
 	0x06, /* 1 */
@@ -68,13 +70,33 @@ unsigned char display_buffer[] = {
 };
 // 0x1, 0x3, 0x5, 0x7, 0x9 are not used
 
+
+void write_temp_sensor_command(unsigned char command_byte);
+void clear_display_buffer(void);
+void write_display(void);
+
+// This method assumes a 12MHz oscillator
+// Most operations on the 8051 take 1/12 oscillator periods, so we'll use that as a basis for the delay
+// All arithmetic instructions execute in 1us (except increment data pointer)
+// However, since we're realistically working with numbers outside of the range of the 8-bit BCD format
+// there *are definitely* going to be more clock cycles used (possibly up to 10x or more) when waiting
+// for operations on values greater than 256
+// Check the assembly output of the keil (assumed) compiler if exact numbers of operations are needed
+void delay(int min_clock_cycles_to_wait)
+{
+	int i;
+	for(i = 0;i < min_clock_cycles_to_wait; i++);
+}
+
 // Idea taken from: https://stackoverflow.com/questions/44308679/8051-i2c-bitbang
 // It's basically just a small delay to ensure that the clock rate is 
-// no faster than 1/5th of the uC clock rate (500kHz/5 = 100kHz)
+// no faster than 1/5th of the uC clock rate (500kHz/5 = 100kH, with a 12MHz oscillator)
 // Addition is a single clock cycle operation on the 8051
+// The HT16K33 controller has a maximum min-set-up time of 1.3us and the DS16 4.7us, so we need at least 5us
+// (realistically, this whole operation will take slightly longer than 5us)
 void i2c_delay()
 {
-	unsigned int i;
+	unsigned int i = 0;
 	for (i = 0; i < 5; i++);
 }
 
@@ -105,6 +127,7 @@ void i2c_scl_write(unsigned char sfr_address, unsigned char value)
 		case DISPLAY_SFR: P2_1 = value; break;
 		case TEMP_SENSOR_SFR: P3_6 = value; break;
 	}
+	i2c_delay();
 }
 
 unsigned char i2c_scl_read(unsigned char sfr_address)
@@ -115,6 +138,7 @@ unsigned char i2c_scl_read(unsigned char sfr_address)
 		case DISPLAY_SFR: result = P2_1; break;
 		case TEMP_SENSOR_SFR: result = P3_6; break;
 	}
+	i2c_delay();
 	return result;
 }
  
@@ -122,22 +146,16 @@ void i2c_start(unsigned char sfr_address)
 {
 	i2c_scl_write(sfr_address, 0);
 	i2c_sda_write(sfr_address, 1);
-	i2c_delay();
 	i2c_scl_write(sfr_address, 1);
-	i2c_delay();
 	i2c_sda_write(sfr_address, 0);
-	i2c_delay();
 	i2c_scl_write(sfr_address, 0);
 }
  
 void i2c_stop(unsigned char sfr_address)
 {
 	i2c_scl_write(sfr_address, 0);
-	i2c_delay();
 	i2c_sda_write(sfr_address, 0);
-	i2c_delay();
 	i2c_scl_write(sfr_address, 1);
-	i2c_delay();
 	i2c_sda_write(sfr_address, 1);
 }
  
@@ -146,26 +164,18 @@ unsigned char i2c_send_byte(unsigned char sfr_address, unsigned char data_out)
 	unsigned char i, ack_bit;
 	for (i = 0; i < 8; i++) {
 		i2c_scl_write(sfr_address, 0);
-		i2c_delay();
 		if ((data_out & 0x80) == 0) {
 			i2c_sda_write(sfr_address, 0);
 		} else {
 			i2c_sda_write(sfr_address, 1);
 		}
-		i2c_delay();
 		i2c_scl_write(sfr_address, 1);
-		i2c_delay();
 		data_out<<=1;
 	}
 	i2c_scl_write(sfr_address, 0);
-	i2c_delay();
 	i2c_sda_write(sfr_address, 1);
-	i2c_delay();
 	i2c_scl_write(sfr_address, 1);
-	i2c_delay();
-	//READ FROM SDA!
 	ack_bit = i2c_sda_read(sfr_address);
-	i2c_delay();
 	i2c_scl_write(sfr_address, 0);
 
 	return ack_bit;
@@ -195,38 +205,53 @@ unsigned char i2c_read_byte(unsigned char sfr_address)
 // TEMP = TEMP_READ - 0.25 + (COUNT_PER_C - COUNT_REMAIN) / COUNT_PER_C
 float read_temp_sensor(void)
 {
-	char first = 0x00; //first value is signed 2s complement
-	unsigned char second = 0x00;
-	unsigned char slope = 0x00;
-	unsigned char remainder = 0x00;
 	unsigned char address_byte = 0x91;
 	unsigned char ack = 0;
 
+	unsigned long millisecond = 1000;
+
+	//TO NOTE, from the sdcc manual:
+	//> SDCC supports (single precision 4 bytes) floating point numbers; the format is somewhat similar to IEEE, but
+	//> it is not IEEE; in particular, denormalized floating -point numbers are not supported. The floating point support
+	//> routines are derived from gcc’s floatlib.c
 	float temperature = 0.0;
 
+	//Slope and count_remaining are going to be implicitly cast into floats from unsigned char
+	float slope = 0x00;
+	float count_remaining = 0x00;
+
+	write_temp_sensor_command(START_TEMP_SENSOR_CONVERSION);
+	i2c_stop(TEMP_SENSOR_SFR);
+
+	//Temperature conversion time is almost a full second_byte (750ms) and may take up to a full second_byte
+	delay(1000*millisecond);//multiplication... this wait  maaay be (read: probably will be) longer than 1000ms
+
 	write_temp_sensor_command(READ_TEMPERATURE);
-
-	//Send repeated start condition after sending command to start reading
+	
+	// A second_byte start signal is required for reading after sending the write command
 	i2c_start(TEMP_SENSOR_SFR);
 	ack = i2c_send_byte(TEMP_SENSOR_SFR, address_byte);
-	first = i2c_read_byte(TEMP_SENSOR_SFR);
-	second = i2c_read_byte(TEMP_SENSOR_SFR);
+	temperature = i2c_read_byte(TEMP_SENSOR_SFR);
+	//Since we're going to perform the calculation for higher precision (same accuracy)
+	//we basically just throw this second byte away (even then it's still only the first bit we care about)
+	i2c_read_byte(TEMP_SENSOR_SFR);
+	i2c_stop(TEMP_SENSOR_SFR);
 
-	write_temp_sensor_command(READ_COUNT_REMAINDER);
+	write_temp_sensor_command(READ_COUNT_REMAIN);
 	i2c_start(TEMP_SENSOR_SFR);
 	ack = i2c_send_byte(TEMP_SENSOR_SFR, address_byte);
-	remainder = i2c_read_byte(TEMP_SENSOR_SFR);
+	count_remaining = i2c_read_byte(TEMP_SENSOR_SFR);
+	i2c_stop(TEMP_SENSOR_SFR);
 	
 	write_temp_sensor_command(READ_SLOPE);
 	i2c_start(TEMP_SENSOR_SFR);
 	ack = i2c_send_byte(TEMP_SENSOR_SFR, address_byte);
 	slope = i2c_read_byte(TEMP_SENSOR_SFR);
-
 	i2c_stop(TEMP_SENSOR_SFR);
 
-	temperature += (float)first;
-
-	temperature = temperature - 0.25 + (slope - remainder) / slope;
+	//More notes about this conversion available here:
+	// https://casper.berkeley.edu/svn/trunk/roach/sw/linux/Documentation/hwmon/ds1621
+	temperature = temperature - (0.25 + (slope - count_remaining) / slope);
 	
 //	if (second & 0x80) //MSB is set if it's fractional
 //	{
@@ -237,6 +262,15 @@ float read_temp_sensor(void)
 //	}
 	
 	return temperature;
+}
+
+void clear_display_buffer(void)
+{
+	int i;
+	for (i = 0; i < DISPLAY_BUFFER_SIZE; i++)
+	{
+		display_buffer[i] = 0x00;
+	}
 }
 
 void write_display(void)
@@ -261,7 +295,6 @@ void write_display(void)
 	*/
 	ack = i2c_send_byte(DISPLAY_SFR, 0x00); //0x00 is the starting address of the 7-set disp
 	for (i=0; i<DISPLAY_BUFFER_SIZE; i++) {
-		i2c_delay();
 		ack = i2c_send_byte(DISPLAY_SFR, display_buffer[i]);
 	}
 	i2c_stop(DISPLAY_SFR);
@@ -342,12 +375,6 @@ void write_temp_sensor_command(unsigned char command_byte)
 	ack = i2c_send_byte(TEMP_SENSOR_SFR, command_byte);
 }
 
-void delay(void)
-{
-	int i;
-	for(i=0;i<500;i++);
-}
-
 void main(void)
 {
 	bool update_display = true;
@@ -357,7 +384,7 @@ void main(void)
 	float current_temp = 0, last_temp = 0;
 	float temp_fraction = 0.0, temp_int = 0.0;
 	// Wait a tic for stuff to boot
-	delay();
+	delay(10); //delay is # clock cycles
 	
 	// Display setup
 	write_display_command(ENABLE_DISPLAY_OSCILLATOR);
@@ -365,11 +392,9 @@ void main(void)
 
 	// Temp sensor setup
 	temp_sensor_config |= TEMP_SENSOR_OUTPUT_HIGH;
-	temp_sensor_config |= TEMP_SENSOR_CONTINUOUS_CONVERSION;
+	temp_sensor_config |= TEMP_SENSOR_ONE_SHOT_CONVERSION;
 
 	write_temp_sensor_config(temp_sensor_config);
-	write_temp_sensor_command(START_TEMP_SENSOR_CONVERSION);
-	i2c_stop(TEMP_SENSOR_SFR);
 	// We need a loop in main, otherwise we do not have deterministic looping
 	// behavior.  The program is re-executed once the instruction pointer has
 	// run to the "end".  In other words, all global vars will be reset, and
@@ -387,7 +412,9 @@ void main(void)
 				current_temp *= -1;
 			}
 			first_num = number_table[(int)current_temp / 10];
-			second_num = number_table[(int)current_temp % 10] | 0x80;
+			second_num = number_table[(int)current_temp % 10] | PERIOD_CHARACTER;
+
+			clear_display_buffer();
 
 			display_buffer[0] = first_num;
 			display_buffer[2] = second_num;
