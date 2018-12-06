@@ -2,9 +2,6 @@
 
 ## ECE 411 Practicum Project - Group 16
 
-https://pdx-lutter.github.io/pdx-ece411-fall2018-kjn/
-
-
 
 ### Precision Temperature Control Unit
 
