@@ -94,3 +94,72 @@ The following is from the sdcc manual (found [here](http://sdcc.sourceforge.net/
 > • GPLv3 license: http://www.gnu.org/licenses/gpl.html
 > • zlib/libpng License: http://www.opensource.org/licenses/Zlib
 > • Boost Software License 1.0 (BSL-1.0): http://www.opensource.org/licenses/BSL-1.0
+
+The sdcc math.h and stdbool.h headers and libraries were used in the firmware of this project.
+
+#### sdcc math.h License
+
+   math.h: Floating point math function declarations
+
+   Copyright (C) 2001, Jesus Calvino-Fraga, jesusc@ieee.org
+
+   This library is free software; you can redistribute it and/or modify it
+   under the terms of the GNU General Public License as published by the
+   Free Software Foundation; either version 2, or (at your option) any
+   later version.
+
+   This library is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this library; see the file COPYING. If not, write to the
+   Free Software Foundation, 51 Franklin Street, Fifth Floor, Boston,
+   MA 02110-1301, USA.
+
+   As a special exception, if you link this library with other files,
+   some of which are compiled with SDCC, to produce an executable,
+   this library does not by itself cause the resulting executable to
+   be covered by the GNU General Public License. This exception does
+   not however invalidate any other reasons why the executable file
+   might be covered by the GNU General Public License.
+
+
+#### sdcc stdbool.h
+
+   stdbool.h - ANSI functions forward declarations
+
+   Copyright (C) 2004, Maarten Brock, sourceforge.brock@dse.nl
+
+   This library is free software; you can redistribute it and/or modify it
+   under the terms of the GNU General Public License as published by the
+   Free Software Foundation; either version 2, or (at your option) any
+   later version.
+
+   This library is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this library; see the file COPYING. If not, write to the
+   Free Software Foundation, 51 Franklin Street, Fifth Floor, Boston,
+   MA 02110-1301, USA.
+
+   As a special exception, if you link this library with other files,
+   some of which are compiled with SDCC, to produce an executable,
+   this library does not by itself cause the resulting executable to
+   be covered by the GNU General Public License. This exception does
+   not however invalidate any other reasons why the executable file
+   might be covered by the GNU General Public License.
+
+
+#### Circuit Schematic and PCB Layout Licensing
+
+The work produced solely for this project, including the circuit diagram, PCB layout, and firmware is licensed under MIT.
+
+Autodesk EAGLE was the CAD software used to produce both the circuit diagrams and the PCB layout design.
+
+Autodesk EAGLE and other Autodesk trademarks may be found here: https://www.autodesk.com/company/legal-notices-trademarks/trademarks/autodesk-inc#top
+
